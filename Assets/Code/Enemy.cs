@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.EventSystems;
 
 public class Enemy : MonoBehaviour
 {
@@ -42,7 +41,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-
     void Awake()
     {
         instance = this;
@@ -56,7 +54,6 @@ public class Enemy : MonoBehaviour
         agent.updateRotation = false;  // 2D에서는 회전 필요 없음
         agent.updateUpAxis = false;    // Up Axis 비활성화
         agent.stoppingDistance = 0.2f; // 목표에 가까워지면 멈추는 거리 설정
-
     }
 
     // Update is called once per frame
@@ -66,18 +63,13 @@ public class Enemy : MonoBehaviour
 
         if (agent.isOnNavMesh && target != null)
         {
-            agent.SetDestination(target.position);
+            agent.SetDestination(target.position); // 목표로 타워의 위치 설정
         }
 
         if (agent.speed == 0)
         {
             agent.speed = speed;
         }
-
-        // Vector2 dirVec = target.position - rigid.position;
-        // Vector2 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime;
-        // rigid.MovePosition(rigid.position + nextVec);
-        // rigid.linearVelocity = Vector2.zero;
     }
 
     void LateUpdate()
@@ -89,9 +81,8 @@ public class Enemy : MonoBehaviour
 
     void OnEnable()
     {
-        target = GameManager.instance.goal.GetComponent<Rigidbody2D>();
+        target = GameManager.instance.goal.GetComponent<Rigidbody2D>(); // 기본 목표 설정
         isLive = true;
-        // maxHp로 해주는이유 = 풀링 시 되살아난다?
         hp = maxHp;
 
         isLive = true;
@@ -103,7 +94,6 @@ public class Enemy : MonoBehaviour
 
     public void Init(SpawnData data)
     {
-        // 애니메이션의 타입을 animCon에 저장한 스프라이트의 타입으로 변경한다.
         anim.runtimeAnimatorController = animCon[data.spriteType];
         speed = data.speed;
         agent.speed = speed;
@@ -113,60 +103,21 @@ public class Enemy : MonoBehaviour
         IsBoss = data.spawnTime >= 5;
     }
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (!collision.CompareTag("Bullet") || !isLive) return;
-
-    //    //hp -= collision.GetComponent<Bullet>().damage;
-    //    StartCoroutine(KnockBack());
-
-    //    if (hp > 0)
-    //    {
-    //        anim.SetTrigger("Hit");
-    //        AudioManager.instance.PlaySFX(AudioManager.SFX.Hit);
-    //    }
-    //    else
-    //    {
-    //        isLive = false;
-    //        col.enabled = false;
-    //        rigid.simulated = false;
-    //        spriter.sortingOrder = 1;
-    //        anim.SetBool("Dead", true);
-    //        if (GameManager.instance.isLive) AudioManager.instance.PlaySFX(AudioManager.SFX.Dead);
-    //    }
-    //}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Tower")) // Tower 태그를 가진 오브젝트 감지
+        {
+            target = collision.GetComponent<Rigidbody2D>(); // Tower 오브젝트를 목표로 설정
+        }
+        // Tower가 없을 경우 goal로 target 변경돼야함.
+    }
 
     IEnumerator KnockBack()
     {
-        //yield return new WaitForSeconds(2); // 2초간 휴식
-        yield return wait; // 1 물리 프레임 휴식
-                           //Vector3 playerPos = GameManager.instance.player.transform.position;
-                           //Vector3 dirVec = transform.position - playerPos;
-                           //rigid.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
-
+        yield return wait;
     }
 
     void Dead()
     {
-        GameManager.instance.kill++;
-        GameManager.instance.GetExp(exp);
-
-        //if (IsBoss)
-        //{
-        //    int randomIndex = Random.Range(0, Drop.instance.itemPrefabs.Length);
-        //    GameObject item = Instantiate(
-        //        Drop.instance.itemPrefabs[randomIndex],
-        //        transform.position,
-        //        Quaternion.identity
-        //    );
-        //    item.transform.parent = Spawner.instance.transform;
-        //}
-        if (Random.value < 0.01f) // 1% 확률로 아이템 스폰
-        {
-            int itemIndex = Random.Range(0, Spawner.instance.itemPrefabs.Length);
-            GameObject item = Instantiate(Spawner.instance.itemPrefabs[itemIndex]);
-            item.transform.position = this.transform.position;
-        }
-        gameObject.SetActive(false);
     }
 }

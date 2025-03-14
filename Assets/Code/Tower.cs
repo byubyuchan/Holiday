@@ -16,16 +16,27 @@ public class Tower : MonoBehaviour
     }
 
     public TowerData towerData;  // 타워 데이터 (각 타워마다 설정)
+    public int damage;
+    public static Tower instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
         ApplyTowerData();
+        Init(towerData);
     }
 
     void ApplyTowerData()
     {
-        // 데이터를 타워에 적용
-        Debug.Log($"타워 타입: {towerData.towerType}");
-        Debug.Log($"체력: {towerData.HP}, 공격력: {towerData.Damage}, 비용: {towerData.Cost}");
+
+    }
+
+    void Init(TowerData towerData)
+    {
+        damage = towerData.Damage;
     }
 }

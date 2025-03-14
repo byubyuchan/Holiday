@@ -10,13 +10,15 @@ GameObject:
   m_Component:
   - component: {fileID: 2535275912908623832}
   - component: {fileID: 5790217877680453697}
+  - component: {fileID: -5561790625650590993}
   - component: {fileID: 3522734664781627643}
   - component: {fileID: 6613787328879077747}
   - component: {fileID: 995168171378870238}
   - component: {fileID: 2940236836558980561}
   - component: {fileID: 4593667440845162793}
+  - component: {fileID: 8763790127201179951}
   m_Layer: 0
-  m_Name: MeleeTower
+  m_Name: Cost1
   m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,7 +86,7 @@ SpriteRenderer:
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 72de0c64f2c6a498096698322c976a67, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.33, y: 0.32}
@@ -93,6 +95,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &-5561790625650590993
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5602809898027044030}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e4cff99bdcba65045bd79a993cb7a7cd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!50 &3522734664781627643
 Rigidbody2D:
   serializedVersion: 5
@@ -214,6 +238,7 @@ MonoBehaviour:
     Cost: 0
     Star: 0
     Desc: 
+  damage: 0
 --- !u!114 &4593667440845162793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,6 +252,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemiesInRange: []
+--- !u!114 &8763790127201179951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5602809898027044030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bf04563f20caf541966f6deb4129e75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6848108829036277571
 GameObject:
   m_ObjectHideFlags: 0
