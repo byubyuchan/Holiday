@@ -34,7 +34,6 @@ public class Enemy : MonoBehaviour
             if (NavMesh.SamplePosition(transform.position, out hit, 5f, NavMesh.AllAreas))
             {
                 transform.position = hit.position; // 가장 가까운 NavMesh 위로 이동
-                Debug.Log("✅ 몬스터를 NavMesh 위로 이동시켰습니다!");
             }
             else
             {
@@ -68,7 +67,6 @@ public class Enemy : MonoBehaviour
         if (agent.isOnNavMesh && target != null)
         {
             agent.SetDestination(target.position);
-            Debug.Log("Moving to: " + target.position);
         }
 
         if (agent.speed == 0)

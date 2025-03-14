@@ -44,7 +44,6 @@ public class GameManager : MonoBehaviour
         hp = maxHp;
         isLive = true;
         Resume();
-
         //PauseButton.gameObject.SetActive(true);
         //AudioManager.instance.PlayBGM(true);
         //AudioManager.instance.PlaySFX(AudioManager.SFX.Select);

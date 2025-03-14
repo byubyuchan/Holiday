@@ -284,6 +284,8 @@ MonoBehaviour:
   exp: 0
   animCon:
   - {fileID: 9100000, guid: 2b656825904332a4a9aea45e002fa3e5, type: 2}
+  - {fileID: 9100000, guid: 92ac96d13992d1e45bb5519bc16468cf, type: 2}
+  - {fileID: 9100000, guid: 67c716b1f11d3dc489685ec26ea36bd9, type: 2}
   target: {fileID: 0}
 --- !u!195 &-458511771405121066
 NavMeshAgent:
