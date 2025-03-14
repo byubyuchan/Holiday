@@ -1,8 +1,11 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class Enemy : MonoBehaviour
 {
+    public static Enemy instance;
     public float speed;
     public float hp;
     public float maxHp;
@@ -19,25 +22,64 @@ public class Enemy : MonoBehaviour
 
     WaitForFixedUpdate wait;
 
+    NavMeshAgent agent;
+
     bool IsBoss;
+
+    void Start()
+    {
+        if (!agent.isOnNavMesh)
+        {
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(transform.position, out hit, 5f, NavMesh.AllAreas))
+            {
+                transform.position = hit.position; // ê°€ì¥ ê°€ê¹Œìš´ NavMesh ìœ„ë¡œ ì´ë™
+                Debug.Log("âœ… ëª¬ìŠ¤í„°ë¥¼ NavMesh ìœ„ë¡œ ì´ë™ì‹œì¼°ìŠµë‹ˆë‹¤!");
+            }
+            else
+            {
+                Debug.LogError("âŒ ì£¼ë³€ì— NavMeshê°€ ì—†ìŠµë‹ˆë‹¤. ì”¬ í™•ì¸ í•„ìš”!");
+            }
+        }
+    }
+
+
     void Awake()
     {
+        instance = this;
         rigid = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
         spriter = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         wait = new WaitForFixedUpdate();
+
+        agent = GetComponent<NavMeshAgent>();
+        agent.updateRotation = false;  // 2Dì—ì„œëŠ” íšŒì „ í•„ìš” ì—†ìŒ
+        agent.updateUpAxis = false;    // Up Axis ë¹„í™œì„±í™”
+        agent.stoppingDistance = 0.2f; // ëª©í‘œì— ê°€ê¹Œì›Œì§€ë©´ ë©ˆì¶”ëŠ” ê±°ë¦¬ ì„¤ì •
+
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!GameManager.instance.isLive) return;
-        if (!isLive) return;
-        Vector2 dirVec = target.position - rigid.position;
-        Vector2 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime;
-        rigid.MovePosition(rigid.position + nextVec);
-        rigid.linearVelocity = Vector2.zero;
+        if (!GameManager.instance.isLive || !isLive) return;
+
+        if (agent.isOnNavMesh && target != null)
+        {
+            agent.SetDestination(target.position);
+            Debug.Log("Moving to: " + target.position);
+        }
+
+        if (agent.speed == 0)
+        {
+            agent.speed = speed;
+        }
+
+        // Vector2 dirVec = target.position - rigid.position;
+        // Vector2 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime;
+        // rigid.MovePosition(rigid.position + nextVec);
+        // rigid.linearVelocity = Vector2.zero;
     }
 
     void LateUpdate()
@@ -49,35 +91,35 @@ public class Enemy : MonoBehaviour
 
     void OnEnable()
     {
-        //target = GameManager.instance.player.GetComponent<Rigidbody2D>();
+        target = GameManager.instance.goal.GetComponent<Rigidbody2D>();
         isLive = true;
-        // maxHp·Î ÇØÁÖ´ÂÀÌÀ¯ = Ç®¸µ ½Ã µÇ»ì¾Æ³­´Ù?
+        // maxHpë¡œ í•´ì£¼ëŠ”ì´ìœ  = í’€ë§ ì‹œ ë˜ì‚´ì•„ë‚œë‹¤?
         hp = maxHp;
 
         isLive = true;
         col.enabled = true;
         rigid.simulated = true;
         spriter.sortingOrder = 2;
-        //anim.SetBool("Dead", false);
+        anim.SetBool("Dead", false);
     }
 
-    //public void Init(SpawnData data)
-    //{
-    //    // ¾Ö´Ï¸ŞÀÌ¼ÇÀÇ Å¸ÀÔÀ» animCon¿¡ ÀúÀåÇÑ ½ºÇÁ¶óÀÌÆ®ÀÇ Å¸ÀÔÀ¸·Î º¯°æÇÑ´Ù.
-    //    anim.runtimeAnimatorController = animCon[data.spriteType];
-    //    speed = data.speed;
-    //    maxHp = data.hp;
-    //    hp = data.hp;
-    //    exp = data.exp;
-
-    //    IsBoss = data.spawnTime >= 5;
-    //}
+    public void Init(SpawnData data)
+    {
+        // ì• ë‹ˆë©”ì´ì…˜ì˜ íƒ€ì…ì„ animConì— ì €ì¥í•œ ìŠ¤í”„ë¼ì´íŠ¸ì˜ íƒ€ì…ìœ¼ë¡œ ë³€ê²½í•œë‹¤.
+        anim.runtimeAnimatorController = animCon[data.spriteType];
+        speed = data.speed;
+        agent.speed = speed;
+        maxHp = data.hp;
+        hp = data.hp;
+        exp = data.exp;
+        IsBoss = data.spawnTime >= 5;
+    }
 
     //private void OnTriggerEnter2D(Collider2D collision)
     //{
     //    if (!collision.CompareTag("Bullet") || !isLive) return;
 
-    //    hp -= collision.GetComponent<Bullet>().damage;
+    //    //hp -= collision.GetComponent<Bullet>().damage;
     //    StartCoroutine(KnockBack());
 
     //    if (hp > 0)
@@ -98,34 +140,35 @@ public class Enemy : MonoBehaviour
 
     IEnumerator KnockBack()
     {
-        //yield return new WaitForSeconds(2); // 2ÃÊ°£ ÈŞ½Ä
-        yield return wait; // 1 ¹°¸® ÇÁ·¹ÀÓ ÈŞ½Ä
+        //yield return new WaitForSeconds(2); // 2ì´ˆê°„ íœ´ì‹
+        yield return wait; // 1 ë¬¼ë¦¬ í”„ë ˆì„ íœ´ì‹
                            //Vector3 playerPos = GameManager.instance.player.transform.position;
                            //Vector3 dirVec = transform.position - playerPos;
                            //rigid.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
 
     }
-    //void Dead()
-    //{
-    //    GameManager.instance.kill++;
-    //    GameManager.instance.GetExp(exp);
 
-    //    //if (IsBoss)
-    //    //{
-    //    //    int randomIndex = Random.Range(0, Drop.instance.itemPrefabs.Length);
-    //    //    GameObject item = Instantiate(
-    //    //        Drop.instance.itemPrefabs[randomIndex],
-    //    //        transform.position,
-    //    //        Quaternion.identity
-    //    //    );
-    //    //    item.transform.parent = Spawner.instance.transform;
-    //    //}
-    //    if (Random.value < 0.01f) // 1% È®·ü·Î ¾ÆÀÌÅÛ ½ºÆù
-    //    {
-    //        int itemIndex = Random.Range(0, Spawner.instance.itemPrefabs.Length);
-    //        GameObject item = Instantiate(Spawner.instance.itemPrefabs[itemIndex]);
-    //        item.transform.position = this.transform.position;
-    //    }
-    //    gameObject.SetActive(false);
-    //}
+    void Dead()
+    {
+        GameManager.instance.kill++;
+        GameManager.instance.GetExp(exp);
+
+        //if (IsBoss)
+        //{
+        //    int randomIndex = Random.Range(0, Drop.instance.itemPrefabs.Length);
+        //    GameObject item = Instantiate(
+        //        Drop.instance.itemPrefabs[randomIndex],
+        //        transform.position,
+        //        Quaternion.identity
+        //    );
+        //    item.transform.parent = Spawner.instance.transform;
+        //}
+        if (Random.value < 0.01f) // 1% í™•ë¥ ë¡œ ì•„ì´í…œ ìŠ¤í°
+        {
+            int itemIndex = Random.Range(0, Spawner.instance.itemPrefabs.Length);
+            GameObject item = Instantiate(Spawner.instance.itemPrefabs[itemIndex]);
+            item.transform.position = this.transform.position;
+        }
+        gameObject.SetActive(false);
+    }
 }

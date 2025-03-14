@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     [Header("# Game Object")]
+    public GameObject goal;
+    public PoolManager pool;
     public static GameManager instance;
     public GameObject EnemyCleaner;
     public Transform UIJoy;
@@ -136,8 +138,8 @@ public class GameManager : MonoBehaviour
         isLive = true;
         // 시간 속도 (배율)
         Time.timeScale = gameSpeed[speedIndex];
-        UIJoy.localScale = Vector3.one;
-        PauseButton.gameObject.SetActive(true);
+        //UIJoy.localScale = Vector3.one;
+        //PauseButton.gameObject.SetActive(true);
     }
 
     public void Pause()
