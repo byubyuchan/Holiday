@@ -2,12 +2,8 @@ using UnityEngine;
 
 public class ObjectDetector : MonoBehaviour
 {
-
-    [SerializeField]
-    public TowerMaker towerMaker;
+    [SerializeField] private TileSelector tileSelector;
     private Camera mainCamera;
-    private Ray ray;
-    private RaycastHit hit;
 
     private void Awake()
     {
@@ -18,16 +14,12 @@ public class ObjectDetector : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
             {
-                if (hit.transform.CompareTag("Tile"))
-                {
-                    towerMaker.SpawnTower(hit.transform);
-                }
-                else Debug.Log("타일맵이 아닙니다.");
+                tileSelector.SelectTile(hit.transform);
             }
-            else Debug.Log("레이캐스트된 부분이 없습니다.");
+            else tileSelector.ResetTile();
         }
     }
 }
