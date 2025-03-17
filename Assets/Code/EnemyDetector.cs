@@ -30,7 +30,6 @@ public class EnemyDetector : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             enemiesInRange.Add(other.gameObject);
-            Debug.Log("적이 사정거리 안에 들어왔습니다!");
         }
     }
 
@@ -46,7 +45,6 @@ public class EnemyDetector : MonoBehaviour
     {
         if (collision.collider.CompareTag("Enemy"))
         {
-            Debug.Log("적과 충돌! 데미지 입음");
         }
     }
 

@@ -11,6 +11,9 @@ public class Spawner : MonoBehaviour
     float timer;
     public int level;
 
+    public int maxEnemies = 150;  // 최대 몬스터 수
+    public int currentEnemyCount = 0;  // 현재 몬스터 수
+
     void Awake()
     {
         // Components = 다수의 자식 선택 + 자기 자신도 포함
@@ -21,13 +24,16 @@ public class Spawner : MonoBehaviour
 
     void Spawn()
     {
-        for (int i = 0; i <= level; i++)
+        if (currentEnemyCount < maxEnemies)
         {
-            GameObject enemy = GameManager.instance.pool.Get(EnemyIndex);
-            enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position;
-            enemy.GetComponent<Enemy>().Init(spawnData[i]);
+            for (int i = 0; i <= level; i++)
+            {
+                GameObject enemy = GameManager.instance.pool.Get(EnemyIndex);
+                enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position;
+                enemy.GetComponent<Enemy>().Init(spawnData[i]);
+                currentEnemyCount++;
+            }
         }
-
     }
 
     void Update()

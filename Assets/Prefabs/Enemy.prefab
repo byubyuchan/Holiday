@@ -316,15 +316,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e17692a7b2b4b84490541ab6b394675, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 0
   hp: 0
   maxHp: 0
   exp: 0
   animCon:
-  - {fileID: 9100000, guid: 17416659cc086114ba98756fe74c76f2, type: 2}
+  - {fileID: 9100000, guid: 2b656825904332a4a9aea45e002fa3e5, type: 2}
   - {fileID: 9100000, guid: 92ac96d13992d1e45bb5519bc16468cf, type: 2}
   - {fileID: 9100000, guid: 67c716b1f11d3dc489685ec26ea36bd9, type: 2}
   target: {fileID: 0}
+  destinationUpdateInterval: 5
 --- !u!195 &-458511771405121066
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -346,4 +347,4 @@ NavMeshAgent:
   m_Height: 0.48
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  m_ObstacleAvoidanceType: 1

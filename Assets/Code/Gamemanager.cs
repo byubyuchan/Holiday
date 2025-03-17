@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Threading;
-using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;

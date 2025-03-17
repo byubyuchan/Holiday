@@ -11,6 +11,10 @@ public class Enemy : MonoBehaviour
     public int exp;
     public RuntimeAnimatorController[] animCon;
     public Rigidbody2D target;
+    private Vector2 lastTargetPosition;
+
+    public float destinationUpdateInterval = 0.5f; // 목표 위치 갱신 주기
+    private float lastUpdateTime = 0f;
 
     bool isLive;
     Animator anim;
@@ -27,16 +31,13 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        // NavMesh 초기화 코드
         if (!agent.isOnNavMesh)
         {
             NavMeshHit hit;
             if (NavMesh.SamplePosition(transform.position, out hit, 5f, NavMesh.AllAreas))
             {
                 transform.position = hit.position; // 가장 가까운 NavMesh 위로 이동
-            }
-            else
-            {
-                Debug.LogError("❌ 주변에 NavMesh가 없습니다. 씬 확인 필요!");
             }
         }
     }
@@ -57,18 +58,24 @@ public class Enemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
         if (!GameManager.instance.isLive || !isLive) return;
 
-        if (agent.isOnNavMesh && target != null)
+        if (target != null && agent.isOnNavMesh)
         {
-            agent.SetDestination(target.position); // 목표로 타워의 위치 설정
-        }
-
-        if (agent.speed == 0)
-        {
-            agent.speed = speed;
+            // 일정 시간마다만 목표 위치를 갱신
+            if (Time.time - lastUpdateTime >= destinationUpdateInterval)
+            {
+                // 목표 위치가 변경되었을 때만 SetDestination 호출
+                if (target.position != lastTargetPosition)
+                {
+                    agent.SetDestination(target.position);
+                    lastTargetPosition = target.position;
+                    lastUpdateTime = Time.time; // 시간 갱신
+                    //Debug.LogError("이동 호출");
+                }
+            }
         }
     }
 
