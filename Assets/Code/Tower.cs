@@ -3,31 +3,25 @@ using UnityEngine;
 public class Tower : MonoBehaviour
 {
     // 타워의 데이터 클래스
-    [System.Serializable]
-    public class TowerData
-    {
-        public string towerType;  // 타워 유형
-        public int HP;            // 체력
-        public float Speed;       // 공격 속도
-        public int Damage;        // 공격력
-        public int Cost;          // 비용
-        public int Star;          // 별 등급
-        [TextArea] public string Desc;  // 설명
-    }
-
-    public TowerData towerData;  // 타워 데이터 (각 타워마다 설정)
-    public int damage;
     public static Tower instance;
+    public TowerData[] towerData;  // 타워 데이터 (각 타워마다 설정)
+
+    public int damage;
+    public string towerType;
+    public RuntimeAnimatorController[] animCon;
+    public Animator anim;
 
     private void Awake()
     {
+        anim = GetComponent<Animator>();
         instance = this;
     }
 
     private void Start()
     {
         ApplyTowerData();
-        Init(towerData);
+        // 확률에 맞게 인덱스 번호 설정됨.
+        Init(towerData[0]);
     }
 
     void ApplyTowerData()
@@ -35,8 +29,29 @@ public class Tower : MonoBehaviour
 
     }
 
-    void Init(TowerData towerData)
+    public void Init(TowerData towerData)
     {
         damage = towerData.Damage;
+        towerType = towerData.towerType;
+
+        // 애니메이터 컨트롤러를 확률적으로 선택
+        if (animCon.Length > 0 && anim != null)
+        {
+            int randomIndex = Random.Range(0, animCon.Length);
+            anim.runtimeAnimatorController = animCon[randomIndex];
+        }
     }
+}
+
+[System.Serializable]
+public class TowerData
+{
+    public string towerType;  // 타워 유형
+    public int HP;            // 체력
+    public float Speed;       // 공격 속도
+    public float Range;       // 사거리
+    public int Damage;        // 공격력
+    public int Cost;          // 비용
+    public int Star;          // 별 등급
+    [TextArea] public string Desc;  // 설명
 }

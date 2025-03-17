@@ -321,7 +321,7 @@ MonoBehaviour:
   maxHp: 0
   exp: 0
   animCon:
-  - {fileID: 9100000, guid: 2b656825904332a4a9aea45e002fa3e5, type: 2}
+  - {fileID: 9100000, guid: 17416659cc086114ba98756fe74c76f2, type: 2}
   - {fileID: 9100000, guid: 92ac96d13992d1e45bb5519bc16468cf, type: 2}
   - {fileID: 9100000, guid: 67c716b1f11d3dc489685ec26ea36bd9, type: 2}
   target: {fileID: 0}
