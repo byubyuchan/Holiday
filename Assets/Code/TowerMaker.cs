@@ -31,18 +31,24 @@ public class TowerMaker : MonoBehaviour
         Debug.Log("탱커 타워 선택");
     }
 
-    public void SpawnTower(Transform tile)
+    public void SpawnTower(Tile tile)
     {
         if (selectedTowerPrefab == null) return;
-        Tile tileComponent = tile.GetComponent<Tile>();
-        // 중복 배치 방지
-        if (tileComponent.IsBuildTower)
+
+        if (tile.IsBuildTower)
         {
             Debug.Log("이미 타워가 설치된 타일입니다!");
             return;
         }
-        Instantiate(selectedTowerPrefab, tile.position, Quaternion.identity);
-        tileComponent.IsBuildTower = true;
-        Debug.Log($"{selectedTowerPrefab.name} 배치됨!");
+
+        GameObject towerObject = Instantiate(selectedTowerPrefab, tile.transform.position, Quaternion.identity);
+
+        Tower tower = towerObject.GetComponent<Tower>();
+        if (tower != null)
+        {
+            tower.tile = tile; // 설치된 타일을 참조하도록 설정
+            tile.IsBuildTower = true; // 설치된 상태로 변경
+            Debug.Log($"{selectedTowerPrefab.name}이 {tile.name}에 배치되었습니다.");
+        }
     }
 }

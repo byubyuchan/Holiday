@@ -5,6 +5,7 @@ public class Projectile : MonoBehaviour
 {
     public float speed = 3f;
     private GameObject target; // 목표 몬스터
+    public GameObject hitEffectPrefab;
 
     public Tower tower;
 
@@ -39,8 +40,8 @@ public class Projectile : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // 충돌 처리 (OnCollisionEnter2D)
-    private void OnCollisionEnter2D(Collision2D collision)
+// 충돌 처리 (OnCollisionEnter2D)
+private void OnCollisionEnter2D(Collision2D collision)
     {
         // "Enemy" 태그를 가진 적과 충돌했는지 확인
         if (collision.collider.CompareTag("Enemy") && collision.gameObject == target)
@@ -61,6 +62,11 @@ public class Projectile : MonoBehaviour
             }
         }
 
-        Destroy(gameObject); // 투사체 제거
+        // 충돌 이펙트 생성
+        if (hitEffectPrefab != null)
+        {
+            Instantiate(hitEffectPrefab, transform.position, Quaternion.identity);
+        }
+        Destroy(gameObject);
     }
 }

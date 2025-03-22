@@ -10,6 +10,7 @@ public class TowerAttack : MonoBehaviour
     private Animator towerAnim;  // 타워의 애니메이터
     private SpriteRenderer spriteRenderer;
 
+    public GameObject meleeEffectPrefab;
     private bool isAttacking = false;
     private float attackCooldown = 0f; // 쿨타임 시간
 
@@ -74,6 +75,8 @@ public class TowerAttack : MonoBehaviour
         isAttacking = true; // 공격 시작
         attackCooldown = 1f; // 쿨타임 설정
         towerAnim.SetTrigger("Attack"); // 애니메이션 실행
+
+        Instantiate(meleeEffectPrefab, target.transform.position, Quaternion.identity);
     }
 
     private void PerformRangeAttack(GameObject target)

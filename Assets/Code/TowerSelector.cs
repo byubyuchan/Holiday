@@ -10,6 +10,8 @@ public class TileSelector : MonoBehaviour
     {
         if (!tileTransform.CompareTag("Tile")) return;
 
+        Tile tile = tileTransform.GetComponent<Tile>();
+
         if (selectedTile == null)
         {
             selectedTile = tileTransform;
@@ -18,7 +20,7 @@ public class TileSelector : MonoBehaviour
         }
         else if (selectedTile == tileTransform)
         {
-            towerMaker.SpawnTower(selectedTile);
+            towerMaker.SpawnTower(tile);
             ResetTile();
         }
         else

@@ -57,6 +57,7 @@ public class SpawnData
     public float spawnTime;
     public int spriteType;
     public int hp;
+    public float damage;
     public float speed;
     public int exp;
 }
