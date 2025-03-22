@@ -102,10 +102,10 @@ GameObject:
   - component: {fileID: 8384478248782540814}
   - component: {fileID: 3868839161709918670}
   - component: {fileID: 2238410380428710349}
-  - component: {fileID: 1263136778078786370}
-  - component: {fileID: 3518112344886342879}
+  - component: {fileID: -2142581307037279633}
+  - component: {fileID: 1545454347195559579}
   m_Layer: 0
-  m_Name: Melee
+  m_Name: Range
   m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -248,7 +248,7 @@ CapsuleCollider2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 0
+  m_LayerOverridePriority: 1
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -281,26 +281,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerData:
-  - towerType: Melee
+  - towerType: Range
     HP: 100
     Speed: 0
-    Range: 2
+    Range: 10
     Damage: 100
     Cost: 0
     Star: 0
     Desc: 
-  - towerType: Melee
+  - towerType: Range
     HP: 100
     Speed: 0
-    Range: 2
+    Range: 5
     Damage: 100
     Cost: 0
     Star: 0
     Desc: 
-  - towerType: Melee
+  - towerType: Range
     HP: 100
     Speed: 0
-    Range: 2
+    Range: 5
     Damage: 100
     Cost: 0
     Star: 0
@@ -327,7 +327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dea9555f3d8f1754e9cd98a9bca2588c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1263136778078786370
+--- !u!114 &-2142581307037279633
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -340,9 +340,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 0}
-  projectilePrefabs: []
+  projectilePrefabs:
+  - {fileID: 8900365330149694422, guid: 01a2735ceaa3ca94f9803055ec7d89f9, type: 3}
   tower: {fileID: 0}
---- !u!114 &3518112344886342879
+--- !u!114 &1545454347195559579
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -354,7 +355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 605d553a643d4cb4ba11468284aa249a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 3
+  attackRange: 10
   segments: 32
   debugColor: {r: 0, g: 0, b: 1, a: 1}
   tower: {fileID: 0}

@@ -1,45 +1,99 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TowerAttack : MonoBehaviour
 {
-    public static TowerAttack instance;
-    public EnemyDetector EnemyDetector;
+    public Transform firePoint; // 투사체 발사 위치
+    public GameObject[] projectilePrefabs; // 서로 다른 투사체 프리팹
+
+    public Tower tower;
+
+    private Animator towerAnim;  // 타워의 애니메이터
+    private SpriteRenderer spriteRenderer;
+
+    private bool isAttacking = false;
+    private float attackCooldown = 0f; // 쿨타임 시간
 
     private void Awake()
     {
-        instance = this;
-    }
-    private void Start()
-    {
+        firePoint = this.transform;
+        towerAnim = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        tower = GetComponent<Tower>();
     }
 
-    public void Attack()
+    private void Update()
     {
-        if (EnemyDetector.enemiesInRange.Count > 0)
+        // 쿨타임 감소
+        if (attackCooldown > 0)
         {
-            switch (Tower.instance.towerType)
+            attackCooldown -= Time.deltaTime;
+            if (attackCooldown <= 0)
             {
-                case ("Melee"):
-                    for (int i = 0; i < EnemyDetector.enemiesInRange.Count; i++)
-                    {
-                        GameObject target = EnemyDetector.enemiesInRange[i]; // 첫 번째 적 공격
-
-                        // 실제 데미지를 주는 코드 (적 스크립트 필요)
-                        Enemy enemy = target.GetComponent<Enemy>();
-                        if (enemy != null)
-                        {
-                            enemy.hp -= Tower.instance.damage;
-                        }
-                    }
-                    break;
-
-                case ("Range"):
-                    // TODO : RangeAttack
-                    break;
+                isAttacking = false; // 쿨타임 종료
+                Debug.Log("쿨타임 종료: 새로운 공격 가능");
             }
         }
-        else return;
+    }
+
+    public void Attack(GameObject target)
+    {
+        if (target == null || isAttacking)
+        {
+            Debug.LogWarning("타워 공격: 목표가 없거나 쿨타임 중입니다!");
+            return;
+        }
+
+        Vector2 direction = (target.transform.position - transform.position).normalized;
+
+        // 타워가 왼쪽을 바라보도록 flipX 설정
+        spriteRenderer.flipX = direction.x > 0;
+
+        switch (tower.towerType)
+        {
+            case "Melee":
+                PerformMeleeAttack(target);
+                break;
+
+            case "Range":
+                PerformRangeAttack(target);
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void PerformMeleeAttack(GameObject target)
+    {
+        Enemy enemy = target.GetComponent<Enemy>();
+        if (enemy != null)
+        {
+            enemy.hp -= tower.damage; // 데미지 적용
+        }
+
+        isAttacking = true; // 공격 시작
+        attackCooldown = 1f; // 쿨타임 설정
+        towerAnim.SetTrigger("Attack"); // 애니메이션 실행
+    }
+
+    private void PerformRangeAttack(GameObject target)
+    {
+        if (projectilePrefabs == null || projectilePrefabs.Length == 0)
+        {
+            return;
+        }
+
+        isAttacking = true; // 공격 시작
+        attackCooldown = 1f; // 쿨타임 설정
+        towerAnim.SetTrigger("Attack"); // 애니메이션 실행
+
+        int projectileIndex = 0; // 사용할 프리팹 인덱스
+        GameObject projectile = Instantiate(projectilePrefabs[projectileIndex], firePoint.position, Quaternion.identity);
+
+        Projectile proj = projectile.GetComponent<Projectile>();
+        if (proj != null)
+        {
+            proj.Init(tower, target); // 목표 설정
+        }
     }
 }

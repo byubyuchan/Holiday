@@ -10,8 +10,11 @@ public class Enemy : MonoBehaviour
     public float maxHp;
     public int exp;
     public RuntimeAnimatorController[] animCon;
-    public Rigidbody2D target;
+
+    public Rigidbody2D target; // 현재 목표
     private Vector2 lastTargetPosition;
+
+    public float detectionRange = 10f; // 탐지 범위
 
     public float destinationUpdateInterval = 0.5f; // 목표 위치 갱신 주기
     private float lastUpdateTime = 0f;
@@ -55,40 +58,68 @@ public class Enemy : MonoBehaviour
         agent.updateRotation = false;  // 2D에서는 회전 필요 없음
         agent.updateUpAxis = false;    // Up Axis 비활성화
         agent.stoppingDistance = 0.2f; // 목표에 가까워지면 멈추는 거리 설정
+        target = GameManager.instance.goal.GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!GameManager.instance.isLive || !isLive) return;
 
-        if (target != null && agent.isOnNavMesh)
+        if (hp <= 0) Dead();
+
+        if (Time.time - lastUpdateTime >= destinationUpdateInterval)
         {
-            // 일정 시간마다만 목표 위치를 갱신
-            if (Time.time - lastUpdateTime >= destinationUpdateInterval)
+            FindClosestTower(); // 가장 가까운 타워 탐색
+            UpdateDestination(); // 목표 위치 갱신
+            lastUpdateTime = Time.time; // 시간 갱신
+        }
+    }
+
+    private void FindClosestTower()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, detectionRange);
+
+        float closestDistance = Mathf.Infinity;
+        Rigidbody2D closestTarget = null;
+
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.CompareTag("Tower"))
             {
-                // 목표 위치가 변경되었을 때만 SetDestination 호출
-                if (target.position != lastTargetPosition)
+                float distanceToTower = Vector3.Distance(transform.position, collider.transform.position);
+                if (distanceToTower < closestDistance)
                 {
-                    agent.SetDestination(target.position);
-                    lastTargetPosition = target.position;
-                    lastUpdateTime = Time.time; // 시간 갱신
-                    //Debug.LogError("이동 호출");
+                    closestDistance = distanceToTower;
+                    closestTarget = collider.GetComponent<Rigidbody2D>();
                 }
             }
+        }
+        if (closestTarget != null)
+        {
+            target = closestTarget; // 가장 가까운 타워를 목표로 설정
+        }
+        else target = GameManager.instance.goal.GetComponent<Rigidbody2D>();
+    }
+
+
+    private void UpdateDestination()
+    {
+        if (target != null && agent.isOnNavMesh)
+        {
+            agent.SetDestination(target.position); // 목표 위치로 이동
+            lastTargetPosition = target.position;  // 마지막 목표 위치 갱신
         }
     }
 
     void LateUpdate()
     {
-        if (!GameManager.instance.isLive) return;
-        if (!isLive) return;
-        spriter.flipX = target.position.x < rigid.position.x;
+        if (!GameManager.instance.isLive || !isLive) return;
+
+        spriter.flipX = target != null && target.position.x < rigid.position.x;
     }
 
     void OnEnable()
     {
-        target = GameManager.instance.goal.GetComponent<Rigidbody2D>(); // 기본 목표 설정
         isLive = true;
         hp = maxHp;
 
@@ -97,6 +128,8 @@ public class Enemy : MonoBehaviour
         rigid.simulated = true;
         spriter.sortingOrder = 2;
         anim.SetBool("Dead", false);
+
+        FindClosestTower(); // 활성화 시 가장 가까운 타워 탐색
     }
 
     public void Init(SpawnData data)
@@ -110,15 +143,6 @@ public class Enemy : MonoBehaviour
         IsBoss = data.spawnTime >= 5;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Tower")) // Tower 태그를 가진 오브젝트 감지
-        {
-            target = collision.GetComponent<Rigidbody2D>(); // Tower 오브젝트를 목표로 설정
-        }
-        // Tower가 없을 경우 goal로 target 변경돼야함.
-    }
-
     IEnumerator KnockBack()
     {
         yield return wait;
@@ -126,5 +150,6 @@ public class Enemy : MonoBehaviour
 
     void Dead()
     {
+        gameObject.SetActive(false);
     }
 }

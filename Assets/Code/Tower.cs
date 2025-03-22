@@ -1,20 +1,24 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Tower : MonoBehaviour
 {
     // 타워의 데이터 클래스
-    public static Tower instance;
     public TowerData[] towerData;  // 타워 데이터 (각 타워마다 설정)
 
-    public int damage;
-    public string towerType;
+    public string towerType;  // 타워 유형
+    public int hp;            // 체력
+    public float range;       // 사거리
+    public int damage;        // 공격력
+
+    public TowerAttack towerattack;
     public RuntimeAnimatorController[] animCon;
     public Animator anim;
 
     private void Awake()
     {
+        towerattack = GetComponent<TowerAttack>();
         anim = GetComponent<Animator>();
-        instance = this;
     }
 
     private void Start()
@@ -31,8 +35,12 @@ public class Tower : MonoBehaviour
 
     public void Init(TowerData towerData)
     {
-        damage = towerData.Damage;
+
+
         towerType = towerData.towerType;
+        hp = towerData.HP;
+        range = towerData.Range;
+        damage = towerData.Damage;
 
         // 애니메이터 컨트롤러를 확률적으로 선택
         if (animCon.Length > 0 && anim != null)

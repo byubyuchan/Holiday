@@ -1,63 +1,61 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyDetector : MonoBehaviour
 {
-    public List<GameObject> enemiesInRange = new List<GameObject>();
-    public bool isAttacking = false;
-
-    private Animator towerAnim;  // 타워의 애니메이터
     private TowerAttack towerAttack;  // 타워 공격 클래스
+    private Tower tower;
+    private GameObject currentTarget;
 
     private void Awake()
     {
-        // 타워의 애니메이터와 공격 클래스 초기화
-        towerAnim = GetComponent<Animator>();
         towerAttack = GetComponent<TowerAttack>();
+        tower = GetComponent<Tower>();
     }
 
     private void Update()
     {
-        if (enemiesInRange.Count > 0 && !isAttacking)
+        // 범위 내 가장 가까운 적을 찾음
+        currentTarget = FindClosestEnemy();
+
+        if (currentTarget != null)
         {
-            Attack();
+            // 현재 목표가 범위 내에 있는지 확인
+            if (IsWithinRange(currentTarget))
+            {
+                towerAttack.Attack(currentTarget); // 지속적으로 공격 수행
+            }
+            else
+            {
+                currentTarget = null; // 목표가 범위를 벗어나면 초기화
+            }
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private GameObject FindClosestEnemy()
     {
-        if (other.CompareTag("Enemy"))
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, tower.range);
+        GameObject closestEnemy = null;
+        float closestDistance = Mathf.Infinity;
+
+        foreach (Collider2D collider in colliders)
         {
-            enemiesInRange.Add(other.gameObject);
+            if (collider.CompareTag("Enemy"))
+            {
+                float distanceToEnemy = Vector3.Distance(transform.position, collider.transform.position);
+                if (distanceToEnemy < closestDistance)
+                {
+                    closestDistance = distanceToEnemy;
+                    closestEnemy = collider.gameObject;
+                }
+            }
         }
+
+        return closestEnemy;
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    private bool IsWithinRange(GameObject enemy)
     {
-        if (other.CompareTag("Enemy"))
-        {
-            enemiesInRange.Remove(other.gameObject);
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("Enemy"))
-        {
-        }
-    }
-
-    private void Attack()
-    {
-        isAttacking = true;  // 공격 시작
-        towerAnim.SetTrigger("Attack");
-        towerAttack.Attack();
-        Invoke("ResetAttack", 1f);  // 공격 후 isAttacking을 false로 설정
-    }
-
-    private void ResetAttack()
-    {
-        isAttacking = false;  // 공격 종료
+        float distanceToEnemy = Vector3.Distance(transform.position, enemy.transform.position);
+        return distanceToEnemy <= tower.range; // 타워의 Range 값과 비교
     }
 }
