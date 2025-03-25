@@ -9,6 +9,7 @@ TagManager:
   - Tile
   - Bullet
   - GUARD
+  - Wall
   layers:
   - Default
   - TransparentFX

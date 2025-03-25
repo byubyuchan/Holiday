@@ -58,7 +58,7 @@ private void OnCollisionEnter2D(Collision2D collision)
             Enemy enemy = target.GetComponent<Enemy>();
             if (enemy != null)
             {
-                enemy.hp -= tower.damage; // 적에게 데미지 적용
+                enemy.TakeDamage(tower.damage);
             }
         }
 

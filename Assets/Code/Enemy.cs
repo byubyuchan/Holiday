@@ -18,8 +18,12 @@ public class Enemy : MonoBehaviour
     public float destinationUpdateInterval = 0.5f; // 목표 위치 갱신 주기
     private float lastUpdateTime = 0f;
 
-    public float repelForce = 5.0f; // 겹친 몬스터를 밀어내는 힘
-    public float detectionRadius = 1.0f; // 주변 몬스터를 감지하는 반경
+    private float lastAttackTime = 0f; // 마지막 공격 시간
+    public float attackCooldown = 1f; // 공격 쿨타임 (초
+
+    private Vector3 lastPosition; // 마지막 위치 저장
+    private float positionCheckTimer = 0f; // 위치 변경 감지 타이머
+    private const float positionCheckInterval = 5f;
 
     private bool isLive;
     private Animator anim;
@@ -29,11 +33,11 @@ public class Enemy : MonoBehaviour
     private SpriteRenderer spriter;
 
     private WaitForFixedUpdate wait;
-    public RuntimeAnimatorController deathAnimatorController; // 사망 애니메이션 컨트롤러
 
     void Start()
     {
         target = GameManager.instance.goal.transform; // 기본 목표 설정
+        lastPosition = transform.position;
     }
 
     void Awake()
@@ -46,7 +50,7 @@ public class Enemy : MonoBehaviour
         wait = new WaitForFixedUpdate();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (!GameManager.instance.isLive || !isLive) return;
 
@@ -59,24 +63,10 @@ public class Enemy : MonoBehaviour
         }
 
         MoveTowardsTarget(); // 목표를 향해 이동
-        PreventOverlap();
 
+        CheckPositionStuck();
     }
-    private void PreventOverlap()
-    {
-        // 주변 몬스터 감지
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, detectionRadius);
 
-        foreach (Collider2D collider in colliders)
-        {
-            if (collider.gameObject != this.gameObject && collider.CompareTag("Enemy"))
-            {
-                // 밀어내는 방향 계산
-                Vector3 repelDirection = (transform.position - collider.transform.position).normalized;
-                rigid.AddForce(repelDirection * repelForce, ForceMode2D.Impulse);
-            }
-        }
-    }
     private void FindClosestTower()
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, detectionRange);
@@ -101,12 +91,10 @@ public class Enemy : MonoBehaviour
         if (closestTarget != null)
         {
             target = closestTarget; // 가장 가까운 타워를 목표로 설정
-            Debug.Log($"탐지된 가장 가까운 타워: {target.name}");
         }
         else
         {
             target = GameManager.instance.goal.transform; // 기본 목표 설정
-            Debug.Log("탐지된 타워가 없습니다. Goal로 이동합니다.");
         }
     }
 
@@ -117,14 +105,17 @@ public class Enemy : MonoBehaviour
             Vector3 direction = (target.position - transform.position).normalized;
             rigid.linearVelocity = direction * speed;
 
-            Debug.Log($"목표 {target.name}을(를) 향해 이동 중");
-        }
-        else
-        {
-            rigid.linearVelocity = Vector2.zero; // 목표가 없으면 멈춤
-            Debug.LogWarning("목표가 설정되지 않았습니다!");
+            // 벽과 충돌 시 방향 조정
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 0.5f);
+            if (hit.collider != null && hit.collider.CompareTag("Wall"))
+            {
+                Vector3 adjustedDirection = Vector3.Reflect(direction, hit.normal);
+                rigid.linearVelocity = adjustedDirection * speed;
+                Debug.Log("벽과 충돌: 방향 조정");
+            }
         }
     }
+
 
     void LateUpdate()
     {
@@ -142,11 +133,8 @@ public class Enemy : MonoBehaviour
         col.enabled = true;
         rigid.simulated = true;
         spriter.sortingOrder = 5;
-        anim.SetBool("Dead", false);
 
         transform.position = new Vector3(transform.position.x, transform.position.y, 0); // Z 축 고정
-
-        FindClosestTower(); // 활성화 시 가장 가까운 타워 탐색
     }
 
     public void Init(SpawnData data)
@@ -166,13 +154,9 @@ public class Enemy : MonoBehaviour
 
     void Dead()
     {
-        if (deathAnimatorController != null)
-        {
-            anim.runtimeAnimatorController = deathAnimatorController; // 사망 애니메이션 컨트롤러 변경
-        }
-
+        anim.SetTrigger("Death");
         rigid.linearVelocity = Vector2.zero; // 이동 멈춤
-        col.enabled = false; // 충돌 비활성화
+        //col.enabled = false; // 충돌 비활성화
         rigid.simulated = false; // 물리 계산 비활성화
 
         StartCoroutine(RemoveAfterDeath()); // 일정 시간 후 삭제
@@ -186,16 +170,57 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Tower"))
+        if (collision.CompareTag("Tower") && Time.time - lastAttackTime >= attackCooldown)
         {
-            collision.GetComponent<Tower>().hp -= damage; // 타워에 데미지 적용
-            Debug.Log($"타워 {collision.name}에 {damage} 데미지를 입힘");
+            DamageFlashEffect flashEffect = collision.GetComponent<DamageFlashEffect>();
+            if (flashEffect != null)
+            {
+                flashEffect.Flash();
+            }
+            collision.GetComponent<Tower>().TakeDamage(damage);
+            lastAttackTime = Time.time;
         }
 
         if (collision.CompareTag("GUARD"))
         {
             Vector3 knockbackDirection = (transform.position - collision.transform.position).normalized + new Vector3(1f, 1f, 0).normalized;
             rigid.AddForce(knockbackDirection * 1f, ForceMode2D.Impulse);
+        }
+    }
+
+    private void CheckPositionStuck()
+    {
+        if ((transform.position - lastPosition).sqrMagnitude < 0.01f) // 움직임이 거의 없으면 타이머 증가
+        {
+            positionCheckTimer += Time.fixedDeltaTime;
+
+            if (positionCheckTimer >= positionCheckInterval) // 5초 동안 움직임이 없으면 처리
+            {
+                transform.position = new Vector3(transform.position.x, 0, transform.position.z); // Y축을 0으로 설정
+                positionCheckTimer = 0f; // 타이머 초기화
+            }
+        }
+        else
+        {
+            positionCheckTimer = 0f; // 움직임이 있으면 타이머 초기화
+            lastPosition = transform.position; // 마지막 위치 갱신
+        }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        hp -= damage;
+
+        // 데미지 효과 적용
+        DamageFlashEffect flashEffect = GetComponent<DamageFlashEffect>();
+        if (flashEffect != null)
+        {
+            flashEffect.Flash();
+        }
+
+        if (hp <= 0)
+        {
+            Dead();
         }
     }
 }

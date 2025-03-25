@@ -18,6 +18,8 @@ public class Tower : MonoBehaviour
     public RuntimeAnimatorController[] animCon;
     public Animator anim;
 
+    public float[] probabilities = { 50f, 20f, 15f, 10f, 5f };
+
     private void Awake()
     {
         towerattack = GetComponent<TowerAttack>();
@@ -33,10 +35,6 @@ public class Tower : MonoBehaviour
 
     private void Update()
     {
-        if (hp <= 0)
-        {
-            RemoveTower();
-        }
     }
 
     private void RemoveTower()
@@ -66,10 +64,42 @@ public class Tower : MonoBehaviour
         // 애니메이터 컨트롤러를 확률적으로 선택
         if (animCon.Length > 0 && anim != null)
         {
-            int randomIndex = Random.Range(0, animCon.Length);
-            anim.runtimeAnimatorController = animCon[randomIndex];
+            anim.runtimeAnimatorController = animCon[GetRandomIndex()];
         }
     }
+    public void TakeDamage(float damage)
+    {
+        hp -= damage;
+
+        // 데미지 효과 적용
+        DamageFlashEffect flashEffect = GetComponent<DamageFlashEffect>();
+        if (flashEffect != null)
+        {
+            flashEffect.Flash();
+        }
+        if (hp <= 0)
+        {
+            RemoveTower();
+        }
+    }
+    private int GetRandomIndex()
+    {
+        float randomValue = Random.Range(0f, 100f); // 0~100 사이의 랜덤 값 생성
+        float cumulativeProbability = 0f;
+
+        for (int i = 0; i < probabilities.Length; i++) // 배열의 첫 번째 요소부터 순회
+        {
+            cumulativeProbability += probabilities[i];
+            if (randomValue <= cumulativeProbability)
+            {
+                Debug.Log(randomValue);
+                return i; // 랜덤 값이 누적 확률에 도달하면 해당 인덱스 반환
+            }
+        }
+
+        return probabilities.Length - 1; // 기본적으로 마지막 인덱스 반환
+    }
+
 }
 
 [System.Serializable]

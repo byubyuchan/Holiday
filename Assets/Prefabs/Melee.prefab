@@ -104,8 +104,8 @@ GameObject:
   - component: {fileID: 2238410380428710349}
   - component: {fileID: 1263136778078786370}
   - component: {fileID: 3518112344886342879}
-  - component: {fileID: 6252574781704844250}
   - component: {fileID: 8362077109610702443}
+  - component: {fileID: -3261649028719795144}
   m_Layer: 0
   m_Name: Melee
   m_TagString: Tower
@@ -123,7 +123,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 209357574758420103}
@@ -287,24 +287,32 @@ MonoBehaviour:
   - towerType: Melee
     HP: 150
     Speed: 0
-    Range: 2
+    Range: 4
     Damage: 80
     Cost: 0
     Star: 0
     Desc: 
   - towerType: Melee
-    HP: 100
+    HP: 200
     Speed: 0
-    Range: 2
+    Range: 5
     Damage: 100
     Cost: 0
     Star: 0
     Desc: 
   - towerType: Melee
-    HP: 100
+    HP: 300
     Speed: 0
-    Range: 2
-    Damage: 100
+    Range: 5
+    Damage: 150
+    Cost: 0
+    Star: 0
+    Desc: 
+  - towerType: Melee
+    HP: 750
+    Speed: 0
+    Range: 10
+    Damage: 300
     Cost: 0
     Star: 0
     Desc: 
@@ -318,7 +326,15 @@ MonoBehaviour:
   - {fileID: 9100000, guid: 3c2a5b7097b0fe44394328c0bdb9252e, type: 2}
   - {fileID: 22100000, guid: b810f2280bb2a6b4cbf996716e6e3d55, type: 2}
   - {fileID: 9100000, guid: b95265f99b6d90e438df1308a89c8bab, type: 2}
+  - {fileID: 9100000, guid: 4f230fa6acf87ff4aa55a06a9691101d, type: 2}
+  - {fileID: 9100000, guid: 7052c8b4bb06f644ea75e62b72afedbd, type: 2}
   anim: {fileID: 0}
+  probabilities:
+  - 50
+  - 20
+  - 15
+  - 10
+  - 5
 --- !u!114 &2238410380428710349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,22 +377,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackRange: 3
   gizmoColor: {r: 0, g: 0, b: 1, a: 1}
---- !u!208 &6252574781704844250
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5415422783019143891}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 0
-  m_Extents: {x: 0.4, y: 0.7, z: 0.4}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0.6, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!61 &8362077109610702443
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -411,7 +411,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.5}
+  m_Offset: {x: 0, y: 0.6}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -421,5 +421,19 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 0.85, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-3261649028719795144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5415422783019143891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee732ecfdcd2a14680c874c98011045, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.2

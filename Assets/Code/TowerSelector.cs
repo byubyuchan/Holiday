@@ -16,7 +16,6 @@ public class TileSelector : MonoBehaviour
         {
             selectedTile = tileTransform;
             SetTileSorting(selectedTile, 0);
-            Debug.Log("타일 선택됨!");
         }
         else if (selectedTile == tileTransform)
         {
@@ -28,7 +27,6 @@ public class TileSelector : MonoBehaviour
             ResetTile();
             selectedTile = tileTransform;
             SetTileSorting(selectedTile, 0);
-            Debug.Log("새로운 타일 선택됨!");
         }
     }
 
@@ -38,7 +36,6 @@ public class TileSelector : MonoBehaviour
         {
             SetTileSorting(selectedTile, defaultSortingOrder);
             selectedTile = null;
-            Debug.Log("타일 선택 해제됨!");
         }
     }
 

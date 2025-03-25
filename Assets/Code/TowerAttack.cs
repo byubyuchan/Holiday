@@ -31,7 +31,6 @@ public class TowerAttack : MonoBehaviour
             if (attackCooldown <= 0)
             {
                 isAttacking = false; // 쿨타임 종료
-                Debug.Log("쿨타임 종료: 새로운 공격 가능");
             }
         }
     }
@@ -40,7 +39,6 @@ public class TowerAttack : MonoBehaviour
     {
         if (target == null || isAttacking)
         {
-            Debug.LogWarning("타워 공격: 목표가 없거나 쿨타임 중입니다!");
             return;
         }
 
@@ -69,7 +67,7 @@ public class TowerAttack : MonoBehaviour
         Enemy enemy = target.GetComponent<Enemy>();
         if (enemy != null)
         {
-            enemy.hp -= tower.damage; // 데미지 적용
+            enemy.TakeDamage(tower.damage);
         }
 
         isAttacking = true; // 공격 시작

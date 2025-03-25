@@ -48,7 +48,6 @@ public class TowerMaker : MonoBehaviour
         {
             tower.tile = tile; // 설치된 타일을 참조하도록 설정
             tile.IsBuildTower = true; // 설치된 상태로 변경
-            Debug.Log($"{selectedTowerPrefab.name}이 {tile.name}에 배치되었습니다.");
         }
     }
 }

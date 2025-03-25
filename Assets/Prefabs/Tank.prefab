@@ -104,7 +104,8 @@ GameObject:
   - component: {fileID: 2238410380428710349}
   - component: {fileID: -2142581307037279633}
   - component: {fileID: 1545454347195559579}
-  - component: {fileID: -3582582206659754153}
+  - component: {fileID: 145571981612051218}
+  - component: {fileID: -1478300470506873876}
   m_Layer: 0
   m_Name: Tank
   m_TagString: Tower
@@ -122,7 +123,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7.037328, y: -8.4307, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 209357574758420103}
@@ -308,6 +309,7 @@ MonoBehaviour:
     Star: 0
     Desc: 
   towerType: 
+  maxHp: 0
   hp: 0
   range: 0
   damage: 0
@@ -360,8 +362,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackRange: 10
   gizmoColor: {r: 0, g: 0, b: 1, a: 1}
---- !u!208 &-3582582206659754153
-NavMeshObstacle:
+--- !u!61 &145571981612051218
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -369,10 +371,54 @@ NavMeshObstacle:
   m_GameObject: {fileID: 5415422783019143891}
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 0
-  m_Extents: {x: 0.7, y: 0.4, z: 0.7}
-  m_MoveThreshold: 0.1
-  m_Carve: 0
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0.58, z: 0}
-  m_TimeToStationary: 0.5
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0.6}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.2}
+    oldSize: {x: 3.8125, y: 3.65625}
+    newSize: {x: 0.33, y: 0.32}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.1, y: 1.1}
+  m_EdgeRadius: 0
+--- !u!114 &-1478300470506873876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5415422783019143891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee732ecfdcd2a14680c874c98011045, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.2
