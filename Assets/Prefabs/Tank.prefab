@@ -318,7 +318,15 @@ MonoBehaviour:
   - {fileID: 22100000, guid: c6f863ffeeadac24b922d5963510a246, type: 2}
   - {fileID: 9100000, guid: 739240ec3c850bd449c1aae3fd751554, type: 2}
   - {fileID: 22100000, guid: 25f7a818644b68042bb0c0c2a28d1550, type: 2}
+  - {fileID: 22100000, guid: c6f863ffeeadac24b922d5963510a246, type: 2}
+  - {fileID: 22100000, guid: c6f863ffeeadac24b922d5963510a246, type: 2}
   anim: {fileID: 0}
+  probabilities:
+  - 50
+  - 20
+  - 15
+  - 10
+  - 5
 --- !u!114 &2238410380428710349
 MonoBehaviour:
   m_ObjectHideFlags: 0
