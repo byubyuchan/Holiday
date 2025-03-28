@@ -12,6 +12,7 @@ public class Tower : MonoBehaviour
     public float maxHp;
     public float hp;            // 체력
     public float range;       // 사거리
+    public float speed;
     public int damage;        // 공격력
 
     public TowerAttack towerattack;
@@ -60,6 +61,7 @@ public class Tower : MonoBehaviour
         hp = towerData.HP;
         range = towerData.Range;
         damage = towerData.Damage;
+        speed = towerData.Speed;
 
         // 애니메이터 컨트롤러를 확률적으로 선택
         if (animCon.Length > 0 && anim != null)

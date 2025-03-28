@@ -3,7 +3,7 @@ using UnityEngine;
 public class TowerAttack : MonoBehaviour
 {
     public Transform firePoint; // 투사체 발사 위치
-    public GameObject[] projectilePrefabs; // 서로 다른 투사체 프리팹
+    public int projectilePoolIndex; // 투사체 프리팹 지정 in Poolmanager 1~4
 
     public Tower tower;
 
@@ -12,7 +12,7 @@ public class TowerAttack : MonoBehaviour
 
     public GameObject meleeEffectPrefab;
     private bool isAttacking = false;
-    private float attackCooldown = 0f; // 쿨타임 시간
+    public float attackCooldown; // 쿨타임 시간
 
     private void Awake()
     {
@@ -71,30 +71,23 @@ public class TowerAttack : MonoBehaviour
         }
 
         isAttacking = true; // 공격 시작
-        attackCooldown = 1f; // 쿨타임 설정
+        attackCooldown = tower.speed; // 쿨타임 설정
         towerAnim.SetTrigger("Attack"); // 애니메이션 실행
 
         Instantiate(meleeEffectPrefab, target.transform.position, Quaternion.identity);
     }
 
-    private void PerformRangeAttack(GameObject target)
+    public void PerformRangeAttack(GameObject target)
     {
-        if (projectilePrefabs == null || projectilePrefabs.Length == 0)
+        GameObject projectileObject = GameManager.instance.pool.Get(1); // 풀링된 투사체 가져오기
+        projectileObject.transform.position = firePoint.position; // 발사 위치 설정
+        Projectile projectile = projectileObject.GetComponent<Projectile>();
+        if (projectile != null)
         {
-            return;
+            projectile.Init(tower, target); // 초기화 및 목표 설정
         }
-
         isAttacking = true; // 공격 시작
-        attackCooldown = 1f; // 쿨타임 설정
+        attackCooldown = tower.speed; // 쿨타임 설정
         towerAnim.SetTrigger("Attack"); // 애니메이션 실행
-
-        int projectileIndex = 0; // 사용할 프리팹 인덱스
-        GameObject projectile = Instantiate(projectilePrefabs[projectileIndex], firePoint.position, Quaternion.identity);
-
-        Projectile proj = projectile.GetComponent<Projectile>();
-        if (proj != null)
-        {
-            proj.Init(tower, target); // 목표 설정
-        }
     }
 }

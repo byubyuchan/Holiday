@@ -4,7 +4,7 @@ using System.Collections;
 public class DamageFlashEffect : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
-    private Color originalColor; // 원래 색상 저장
+    public Color originalColor; // 원래 색상 저장
     public Color flashColor = Color.red; // 타격 시 나타날 색상
     public float flashDuration = 0.2f; // 색상이 유지되는 시간
 
@@ -19,7 +19,12 @@ public class DamageFlashEffect : MonoBehaviour
 
     public void Flash()
     {
-        if (spriteRenderer != null)
+        if (!gameObject.activeInHierarchy) // 활성 상태 확인
+        {
+            return;
+        }
+
+        if (spriteRenderer != null) // 활성 상태 확인
         {
             StartCoroutine(FlashCoroutine());
         }

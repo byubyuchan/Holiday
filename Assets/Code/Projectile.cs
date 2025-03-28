@@ -9,20 +9,21 @@ public class Projectile : MonoBehaviour
 
     public Tower tower;
 
-    // 목표와 데미지를 설정하는 함수
+    private bool isActive; // 투사체 활성 상태 확인
 
     // 초기화 메서드: 타워와 목표 설정
     public void Init(Tower _tower, GameObject _target)
     {
         tower = _tower;
         target = _target;
+        isActive = true; // 활성화 상태로 설정
         StartCoroutine(MoveToTarget());
     }
 
     // 목표를 향해 이동하는 코루틴
     IEnumerator MoveToTarget()
     {
-        while (target != null)
+        while (target != null && isActive)
         {
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
 
@@ -36,14 +37,13 @@ public class Projectile : MonoBehaviour
             yield return null;
         }
 
-        // 목표가 사라졌다면 투사체 제거
-        Destroy(gameObject);
+        // 목표가 사라졌거나 비활성화되었다면 투사체 비활성화
+        DeactivateProjectile();
     }
 
-// 충돌 처리 (OnCollisionEnter2D)
-private void OnCollisionEnter2D(Collision2D collision)
+    // 충돌 처리 (OnCollisionEnter2D)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        // "Enemy" 태그를 가진 적과 충돌했는지 확인
         if (collision.collider.CompareTag("Enemy") && collision.gameObject == target)
         {
             HitTarget();
@@ -67,6 +67,14 @@ private void OnCollisionEnter2D(Collision2D collision)
         {
             Instantiate(hitEffectPrefab, transform.position, Quaternion.identity);
         }
-        Destroy(gameObject);
+
+        DeactivateProjectile(); // 투사체 비활성화
+    }
+
+    private void DeactivateProjectile()
+    {
+        StopAllCoroutines();
+        isActive = false; // 활성 상태 변경
+        gameObject.SetActive(false); // 투사체 비활성화
     }
 }

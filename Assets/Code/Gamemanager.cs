@@ -13,11 +13,15 @@ public class GameManager : MonoBehaviour
     public Transform UIJoy;
     public Transform UIPause;
     public Button PauseButton;
+    public Button StartRoundButton;
 
     [Header("# Game Control")]
     public float gameTime;
-    public float maxGameTime = 5 * 60f;
     public bool isLive;
+    public bool isStart;
+    public int Life;
+    public int Gold;
+    public int currentRound = 0; // 현재 라운드
     int speedIndex = 0;
     public float[] gameSpeed = { 1f, 1.5f, 2f, 2.5f, 3f };
 
@@ -27,25 +31,49 @@ public class GameManager : MonoBehaviour
     public float maxHp;
     public int level;
     public int kill;
-    public int exp;
-    public int[] nextExp = { 10, 30, 50, 70, 100, 150, 200, 250, 300 };
 
     private void Awake()
     {
         instance = this;
         Application.targetFrameRate = 120;
-        //PauseButton.gameObject.SetActive(false);
-    }
-    public void GameStart(int id)
-    {
-        playerId = id;
-        hp = maxHp;
+        PauseButton.gameObject.SetActive(true);
+        StartRoundButton.gameObject.SetActive(true);
         isLive = true;
-        Resume();
-        //PauseButton.gameObject.SetActive(true);
-        //AudioManager.instance.PlayBGM(true);
-        //AudioManager.instance.PlaySFX(AudioManager.SFX.Select);
     }
+
+    void Update()
+    {
+        if (!isLive) return;
+        gameTime += Time.deltaTime;
+    }
+
+    public void StartRound()
+    {
+        if (isStart) return;
+
+        currentRound++;
+        Spawner.instance.level = currentRound - 1;
+
+        StartRoundButton.gameObject.SetActive(false); // 버튼 비활성화
+        isStart = true;
+    }
+
+    public void EndRound()
+    {
+        isStart = false;
+        StartRoundButton.gameObject.SetActive(true); // 버튼 활성화
+    }
+
+    //public void GameStart(int id)
+    //{
+    //    playerId = id;
+    //    hp = maxHp;
+    //    isLive = true;
+    //    Resume();
+    //    PauseButton.gameObject.SetActive(true);
+    //    //AudioManager.instance.PlayBGM(true);
+    //    //AudioManager.instance.PlaySFX(AudioManager.SFX.Select);
+    //}
 
     public void GameOver()
     {
@@ -96,29 +124,6 @@ public class GameManager : MonoBehaviour
     public void GameQuit()
     {
         Application.Quit();
-    }
-    void Update()
-    {
-        if (!isLive) return;
-        gameTime += Time.deltaTime;
-        if (gameTime > maxGameTime)
-        {
-            gameTime = maxGameTime;
-            GameWin();
-        }
-    }
-
-    public void GetExp(int expVal)
-    {
-        if (!isLive) return;
-        exp += expVal;
-
-        if (exp >= nextExp[Mathf.Min(level, nextExp.Length - 1)])
-        {
-            level++;
-            exp -= nextExp[Mathf.Min(level - 1, nextExp.Length - 1)];
-            //UILevelUp.show();
-        }
     }
 
     public void Stop()

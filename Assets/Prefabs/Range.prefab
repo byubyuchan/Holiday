@@ -286,7 +286,7 @@ MonoBehaviour:
   towerData:
   - towerType: Range
     HP: 50
-    Speed: 0
+    Speed: 1.5
     Range: 10
     Damage: 50
     Cost: 0
@@ -320,6 +320,7 @@ MonoBehaviour:
   maxHp: 0
   hp: 0
   range: 0
+  speed: 0
   damage: 0
   towerattack: {fileID: 0}
   animCon:
@@ -327,6 +328,12 @@ MonoBehaviour:
   - {fileID: 22100000, guid: 94ebc3cd3e8075e4c812142b672552a3, type: 2}
   - {fileID: 22100000, guid: 683e4461b8758ae4c9030d956cbea442, type: 2}
   anim: {fileID: 0}
+  probabilities:
+  - 50
+  - 20
+  - 15
+  - 10
+  - 5
 --- !u!114 &3621588929993815978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,10 +359,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firePoint: {fileID: 0}
-  projectilePrefabs:
-  - {fileID: 8900365330149694422, guid: 01a2735ceaa3ca94f9803055ec7d89f9, type: 3}
+  projectilePoolIndex: 0
   tower: {fileID: 0}
   meleeEffectPrefab: {fileID: 0}
+  attackCooldown: 1
 --- !u!114 &1471087137891341621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -428,5 +435,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eee732ecfdcd2a14680c874c98011045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalColor: {r: 0, g: 0, b: 0, a: 0}
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.2

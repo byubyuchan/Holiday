@@ -32,8 +32,6 @@ public class Enemy : MonoBehaviour
     private Collider2D col;
     private SpriteRenderer spriter;
 
-    private WaitForFixedUpdate wait;
-
     void Start()
     {
         target = GameManager.instance.goal.transform; // 기본 목표 설정
@@ -47,7 +45,6 @@ public class Enemy : MonoBehaviour
         col = GetComponent<Collider2D>();
         spriter = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        wait = new WaitForFixedUpdate();
     }
 
     void FixedUpdate()
@@ -147,11 +144,6 @@ public class Enemy : MonoBehaviour
         damage = data.damage;
     }
 
-    IEnumerator KnockBack()
-    {
-        yield return wait;
-    }
-
     void Dead()
     {
         anim.SetTrigger("Death");
@@ -159,13 +151,30 @@ public class Enemy : MonoBehaviour
         //col.enabled = false; // 충돌 비활성화
         rigid.simulated = false; // 물리 계산 비활성화
 
-        StartCoroutine(RemoveAfterDeath()); // 일정 시간 후 삭제
+        DamageFlashEffect flashEffect = GetComponent<DamageFlashEffect>();
+
+        if (flashEffect != null)
+        {
+            flashEffect.StopAllCoroutines(); // 모든 깜빡임 코루틴 중지
+            spriter.color = flashEffect.originalColor; // 원래 색상으로 복구
+        }
+
+        if (gameObject.activeInHierarchy) // 활성 상태 확인
+        {
+            StartCoroutine(RemoveAfterDeath());
+        }
+        else
+        {
+            Debug.LogWarning($"코루틴을 시작할 수 없습니다. {gameObject.name}은 비활성화 상태입니다.");
+        }
     }
 
     private IEnumerator RemoveAfterDeath()
     {
         yield return new WaitForSeconds(0.5f); // 사망 애니메이션 길이에 맞게 대기
-        Destroy(gameObject); // 오브젝트 삭제
+        Spawner.instance.EnemyDefeated(); // 스포너에 몬스터 사망 알림
+        StopAllCoroutines();
+        gameObject.SetActive(false); // 비활성화하여 풀링 시스템으로 반환
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -210,6 +219,11 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float damage)
     {
         hp -= damage;
+
+        if (!gameObject.activeInHierarchy) // 활성 상태 확인
+        {
+            return;
+        }
 
         // 데미지 효과 적용
         DamageFlashEffect flashEffect = GetComponent<DamageFlashEffect>();
