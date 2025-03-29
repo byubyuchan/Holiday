@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
         PauseButton.gameObject.SetActive(true);
         StartRoundButton.gameObject.SetActive(true);
         isLive = true;
+        Gold = 50;
     }
 
     void Update()
@@ -62,6 +63,7 @@ public class GameManager : MonoBehaviour
     {
         isStart = false;
         StartRoundButton.gameObject.SetActive(true); // 버튼 활성화
+        Gold += 50;
     }
 
     //public void GameStart(int id)
@@ -140,15 +142,15 @@ public class GameManager : MonoBehaviour
         isLive = true;
         // 시간 속도 (배율)
         Time.timeScale = gameSpeed[speedIndex];
-        //UIJoy.localScale = Vector3.one;
-        //PauseButton.gameObject.SetActive(true);
+        UIJoy.localScale = Vector3.one;
+        PauseButton.gameObject.SetActive(true);
     }
 
     public void Pause()
     {
         isLive = false;
         Time.timeScale = 0;
-        UIPause.localScale = Vector3.one;
+        UIPause.localScale = Vector3.one/2;
     }
 
     public void Pause_Resume()
@@ -162,8 +164,6 @@ public class GameManager : MonoBehaviour
     public void ChangeSpeed()
     {
         speedIndex = (speedIndex + 1) % gameSpeed.Length;
-        //GameSpeed.instance.speed = gameSpeed[speedIndex];
-        Time.timeScale = gameSpeed[speedIndex];
-
+        GameSpeed.instance.speed = gameSpeed[speedIndex];
     }
 }

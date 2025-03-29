@@ -5,6 +5,7 @@ public class TowerMaker : MonoBehaviour
     [SerializeField] private GameObject meleeTowerPrefab;
     [SerializeField] private GameObject rangedTowerPrefab;
     [SerializeField] private GameObject tankTowerPrefab;
+    [SerializeField] private Transform towerParent;
 
     private GameObject selectedTowerPrefab;
 
@@ -41,13 +42,18 @@ public class TowerMaker : MonoBehaviour
             return;
         }
 
-        GameObject towerObject = Instantiate(selectedTowerPrefab, tile.transform.position, Quaternion.identity);
+        if (GameManager.instance.Gold < 5) return;
 
+        GameObject towerObject = Instantiate(selectedTowerPrefab, tile.transform.position, Quaternion.identity);
+        towerObject.transform.SetParent(towerParent);
         Tower tower = towerObject.GetComponent<Tower>();
+        GameManager.instance.Gold -= 5;
+
         if (tower != null)
         {
             tower.tile = tile; // 설치된 타일을 참조하도록 설정
             tile.IsBuildTower = true; // 설치된 상태로 변경
+            tile.currentTower = tower;
         }
     }
 }

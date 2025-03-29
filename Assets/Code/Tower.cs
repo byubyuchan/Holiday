@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 using static UnityEngine.GraphicsBuffer;
 
 public class Tower : MonoBehaviour
@@ -7,6 +8,7 @@ public class Tower : MonoBehaviour
     // 타워의 데이터 클래스
     public Tile tile;
     public TowerData[] towerData;  // 타워 데이터 (각 타워마다 설정)
+    private SpriteRenderer spriteRenderer;
 
     public string towerType;  // 타워 유형
     public float maxHp;
@@ -25,6 +27,7 @@ public class Tower : MonoBehaviour
     {
         towerattack = GetComponent<TowerAttack>();
         anim = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
@@ -32,13 +35,10 @@ public class Tower : MonoBehaviour
         ApplyTowerData();
         // 확률에 맞게 인덱스 번호 설정됨.
         Init(towerData[0]);
+        SortingOrder();
     }
 
-    private void Update()
-    {
-    }
-
-    private void RemoveTower()
+    public void RemoveTower()
     {
         if (tile != null)
         {
@@ -102,6 +102,41 @@ public class Tower : MonoBehaviour
         return probabilities.Length - 1; // 기본적으로 마지막 인덱스 반환
     }
 
+    public void MoveToTile(Tile newTile, bool isSwap)
+    {
+        if (tile != null && isSwap == false)
+        {
+            tile.IsBuildTower = false;
+            tile.currentTower = null;
+        }
+
+        newTile.IsBuildTower = true;
+        newTile.currentTower = this;
+        tile = newTile;
+        
+        transform.position = newTile.transform.position; // 위치 변경
+        SortingOrder();
+    }
+
+    public void SwapWithTower(Tower otherTower)
+    {
+        Tile tempTile = tile;
+
+        // 현재 타워의 상태 변경
+        MoveToTile(otherTower.tile, true);
+        SortingOrder();
+
+        // 다른 타워의 상태 변경
+        otherTower.MoveToTile(tempTile, true);
+        otherTower.SortingOrder();
+    }
+
+    public void SortingOrder()
+    {
+        Transform parentTransform = tile.transform.parent; // 부모 오브젝트 가져오기
+        float order = (parentTransform.position.y - 2.5f) / 1.5f;
+        spriteRenderer.sortingOrder = Mathf.RoundToInt(-order);
+    }
 }
 
 [System.Serializable]

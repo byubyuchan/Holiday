@@ -2,15 +2,18 @@ using UnityEngine;
 
 public class TowerManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Transform towerParent; // 부모 오브젝트
 
-    // Update is called once per frame
-    void Update()
+    public void HealAllTowers()
     {
-        
+        Tower[] towers = towerParent.GetComponentsInChildren<Tower>(); // 부모의 모든 자식 타워 가져오기
+
+        foreach (Tower tower in towers)
+        {
+            if (tower != null)
+            {
+                tower.hp = tower.maxHp; // 체력 회복, 최대 체력 초과 방지
+            }
+        }
     }
 }

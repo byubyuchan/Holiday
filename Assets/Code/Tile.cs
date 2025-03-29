@@ -3,8 +3,9 @@ using UnityEngine;
 public class Tile : MonoBehaviour
 {
 
-    public bool IsBuildTower { set; get; }
+    public bool IsBuildTower;
     // 자동구현 프로퍼티 = set과 get 함수가 자동으로 작성된다.
+    public Tower currentTower;
 
     private void Awake()
     {
@@ -15,5 +16,6 @@ public class Tile : MonoBehaviour
         {
             spriteRenderer.sortingOrder = -3;
         }
+        currentTower = null;
     }
 }

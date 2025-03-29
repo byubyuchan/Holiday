@@ -25,15 +25,12 @@ public class Projectile : MonoBehaviour
     {
         while (target != null && isActive)
         {
-            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
-
-            // 목표에 도달했는지 확인
-            if (Vector3.Distance(transform.position, target.transform.position) < 0.1f)
+            if (target == null || !target.activeSelf) // 목표가 비활성화된 경우
             {
-                HitTarget();
-                yield break; // 코루틴 종료
+                DeactivateProjectile(); // 투사체 비활성화
+                yield break;
             }
-
+            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
             yield return null;
         }
 
@@ -44,22 +41,29 @@ public class Projectile : MonoBehaviour
     // 충돌 처리 (OnCollisionEnter2D)
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.CompareTag("Enemy") && collision.gameObject == target)
+        if (collision.collider.CompareTag("Enemy"))
         {
-            HitTarget();
+            Debug.Log("부딪힘");
+            HitTarget(collision.gameObject);
         }
     }
 
     // 목표에 도달했을 때 처리
-    private void HitTarget()
+    private void HitTarget(GameObject enemyObject)
     {
-        if (target != null)
+        //if (target != null)
+        //{
+        //    Enemy enemy = target.GetComponent<Enemy>();
+        //    if (enemy != null)
+        //    {
+        //        enemy.TakeDamage(tower.damage);
+        //    }
+        //}
+
+        Enemy enemy = enemyObject.GetComponent<Enemy>();
+        if (enemy != null)
         {
-            Enemy enemy = target.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                enemy.TakeDamage(tower.damage);
-            }
+            enemy.TakeDamage(tower.damage); // 적에게 데미지 적용
         }
 
         // 충돌 이펙트 생성
