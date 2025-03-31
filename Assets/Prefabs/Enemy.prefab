@@ -326,7 +326,7 @@ MonoBehaviour:
   - {fileID: 9100000, guid: 92ac96d13992d1e45bb5519bc16468cf, type: 2}
   - {fileID: 9100000, guid: 67c716b1f11d3dc489685ec26ea36bd9, type: 2}
   target: {fileID: 0}
-  detectionRange: 10
+  detectionRange: 5
   destinationUpdateInterval: 0.5
   attackCooldown: 1
 --- !u!114 &4076967841588027805
@@ -341,5 +341,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eee732ecfdcd2a14680c874c98011045, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalColor: {r: 0, g: 0, b: 0, a: 0}
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.2
