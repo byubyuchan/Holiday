@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  hitEffectPrefab: {fileID: 8900365330149694422, guid: 50a72338f7ce3514a811119320fa5ecd, type: 3}
+  effectIndex: 6
   tower: {fileID: 0}
 --- !u!95 &3184257431598620097
 Animator:

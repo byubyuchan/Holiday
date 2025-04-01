@@ -1,16 +1,16 @@
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class TowerAttack : MonoBehaviour
 {
     public Transform firePoint; // 투사체 발사 위치
-    public int projectilePoolIndex; // 투사체 프리팹 지정 in Poolmanager 1~4
 
     public Tower tower;
 
     private Animator towerAnim;  // 타워의 애니메이터
     private SpriteRenderer spriteRenderer;
 
-    public GameObject meleeEffectPrefab;
+    public int meleeEffectIndex;
     private bool isAttacking = false;
     public float attackCooldown; // 쿨타임 시간
 
@@ -45,7 +45,9 @@ public class TowerAttack : MonoBehaviour
         Vector2 direction = (target.transform.position - transform.position).normalized;
 
         // 타워가 왼쪽을 바라보도록 flipX 설정
-        spriteRenderer.flipX = direction.x > 0;
+        if (tower.flipX == false) spriteRenderer.flipX = direction.x > 0;
+        else spriteRenderer.flipX = !(direction.x > 0);
+
 
         switch (tower.towerType)
         {
@@ -74,12 +76,14 @@ public class TowerAttack : MonoBehaviour
         attackCooldown = tower.speed; // 쿨타임 설정
         towerAnim.SetTrigger("Attack"); // 애니메이션 실행
 
-        Instantiate(meleeEffectPrefab, target.transform.position, Quaternion.identity);
+        GameObject effectInstance = GameManager.instance.pool.Get(meleeEffectIndex);
+        effectInstance.transform.position = target.transform.position;
+        effectInstance.SetActive(true); // 이펙트 활성화
     }
 
     public void PerformRangeAttack(GameObject target)
     {
-        GameObject projectileObject = GameManager.instance.pool.Get(1); // 풀링된 투사체 가져오기
+        GameObject projectileObject = GameManager.instance.pool.Get(tower.projectileIndex); // 풀링된 투사체 가져오기
         projectileObject.transform.position = firePoint.position; // 발사 위치 설정
         Projectile projectile = projectileObject.GetComponent<Projectile>();
         if (projectile != null)
@@ -90,4 +94,6 @@ public class TowerAttack : MonoBehaviour
         attackCooldown = tower.speed; // 쿨타임 설정
         towerAnim.SetTrigger("Attack"); // 애니메이션 실행
     }
+
+
 }

@@ -16,11 +16,14 @@ public class Tower : MonoBehaviour
     public float range;       // 사거리
     public float speed;
     public int damage;        // 공격력
+    public int projectileIndex;
+    public bool flipX;
 
     public TowerAttack towerattack;
     public RuntimeAnimatorController[] animCon;
     public Animator anim;
 
+    public int towerindex;
     public float[] probabilities = { 50f, 20f, 15f, 10f, 5f };
 
     private void Awake()
@@ -32,9 +35,9 @@ public class Tower : MonoBehaviour
 
     private void Start()
     {
-        ApplyTowerData();
+        towerindex = GetRandomIndex();
         // 확률에 맞게 인덱스 번호 설정됨.
-        Init(towerData[0]);
+        Init(towerData[towerindex]);
         SortingOrder();
     }
 
@@ -43,15 +46,9 @@ public class Tower : MonoBehaviour
         if (tile != null)
         {
             tile.IsBuildTower = false; // 설치된 타일의 상태를 초기화
-            Debug.Log($"타워가 제거되었습니다. {tile.name}의 IsBuildTower가 false로 변경되었습니다.");
         }
 
         Destroy(gameObject); // 타워 제거
-    }
-
-    void ApplyTowerData()
-    {
-
     }
 
     public void Init(TowerData towerData)
@@ -62,11 +59,15 @@ public class Tower : MonoBehaviour
         range = towerData.Range;
         damage = towerData.Damage;
         speed = towerData.Speed;
+        flipX = towerData.FlipX;
+        projectileIndex = towerData.ProjectileIndex;
 
+
+        spriteRenderer.flipX = flipX;
         // 애니메이터 컨트롤러를 확률적으로 선택
         if (animCon.Length > 0 && anim != null)
         {
-            anim.runtimeAnimatorController = animCon[GetRandomIndex()];
+            anim.runtimeAnimatorController = animCon[towerindex];
         }
     }
     public void TakeDamage(float damage)
@@ -149,5 +150,7 @@ public class TowerData
     public int Damage;        // 공격력
     public int Cost;          // 비용
     public int Star;          // 별 등급
+    public int ProjectileIndex;
+    public bool FlipX;
     [TextArea] public string Desc;  // 설명
 }

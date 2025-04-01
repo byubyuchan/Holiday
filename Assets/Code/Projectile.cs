@@ -5,7 +5,7 @@ public class Projectile : MonoBehaviour
 {
     public float speed = 3f;
     private GameObject target; // 목표 몬스터
-    public GameObject hitEffectPrefab;
+    public int effectIndex;
 
     public Tower tower;
 
@@ -43,7 +43,6 @@ public class Projectile : MonoBehaviour
     {
         if (collision.collider.CompareTag("Enemy"))
         {
-            Debug.Log("부딪힘");
             HitTarget(collision.gameObject);
         }
     }
@@ -51,14 +50,6 @@ public class Projectile : MonoBehaviour
     // 목표에 도달했을 때 처리
     private void HitTarget(GameObject enemyObject)
     {
-        //if (target != null)
-        //{
-        //    Enemy enemy = target.GetComponent<Enemy>();
-        //    if (enemy != null)
-        //    {
-        //        enemy.TakeDamage(tower.damage);
-        //    }
-        //}
 
         Enemy enemy = enemyObject.GetComponent<Enemy>();
         if (enemy != null)
@@ -67,10 +58,9 @@ public class Projectile : MonoBehaviour
         }
 
         // 충돌 이펙트 생성
-        if (hitEffectPrefab != null)
-        {
-            Instantiate(hitEffectPrefab, transform.position, Quaternion.identity);
-        }
+        GameObject effectInstance = GameManager.instance.pool.Get(effectIndex);
+        effectInstance.transform.position = transform.position;
+        effectInstance.SetActive(true);
 
         DeactivateProjectile(); // 투사체 비활성화
     }

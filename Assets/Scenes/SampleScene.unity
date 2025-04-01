@@ -4283,6 +4283,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 129005535}
+  - component: {fileID: 129005536}
   m_Layer: 0
   m_Name: CanGround_TIlemap1 (5)
   m_TagString: Untagged
@@ -4318,6 +4319,28 @@ RectTransform:
   m_AnchoredPosition: {x: -57.580063, y: -10}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &129005536
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129005534}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 077e4b74d8b2a7d4a8dcb6ead06dc2e3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &129455347
 GameObject:
   m_ObjectHideFlags: 0
@@ -33109,9 +33132,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabs:
   - {fileID: 8526039864412694808, guid: 6a17153cb791b2749a09f5e14429702f, type: 3}
+  - {fileID: 8900365330149694422, guid: 01a2735ceaa3ca94f9803055ec7d89f9, type: 3}
   - {fileID: 8900365330149694422, guid: 141a3bc5f7be7a34b9f468337f6503a5, type: 3}
   - {fileID: 8900365330149694422, guid: 113d84bfa7d93b844b9438b51d89323d, type: 3}
-  - {fileID: 8900365330149694422, guid: 141a3bc5f7be7a34b9f468337f6503a5, type: 3}
+  - {fileID: 8900365330149694422, guid: 6a137b117deb60341836d44ac1b92fdd, type: 3}
+  - {fileID: 8900365330149694422, guid: 065437d1d42921845869d8a242b7a715, type: 3}
+  - {fileID: 6192724089161036641, guid: e17d9a3f04750764c8c0a7a0461e4c3b, type: 3}
+  - {fileID: 4794043405585894037, guid: 37138c0c33167b04fa1fb90b7f5a794f, type: 3}
+  - {fileID: 8900365330149694422, guid: 065437d1d42921845869d8a242b7a715, type: 3}
+  - {fileID: 8900365330149694422, guid: 50a72338f7ce3514a811119320fa5ecd, type: 3}
 --- !u!4 &1327216126
 Transform:
   m_ObjectHideFlags: 0
@@ -35227,6 +35256,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1440086938}
+  - component: {fileID: 1440086939}
   m_Layer: 0
   m_Name: CanGround_TIlemap1 (4)
   m_TagString: Untagged
@@ -35262,6 +35292,28 @@ RectTransform:
   m_AnchoredPosition: {x: -57.580063, y: -8.5}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &1440086939
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1440086937}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 48a7935926a4d614e84a67a889edb9cd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1440158741
 GameObject:
   m_ObjectHideFlags: 0
