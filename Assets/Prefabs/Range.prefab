@@ -308,7 +308,7 @@ MonoBehaviour:
     HP: 100
     Speed: 1.5
     Range: 15
-    Damage: 100
+    Damage: 50
     Cost: 0
     Star: 0
     ProjectileIndex: 3

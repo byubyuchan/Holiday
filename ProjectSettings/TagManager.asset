@@ -10,6 +10,7 @@ TagManager:
   - Bullet
   - GUARD
   - Wall
+  - BackGround
   layers:
   - Default
   - TransparentFX

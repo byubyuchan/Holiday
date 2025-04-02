@@ -14886,7 +14886,7 @@ GameObject:
   - component: {fileID: 771345683}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28897,7 +28897,7 @@ GameObject:
   - component: {fileID: 1169197393}
   m_Layer: 0
   m_Name: Tilemap
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -38248,7 +38248,7 @@ GameObject:
   - component: {fileID: 1576771161}
   m_Layer: 0
   m_Name: CanBuildTower_4
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39920,7 +39920,7 @@ GameObject:
   - component: {fileID: 1683111812}
   m_Layer: 0
   m_Name: GUARD
-  m_TagString: Wall
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46457,7 +46457,7 @@ GameObject:
   - component: {fileID: 1778733361}
   m_Layer: 0
   m_Name: CanBuildTower_1
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51205,7 +51205,7 @@ GameObject:
   - component: {fileID: 1888037176}
   m_Layer: 0
   m_Name: CanBuildTower_3
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53097,7 +53097,7 @@ GameObject:
   - component: {fileID: 2016789406}
   m_Layer: 0
   m_Name: CanBuildTower_2
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
