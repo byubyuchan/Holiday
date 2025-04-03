@@ -289,7 +289,7 @@ MonoBehaviour:
     Speed: 1
     Range: 4
     Damage: 80
-    Cost: 0
+    Cost: C
     Star: 0
     ProjectileIndex: 0
     FlipX: 0
@@ -299,29 +299,29 @@ MonoBehaviour:
     Speed: 1
     Range: 5
     Damage: 100
-    Cost: 0
+    Cost: B
     Star: 0
     ProjectileIndex: 0
     FlipX: 0
     Desc: 
-  - towerType: Melee
+  - towerType: Round
     HP: 300
     Speed: 1
     Range: 5
     Damage: 150
-    Cost: 0
+    Cost: A
     Star: 0
     ProjectileIndex: 0
     FlipX: 1
     Desc: 
-  - towerType: Melee
+  - towerType: Range
     HP: 750
     Speed: 1
     Range: 10
     Damage: 300
-    Cost: 0
+    Cost: S
     Star: 0
-    ProjectileIndex: 0
+    ProjectileIndex: 10
     FlipX: 1
     Desc: 
   towerType: 
@@ -330,6 +330,7 @@ MonoBehaviour:
   range: 0
   speed: 0
   damage: 0
+  cost: 
   projectileIndex: 0
   flipX: 0
   towerattack: {fileID: 0}

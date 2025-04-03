@@ -3,23 +3,24 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [Header("# Nomal Info")]
     public static Enemy instance;
     public float speed; // 이동 속도
     public float hp; // 현재 체력
     public float maxHp; // 최대 체력
     public float damage; // 공격력
     public int exp; // 경험치
+    public float range;
+    public float attackCooldown; // 공격 쿨타임
     public RuntimeAnimatorController[] animCon; // 애니메이션 컨트롤러 배열
+    private float lastAttackTime = 0f; // 마지막 공격 시간
 
+    [Header("# Check Info")]
     public Transform target; // 현재 목표 (타워 또는 Goal)
     private Vector2 lastTargetPosition;
-
     public float detectionRange = 10f; // 탐지 범위
     public float destinationUpdateInterval = 0.5f; // 목표 위치 갱신 주기
     private float lastUpdateTime = 0f;
-
-    private float lastAttackTime = 0f; // 마지막 공격 시간
-    public float attackCooldown = 1f; // 공격 쿨타임 (초
 
     private Vector3 lastPosition; // 마지막 위치 저장
     private float positionCheckTimer = 0f; // 위치 변경 감지 타이머
@@ -27,7 +28,6 @@ public class Enemy : MonoBehaviour
 
     private bool isLive;
     private Animator anim;
-
     private Rigidbody2D rigid;
     private Collider2D col;
     private SpriteRenderer spriter;
@@ -38,6 +38,31 @@ public class Enemy : MonoBehaviour
         lastPosition = transform.position;
     }
 
+    void OnEnable()
+    {
+        isLive = true;
+        hp = maxHp;
+
+        isLive = true;
+        col.enabled = true;
+        rigid.simulated = true;
+        spriter.sortingOrder = 5;
+
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0); // Z 축 고정
+    }
+
+    public void Init(SpawnData data)
+    {
+        anim.runtimeAnimatorController = animCon[data.spriteType];
+        speed = data.speed;
+        maxHp = data.hp;
+        hp = data.hp;
+        exp = data.exp;
+        damage = data.damage;
+        range = data.Range;
+        attackCooldown = data.AttackSpeed;
+    }
+
     void Awake()
     {
         instance = this;
@@ -45,6 +70,12 @@ public class Enemy : MonoBehaviour
         col = GetComponent<Collider2D>();
         spriter = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+    }
+
+    void LateUpdate()
+    {
+        if (!GameManager.instance.isLive || !isLive) return;
+        spriter.flipX = target != null && target.position.x < transform.position.x;
     }
 
     void FixedUpdate()
@@ -58,6 +89,8 @@ public class Enemy : MonoBehaviour
             FindClosestTower(); // 가장 가까운 타워 탐색
             lastUpdateTime = Time.time; // 시간 갱신
         }
+
+        Attack();
 
         MoveTowardsTarget(); // 목표를 향해 이동
 
@@ -108,40 +141,8 @@ public class Enemy : MonoBehaviour
             {
                 Vector3 adjustedDirection = Vector3.Reflect(direction, hit.normal);
                 rigid.linearVelocity = adjustedDirection * speed;
-                Debug.Log("벽과 충돌: 방향 조정");
             }
         }
-    }
-
-
-    void LateUpdate()
-    {
-        if (!GameManager.instance.isLive || !isLive) return;
-
-        spriter.flipX = target != null && target.position.x < transform.position.x;
-    }
-
-    void OnEnable()
-    {
-        isLive = true;
-        hp = maxHp;
-
-        isLive = true;
-        col.enabled = true;
-        rigid.simulated = true;
-        spriter.sortingOrder = 5;
-
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0); // Z 축 고정
-    }
-
-    public void Init(SpawnData data)
-    {
-        anim.runtimeAnimatorController = animCon[data.spriteType];
-        speed = data.speed;
-        maxHp = data.hp;
-        hp = data.hp;
-        exp = data.exp;
-        damage = data.damage;
     }
 
     void Dead()
@@ -177,23 +178,25 @@ public class Enemy : MonoBehaviour
         gameObject.SetActive(false); // 비활성화하여 풀링 시스템으로 반환
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void Attack()
     {
-        if (collision.CompareTag("Tower") && Time.time - lastAttackTime >= attackCooldown)
-        {
-            DamageFlashEffect flashEffect = collision.GetComponent<DamageFlashEffect>();
-            if (flashEffect != null)
-            {
-                flashEffect.Flash();
-            }
-            collision.GetComponent<Tower>().TakeDamage(damage);
-            lastAttackTime = Time.time;
-        }
+        if (Time.time - lastAttackTime < attackCooldown) return; // 쿨타임 체크
 
-        if (collision.CompareTag("GUARD"))
+        Collider2D[] hitTowers = Physics2D.OverlapCircleAll(transform.position, range); // 범위 내 타워 탐지
+
+        foreach (Collider2D towerCollider in hitTowers)
         {
-            Vector3 knockbackDirection = (transform.position - collision.transform.position).normalized + new Vector3(1f, 1f, 0).normalized;
-            rigid.AddForce(knockbackDirection * 1f, ForceMode2D.Impulse);
+            if (towerCollider.CompareTag("Tower")) // 타워 태그 확인
+            {
+                Tower tower = towerCollider.GetComponent<Tower>();
+                if (tower != null)
+                {
+                    tower.TakeDamage(damage); // 타워에 데미지 적용
+                    anim.SetTrigger("Attack"); // 공격 애니메이션 실행
+                    lastAttackTime = Time.time; // 마지막 공격 시간 갱신
+                    break; // 한 번 공격 후 종료
+                }
+            }
         }
     }
 

@@ -16,6 +16,7 @@ public class Tower : MonoBehaviour
     public float range;       // 사거리
     public float speed;
     public int damage;        // 공격력
+    public string cost;
     public int projectileIndex;
     public bool flipX;
 
@@ -60,6 +61,7 @@ public class Tower : MonoBehaviour
         damage = towerData.Damage;
         speed = towerData.Speed;
         flipX = towerData.FlipX;
+        cost = towerData.Cost;
         projectileIndex = towerData.ProjectileIndex;
 
 
@@ -148,7 +150,7 @@ public class TowerData
     public float Speed;       // 공격 속도
     public float Range;       // 사거리
     public int Damage;        // 공격력
-    public int Cost;          // 비용
+    public string Cost;          // 비용
     public int Star;          // 별 등급
     public int ProjectileIndex;
     public bool FlipX;

@@ -360,7 +360,16 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BladeTorso_Slash_Attack2_0: 2470327154934355296
+      BladeTorso_Slash_Attack2_1: -2117478972919956127
+      BladeTorso_Slash_Attack2_2: 962760627506799240
+      BladeTorso_Slash_Attack2_3: 4346908313446460961
+      BladeTorso_Slash_Attack2_4: -2674907539478679400
+      BladeTorso_Slash_Attack2_5: 2684334221043552158
+      BladeTorso_Slash_Attack2_6: -6974090232088004789
+      BladeTorso_Slash_Attack2_7: 27789050129553487
+      BladeTorso_Slash_Attack2_8: -1543981963037325916
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

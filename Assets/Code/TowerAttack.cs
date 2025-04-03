@@ -59,6 +59,10 @@ public class TowerAttack : MonoBehaviour
                 PerformRangeAttack(target);
                 break;
 
+            case "Round":
+                PerformRoundAttack();
+                break;
+
             default:
                 break;
         }
@@ -93,6 +97,31 @@ public class TowerAttack : MonoBehaviour
         isAttacking = true; // 공격 시작
         attackCooldown = tower.speed; // 쿨타임 설정
         towerAnim.SetTrigger("Attack"); // 애니메이션 실행
+    }
+
+    private void PerformRoundAttack()
+    {
+        // 타워 주변 범위 내 적 감지
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, tower.range);
+
+        foreach (Collider2D enemyCollider in hitEnemies)
+        {
+            if (enemyCollider.CompareTag("Enemy"))
+            {
+                Enemy enemy = enemyCollider.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.TakeDamage(tower.damage); // 적에게 데미지 적용
+                    GameObject effectInstance = GameManager.instance.pool.Get(meleeEffectIndex);
+                    effectInstance.transform.position = enemy.transform.position;
+                    effectInstance.SetActive(true);
+                }
+            }
+        }
+        isAttacking = true; // 공격 시작
+        attackCooldown = tower.speed; // 쿨타임 설정
+        towerAnim.SetTrigger("Attack"); // 애니메이션 실행
+
     }
 
 

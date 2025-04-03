@@ -76,4 +76,6 @@ public class SpawnData
     public float damage;
     public float speed;
     public int exp;
+    public float Range;
+    public float AttackSpeed;
 }

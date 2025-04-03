@@ -19,12 +19,22 @@ public class Projectile : MonoBehaviour
         target = _target;
         isActive = true; // 활성화 상태로 설정
 
-        if (tower.projectileIndex == 3) // 특수한 프로젝타일인 경우
+        if (tower.projectileIndex == 3 || tower.projectileIndex == 10) // 특수한 프로젝타일인 경우
         {
-            if (target != null)
+            if (tower.projectileIndex == 3)
             {
-                moveDirection = (target.transform.position - transform.position).normalized; // 타겟을 향한 초기 방향 설정
-                transform.up = moveDirection; // 투사체의 회전 방향 설정
+                // 인덱스 3: 타겟을 향해 이동하며 회전
+                moveDirection = (target.transform.position - transform.position).normalized;
+                transform.up = moveDirection;
+            }
+            else // 인덱스 10: 캐릭터 기준 수평 이동
+            {
+                // 타워가 왼쪽을 바라보면 Vector3.left, 오른쪽이면 Vector3.right
+                moveDirection = tower.flipX ? Vector3.left : Vector3.right;
+
+                // 스프라이트를 수평(90도)으로 회전
+                float angle = tower.flipX ? 0f : 180f;
+                transform.rotation = Quaternion.Euler(0, 0, angle);
             }
             StartCoroutine(MoveStraight());
             Invoke("DeactivateProjectile", 10f);
@@ -63,7 +73,7 @@ public class Projectile : MonoBehaviour
         while (isActive)
         {
             transform.position += moveDirection * speed * Time.deltaTime; // 현재 방향으로 이동
-            transform.Rotate(Vector3.forward * 1000 * Time.deltaTime);
+            if (tower.projectileIndex == 3) transform.Rotate(Vector3.forward * 1000 * Time.deltaTime);
             yield return null;
         }
     }
@@ -87,7 +97,7 @@ public class Projectile : MonoBehaviour
                 enemy.TakeDamage(tower.damage); // 적에게 데미지 적용
             }
 
-            if (tower.projectileIndex == 4)
+            if (tower.projectileIndex == 4 || tower.projectileIndex == 10)
             {
                 GameObject effectInstance = GameManager.instance.pool.Get(effectIndex);
                 effectInstance.transform.position = enemy.transform.position;
