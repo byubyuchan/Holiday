@@ -12,6 +12,10 @@ public class Projectile : MonoBehaviour
     private bool isActive; // 투사체 활성 상태 확인
     private Vector3 moveDirection;
 
+    [Header ("#Enemy Info")]
+    private float damage; // 데미지 값
+    private bool isEnemyProjectile = false; // 적의 투사체인지 여부
+
     // 초기화 메서드: 타워와 목표 설정
     public void Init(Tower _tower, GameObject _target)
     {
@@ -29,11 +33,8 @@ public class Projectile : MonoBehaviour
             }
             else // 인덱스 10: 캐릭터 기준 수평 이동
             {
-                // 타워가 왼쪽을 바라보면 Vector3.left, 오른쪽이면 Vector3.right
-                moveDirection = tower.flipX ? Vector3.left : Vector3.right;
-
-                // 스프라이트를 수평(90도)으로 회전
-                float angle = tower.flipX ? 0f : 180f;
+                moveDirection = target.transform.position.x < transform.position.x ? Vector3.left : Vector3.right;
+                float angle = target.transform.position.x < transform.position.x ? 0f : 180f;
                 transform.rotation = Quaternion.Euler(0, 0, angle);
             }
             StartCoroutine(MoveStraight());
@@ -48,6 +49,16 @@ public class Projectile : MonoBehaviour
         {
             StartCoroutine(MoveToTarget());
         }
+    }
+
+    public void Init(float damage, GameObject target, float speed)
+    {
+        this.damage = damage;
+        this.target = target;
+        this.speed = speed;
+        isEnemyProjectile = true;
+        isActive = true;
+        StartCoroutine(MoveToTarget());
     }
 
     // 목표를 향해 이동하는 코루틴
@@ -81,46 +92,76 @@ public class Projectile : MonoBehaviour
     // 충돌 처리 (OnCollisionEnter2D)
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (isEnemyProjectile) return;
+
         if (collision.collider.CompareTag("Enemy"))
         {
-            HitTarget(collision.gameObject);
+                HitTarget(collision.gameObject);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Enemy")) // 적과 충돌했을 때
+        if (isEnemyProjectile)
         {
-            Enemy enemy = collision.GetComponent<Enemy>();
-            if (enemy != null)
+            if (collision.CompareTag("Tower"))
             {
-                enemy.TakeDamage(tower.damage); // 적에게 데미지 적용
+                Tower tower = collision.GetComponent<Tower>();
+                if (tower != null)
+                {
+                    tower.TakeDamage(damage);
+                    GameObject effectInstance = GameManager.instance.pool.Get(effectIndex);
+                    effectInstance.transform.position = transform.position;
+                    effectInstance.SetActive(true);
+                    DeactivateProjectile();
+                }
             }
-
-            if (tower.projectileIndex == 4 || tower.projectileIndex == 10)
-            {
-                GameObject effectInstance = GameManager.instance.pool.Get(effectIndex);
-                effectInstance.transform.position = enemy.transform.position;
-                effectInstance.SetActive(true);
-            }
-            else
-            {
-                GameObject effectInstance = GameManager.instance.pool.Get(effectIndex);
-                effectInstance.transform.position = transform.position;
-                effectInstance.SetActive(true);
-            }
-                
         }
+        else
+        {
+            if (collision.CompareTag("Enemy"))
+            {
+                Enemy enemy = collision.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.TakeDamage(tower.damage); // 적에게 데미지 적용
+                }
+
+                if (tower.projectileIndex == 4 || tower.projectileIndex == 10)
+                {
+                    GameObject effectInstance = GameManager.instance.pool.Get(effectIndex);
+                    effectInstance.transform.position = enemy.transform.position;
+                    effectInstance.SetActive(true);
+                }
+                else
+                {
+                    GameObject effectInstance = GameManager.instance.pool.Get(effectIndex);
+                    effectInstance.transform.position = transform.position;
+                    effectInstance.SetActive(true);
+                }
+            }
+        }
+
     }
 
     // 목표에 도달했을 때 처리
     private void HitTarget(GameObject enemyObject)
     {
-
-        Enemy enemy = enemyObject.GetComponent<Enemy>();
-        if (enemy != null)
+        if (isEnemyProjectile)
         {
-            enemy.TakeDamage(tower.damage); // 적에게 데미지 적용
+            Tower tower = enemyObject.GetComponent<Tower>();
+            if (tower != null)
+            {
+                tower.TakeDamage(tower.damage);
+            }
+        }
+        else
+        {
+            Enemy enemy = enemyObject.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(this.damage); // 적에게 데미지 적용
+            }
         }
 
         // 충돌 이펙트 생성

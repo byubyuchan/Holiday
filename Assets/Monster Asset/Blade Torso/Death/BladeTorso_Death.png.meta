@@ -93,7 +93,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 120
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -171,12 +171,12 @@ TextureImporter:
       name: BladeTorso_Death_0
       rect:
         serializedVersion: 2
-        x: 22
+        x: 23
         y: 0
-        width: 40
-        height: 30
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 38
+        height: 29
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -193,12 +193,12 @@ TextureImporter:
       name: BladeTorso_Death_1
       rect:
         serializedVersion: 2
-        x: 106
+        x: 107
         y: 0
-        width: 40
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 38
+        height: 27
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -215,12 +215,12 @@ TextureImporter:
       name: BladeTorso_Death_2
       rect:
         serializedVersion: 2
-        x: 190
+        x: 191
         y: 0
-        width: 40
-        height: 29
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 38
+        height: 28
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -237,12 +237,12 @@ TextureImporter:
       name: BladeTorso_Death_3
       rect:
         serializedVersion: 2
-        x: 274
+        x: 275
         y: 0
-        width: 40
-        height: 29
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 38
+        height: 28
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -256,37 +256,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BladeTorso_Death_4
-      rect:
-        serializedVersion: 2
-        x: 358
-        y: 0
-        width: 12
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c24eab2d0184a59d0800000000000000
-      internalID: -2784834182483090388
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: BladeTorso_Death_5
       rect:
         serializedVersion: 2
-        x: 368
+        x: 359
         y: 0
-        width: 30
-        height: 26
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 38
+        height: 29
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -300,59 +278,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BladeTorso_Death_6
-      rect:
-        serializedVersion: 2
-        x: 442
-        y: 0
-        width: 10
-        height: 21
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 76a6ab063b719e110800000000000000
-      internalID: 1290588827407772263
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BladeTorso_Death_7
-      rect:
-        serializedVersion: 2
-        x: 445
-        y: 19
-        width: 10
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b7f82c712a0135590800000000000000
-      internalID: -7686781850621931653
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: BladeTorso_Death_8
       rect:
         serializedVersion: 2
-        x: 452
+        x: 443
         y: 0
-        width: 30
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 38
+        height: 29
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -366,37 +300,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BladeTorso_Death_9
-      rect:
-        serializedVersion: 2
-        x: 526
-        y: 0
-        width: 10
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 84c03990e676a0910800000000000000
-      internalID: 1804368323020000328
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: BladeTorso_Death_10
       rect:
         serializedVersion: 2
-        x: 537
+        x: 611
         y: 0
-        width: 29
-        height: 25
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 38
+        height: 29
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -410,89 +322,45 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
+      name: BladeTorso_Death_9
+      rect:
+        serializedVersion: 2
+        x: 527
+        y: 0
+        width: 38
+        height: 29
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e2839a0021808b478cd3dae6445f8d8
+      internalID: 1804368323020000328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
       name: BladeTorso_Death_11
       rect:
         serializedVersion: 2
-        x: 610
+        x: 695
         y: 0
-        width: 10
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 38
+        height: 29
+      alignment: 9
+      pivot: {x: 0.5, y: 0.1}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: b2d8dd430341c88e0800000000000000
+      spriteID: ab0e7d94ba8cfc24baaad97c49bf44fc
       internalID: -1689953562892858069
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BladeTorso_Death_12
-      rect:
-        serializedVersion: 2
-        x: 621
-        y: 0
-        width: 29
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: df065271115e57230800000000000000
-      internalID: 3636064135737073917
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BladeTorso_Death_13
-      rect:
-        serializedVersion: 2
-        x: 694
-        y: 0
-        width: 10
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 362ce194f886bd550800000000000000
-      internalID: 6186653477739872867
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: BladeTorso_Death_14
-      rect:
-        serializedVersion: 2
-        x: 705
-        y: 0
-        width: 29
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: baebf7706b366eac0800000000000000
-      internalID: -3826261199943647573
       vertices: []
       indices: 
       edges: []
@@ -501,7 +369,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: f809a4168d639434e8400f54c5249879
     internalID: 0
     vertices: []
     indices: 

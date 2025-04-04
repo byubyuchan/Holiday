@@ -292,7 +292,7 @@ MonoBehaviour:
     Cost: C
     Star: 0
     ProjectileIndex: 0
-    FlipX: 0
+    FlipX: 1
     Desc: 
   - towerType: Tank
     HP: 500
@@ -302,7 +302,7 @@ MonoBehaviour:
     Cost: B
     Star: 0
     ProjectileIndex: 0
-    FlipX: 0
+    FlipX: 1
     Desc: 
   - towerType: Tank
     HP: 1000
@@ -312,7 +312,7 @@ MonoBehaviour:
     Cost: A
     Star: 0
     ProjectileIndex: 0
-    FlipX: 0
+    FlipX: 1
     Desc: 
   - towerType: Tank
     HP: 3333
@@ -322,7 +322,7 @@ MonoBehaviour:
     Cost: S
     Star: 0
     ProjectileIndex: 0
-    FlipX: 0
+    FlipX: 1
     Desc: 
   towerType: 
   maxHp: 0

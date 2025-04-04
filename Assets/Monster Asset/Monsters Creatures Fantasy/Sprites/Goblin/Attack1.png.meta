@@ -180,177 +180,177 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Attack_0
+      name: Attack1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 150
         height: 150
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9de5907398e183147a748cc816bc9bd4
-      internalID: -7008412969330441016
+      spriteID: 5896b245855141a48b628a61cd36ff7b
+      internalID: -141002747
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Attack_1
+      name: Attack1_1
       rect:
         serializedVersion: 2
         x: 150
         y: 0
         width: 150
         height: 150
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8d486b4035e80bd4dbfae7624e650b71
-      internalID: -7763475090823894447
+      spriteID: fa2fc80e98258d24480a0c5dfcd5cdba
+      internalID: 1803255521
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Attack_2
+      name: Attack1_2
       rect:
         serializedVersion: 2
         x: 300
         y: 0
         width: 150
         height: 150
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 230e6a80af20bc548ac27e9e2ec999ef
-      internalID: 302641331129538988
+      spriteID: d1e544b328205104fa888f51b5335ebb
+      internalID: -1378912885
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Attack_3
+      name: Attack1_3
       rect:
         serializedVersion: 2
         x: 450
         y: 0
         width: 150
         height: 150
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a55002ee9c245664fb4b141000cd82c2
-      internalID: -6329420634031446844
+      spriteID: 474234dc42708394eb4f059c4945f573
+      internalID: -1624921870
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Attack_4
+      name: Attack1_4
       rect:
         serializedVersion: 2
         x: 600
         y: 0
         width: 150
         height: 150
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f5ac547754ba4d846a3329c8051df9a9
-      internalID: -910092549403018386
+      spriteID: af475df7d99a420499fff119e6cfab02
+      internalID: -945195428
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Attack_5
+      name: Attack1_5
       rect:
         serializedVersion: 2
         x: 750
         y: 0
         width: 150
         height: 150
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e872ca024bd7a2c4ea3a955c866813d3
-      internalID: 221524225039350300
+      spriteID: fe8cf788b273ba142833e732b573f34f
+      internalID: -361915591
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Attack_6
+      name: Attack1_6
       rect:
         serializedVersion: 2
         x: 900
         y: 0
         width: 150
         height: 150
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5090ba805fea1824b8791360d8ec1b55
-      internalID: 1290532464073988732
+      spriteID: 23acefde89e170b4597563297f6ee613
+      internalID: -2046246652
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Attack_7
+      name: Attack1_7
       rect:
         serializedVersion: 2
         x: 1050
         y: 0
         width: 150
         height: 150
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.5, y: 0.33}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b415cbb5180fa9b49b62a7a8c1f59ecf
-      internalID: 4780903288873104255
+      spriteID: d1a04328a7203a24391c8b3fed893b7f
+      internalID: 877084154
       vertices: []
       indices: 
       edges: []
@@ -369,14 +369,14 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Attack_0: -7008412969330441016
-      Attack_1: -7763475090823894447
-      Attack_2: 302641331129538988
-      Attack_3: -6329420634031446844
-      Attack_4: -910092549403018386
-      Attack_5: 221524225039350300
-      Attack_6: 1290532464073988732
-      Attack_7: 4780903288873104255
+      Attack1_0: -141002747
+      Attack1_1: 1803255521
+      Attack1_2: -1378912885
+      Attack1_3: -1624921870
+      Attack1_4: -945195428
+      Attack1_5: -361915591
+      Attack1_6: -2046246652
+      Attack1_7: 877084154
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

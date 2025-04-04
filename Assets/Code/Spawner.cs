@@ -78,4 +78,6 @@ public class SpawnData
     public int exp;
     public float Range;
     public float AttackSpeed;
+    public string AttackType;
+    public int projectileIndex;
 }

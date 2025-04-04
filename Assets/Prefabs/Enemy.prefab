@@ -170,7 +170,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: -4795363162621231457, guid: 6d7cd4f7505dc674c891ca8946cfd98b, type: 3}
+  m_Sprite: {fileID: 5898935657641605612, guid: e04650500a395594aa0622725e140850, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -215,9 +215,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 9999
+  m_Mass: 100
   m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_AngularDamping: 0
   m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: 9c497a4ce1f356b448c0dd3eca091d35, type: 2}
   m_IncludeLayers:
@@ -321,14 +321,19 @@ MonoBehaviour:
   maxHp: 0
   damage: 0
   exp: 0
+  range: 0
+  attackType: 
+  projectileIndex: 0
+  attackCooldown: 1
   animCon:
-  - {fileID: 22100000, guid: 96796c07eb4bc9149b9e0f5a9c128000, type: 2}
-  - {fileID: 9100000, guid: 92ac96d13992d1e45bb5519bc16468cf, type: 2}
+  - {fileID: 22100000, guid: 47e4553a3f472394380feb263ce55766, type: 2}
+  - {fileID: 22100000, guid: 89d84e48753ab67428eacbe1989d9d2e, type: 2}
   - {fileID: 9100000, guid: 67c716b1f11d3dc489685ec26ea36bd9, type: 2}
+  isAttacking: 0
+  speedTemp: 0
   target: {fileID: 0}
   detectionRange: 5
   destinationUpdateInterval: 0.5
-  attackCooldown: 1
 --- !u!114 &4076967841588027805
 MonoBehaviour:
   m_ObjectHideFlags: 0

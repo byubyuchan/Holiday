@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Android.Gradle.Manifest;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -11,6 +12,8 @@ public class Enemy : MonoBehaviour
     public float damage; // 공격력
     public int exp; // 경험치
     public float range;
+    public string attackType; // "Melee" 또는 "Range"
+    public int projectileIndex; // 투사체 풀링 인덱스
     public float attackCooldown; // 공격 쿨타임
     public RuntimeAnimatorController[] animCon; // 애니메이션 컨트롤러 배열
     private float lastAttackTime = 0f; // 마지막 공격 시간
@@ -25,12 +28,14 @@ public class Enemy : MonoBehaviour
     private Vector3 lastPosition; // 마지막 위치 저장
     private float positionCheckTimer = 0f; // 위치 변경 감지 타이머
     private const float positionCheckInterval = 5f;
+    //private float speedTemp;
 
     private bool isLive;
     private Animator anim;
     private Rigidbody2D rigid;
     private Collider2D col;
     private SpriteRenderer spriter;
+
 
     void Start()
     {
@@ -42,7 +47,6 @@ public class Enemy : MonoBehaviour
     {
         isLive = true;
         hp = maxHp;
-
         isLive = true;
         col.enabled = true;
         rigid.simulated = true;
@@ -61,6 +65,8 @@ public class Enemy : MonoBehaviour
         damage = data.damage;
         range = data.Range;
         attackCooldown = data.AttackSpeed;
+        attackType = data.AttackType;
+        projectileIndex = data.projectileIndex;
     }
 
     void Awake()
@@ -134,14 +140,6 @@ public class Enemy : MonoBehaviour
         {
             Vector3 direction = (target.position - transform.position).normalized;
             rigid.linearVelocity = direction * speed;
-
-            // 벽과 충돌 시 방향 조정
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 0.5f);
-            if (hit.collider != null && hit.collider.CompareTag("Wall"))
-            {
-                Vector3 adjustedDirection = Vector3.Reflect(direction, hit.normal);
-                rigid.linearVelocity = adjustedDirection * speed;
-            }
         }
     }
 
@@ -172,7 +170,7 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator RemoveAfterDeath()
     {
-        yield return new WaitForSeconds(0.5f); // 사망 애니메이션 길이에 맞게 대기
+        yield return new WaitForSeconds(1.5f); // 사망 애니메이션 길이에 맞게 대기
         Spawner.instance.EnemyDefeated(); // 스포너에 몬스터 사망 알림
         StopAllCoroutines();
         gameObject.SetActive(false); // 비활성화하여 풀링 시스템으로 반환
@@ -180,25 +178,37 @@ public class Enemy : MonoBehaviour
 
     private void Attack()
     {
-        if (Time.time - lastAttackTime < attackCooldown) return; // 쿨타임 체크
+        if (Time.time - lastAttackTime < attackCooldown) return;
 
-        Collider2D[] hitTowers = Physics2D.OverlapCircleAll(transform.position, range); // 범위 내 타워 탐지
-
-        foreach (Collider2D towerCollider in hitTowers)
+        Collider2D[] towers = Physics2D.OverlapCircleAll(transform.position, range);
+        foreach (Collider2D col in towers)
         {
-            if (towerCollider.CompareTag("Tower")) // 타워 태그 확인
+            if (col.CompareTag("Tower"))
             {
-                Tower tower = towerCollider.GetComponent<Tower>();
+                Tower tower = col.GetComponent<Tower>();
                 if (tower != null)
                 {
-                    tower.TakeDamage(damage); // 타워에 데미지 적용
-                    anim.SetTrigger("Attack"); // 공격 애니메이션 실행
-                    lastAttackTime = Time.time; // 마지막 공격 시간 갱신
-                    break; // 한 번 공격 후 종료
+                    if (attackType == "Melee")
+                    {
+                        // 근접 공격
+                        tower.TakeDamage(damage);
+                        GameObject effectInstance = GameManager.instance.pool.Get(12);
+                        effectInstance.transform.position = tower.transform.position;
+                        effectInstance.SetActive(true);
+                    }
+                    else if (attackType == "Range")
+                    {
+                        FireProjectile(tower.gameObject);
+                    }
+                    anim.SetTrigger("Attack");
+                    lastAttackTime = Time.time;
+                    break;
                 }
             }
         }
     }
+    
+
 
     private void CheckPositionStuck()
     {
@@ -238,6 +248,18 @@ public class Enemy : MonoBehaviour
         if (hp <= 0)
         {
             Dead();
+
+        }
+    }
+    private void FireProjectile(GameObject tower)
+    {
+        GameObject projectile = GameManager.instance.pool.Get(projectileIndex);
+        projectile.transform.position = transform.position;
+
+        Projectile proj = projectile.GetComponent<Projectile>();
+        if (proj != null)
+        {
+            proj.Init(damage, tower, 12);
         }
     }
 }
