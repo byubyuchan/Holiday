@@ -36,21 +36,21 @@ public class Spawner : MonoBehaviour
 
     void Spawn()
     {
-        if (enemyCount >= maxEnemies[level])
+        for (int i = Mathf.Max(level-2, 0); i <= level; i++)
         {
-            return;
-        }
-        for (int i = 0; i <= level; i++)
-        {
-            GameObject enemy = GameManager.instance.pool.Get(EnemyIndex);
-            if (enemy == null)
+            if (enemyCount >= maxEnemies[level])
+            {
+                return;
+            }
+            GameObject enemy = GameManager.instance.pool.Get(EnemyIndex); // 풀링될 프리팹 선택
+            if (enemy == null || currentEnemyCount >= 150)
             {
                 continue;
             }
 
             Transform randomSpawnPoint = spawnPoint[Random.Range(1, spawnPoint.Length)];
             enemy.transform.position = randomSpawnPoint.position;
-            enemy.GetComponent<Enemy>().Init(spawnData[Mathf.Min(i, spawnData.Length - 1)]);
+            enemy.GetComponent<Enemy>().Init(spawnData[i]);
             enemyCount++;
             currentEnemyCount++;
         }
@@ -59,7 +59,7 @@ public class Spawner : MonoBehaviour
     public void EnemyDefeated()
     {
         currentEnemyCount--;
-        if (currentEnemyCount <= 0)
+        if (currentEnemyCount <= 0 && enemyCount >= maxEnemies[level])
         {
             enemyCount = 0;
             GameManager.instance.EndRound();

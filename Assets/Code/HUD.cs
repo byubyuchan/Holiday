@@ -17,7 +17,6 @@ public class HUD : MonoBehaviour
 
     void LateUpdate()
     {
-        int curLevel = GameManager.instance.level;
         switch (type)
         {
             case InfoType.Round:

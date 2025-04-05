@@ -7,6 +7,11 @@ public class TowerManager : MonoBehaviour
     public void HealAllTowers()
     {
         Tower[] towers = towerParent.GetComponentsInChildren<Tower>(); // 부모의 모든 자식 타워 가져오기
+        if (GameManager.instance.Gold < 5)
+        {
+            return;
+        }
+        GameManager.instance.Gold -= 5;
 
         foreach (Tower tower in towers)
         {

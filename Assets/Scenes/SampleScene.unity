@@ -55509,52 +55509,52 @@ MonoBehaviour:
   - spawnTime: 0.1
     spriteType: 0
     hp: 150
-    damage: 0
+    damage: 10
+    speed: 4
+    exp: 1
+    Range: 2
+    AttackSpeed: 2
+    AttackType: Melee
+    projectileIndex: 0
+  - spawnTime: 0.1
+    spriteType: 1
+    hp: 200
+    damage: 20
+    speed: 6
+    exp: 1
+    Range: 2
+    AttackSpeed: 1.5
+    AttackType: Melee
+    projectileIndex: 0
+  - spawnTime: 0.1
+    spriteType: 2
+    hp: 400
+    damage: 40
+    speed: 5
+    exp: 1
+    Range: 2
+    AttackSpeed: 2
+    AttackType: Melee
+    projectileIndex: 0
+  - spawnTime: 0.1
+    spriteType: 3
+    hp: 400
+    damage: 30
     speed: 2
     exp: 1
     Range: 7
-    AttackSpeed: 2
+    AttackSpeed: 4
     AttackType: Range
     projectileIndex: 11
-  - spawnTime: 0
-    spriteType: 0
-    hp: 150
-    damage: 10
-    speed: 5
+  - spawnTime: 0.1
+    spriteType: 4
+    hp: 1000
+    damage: 44
+    speed: 7
     exp: 1
-    Range: 0
+    Range: 3
     AttackSpeed: 1
     AttackType: Melee
-    projectileIndex: 0
-  - spawnTime: 0
-    spriteType: 0
-    hp: 150
-    damage: 10
-    speed: 5
-    exp: 1
-    Range: 0
-    AttackSpeed: 0
-    AttackType: 
-    projectileIndex: 0
-  - spawnTime: 0.05
-    spriteType: 0
-    hp: 150
-    damage: 10
-    speed: 5
-    exp: 1
-    Range: 0
-    AttackSpeed: 0
-    AttackType: 
-    projectileIndex: 0
-  - spawnTime: 0.05
-    spriteType: 0
-    hp: 150
-    damage: 10
-    speed: 5
-    exp: 1
-    Range: 0
-    AttackSpeed: 0
-    AttackType: 
     projectileIndex: 0
   itemPrefabs: []
   EnemyIndex: 0
