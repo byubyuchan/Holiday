@@ -165,5 +165,6 @@ public class GameManager : MonoBehaviour
     {
         speedIndex = (speedIndex + 1) % gameSpeed.Length;
         GameSpeed.instance.speed = gameSpeed[speedIndex];
+        
     }
 }

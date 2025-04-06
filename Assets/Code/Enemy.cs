@@ -51,6 +51,7 @@ public class Enemy : MonoBehaviour
         col.enabled = true;
         rigid.simulated = true;
         spriter.sortingOrder = 5;
+        col.enabled = true;
 
         transform.position = new Vector3(transform.position.x, transform.position.y, 0); // Z 축 고정
     }
@@ -143,7 +144,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void Dead()
+    public void Dead()
     {
         anim.SetTrigger("Death");
         rigid.linearVelocity = Vector2.zero; // 이동 멈춤
@@ -207,8 +208,6 @@ public class Enemy : MonoBehaviour
             }
         }
     }
-    
-
 
     private void CheckPositionStuck()
     {

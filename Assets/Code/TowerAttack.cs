@@ -63,6 +63,10 @@ public class TowerAttack : MonoBehaviour
                 PerformRoundAttack();
                 break;
 
+            case "Heal":
+                PerformHeal();
+                break;
+
             default:
                 break;
         }
@@ -109,7 +113,7 @@ public class TowerAttack : MonoBehaviour
             if (enemyCollider.CompareTag("Enemy"))
             {
                 Enemy enemy = enemyCollider.GetComponent<Enemy>();
-                if (enemy != null)
+                if (enemy != null || enemy.hp > 0)
                 {
                     enemy.TakeDamage(tower.damage); // 적에게 데미지 적용
                     GameObject effectInstance = GameManager.instance.pool.Get(meleeEffectIndex);
@@ -121,8 +125,30 @@ public class TowerAttack : MonoBehaviour
         isAttacking = true; // 공격 시작
         attackCooldown = tower.speed; // 쿨타임 설정
         towerAnim.SetTrigger("Attack"); // 애니메이션 실행
-
     }
 
+    private void PerformHeal()
+    {
+        // 주변 타워 감지
+        Collider2D[] nearTowers = Physics2D.OverlapCircleAll(transform.position, tower.range);
 
+        foreach (Collider2D towerCollider in nearTowers)
+        {
+            if (towerCollider.CompareTag("Tower"))
+            {
+                Tower nearTower = towerCollider.GetComponent<Tower>();
+                if (nearTower != null)
+                {
+                    nearTower.hp += tower.damage; // 타워 회복
+                    if (nearTower.hp >= nearTower.maxHp) nearTower.hp = nearTower.maxHp;
+                    GameObject effectInstance = GameManager.instance.pool.Get(meleeEffectIndex);
+                    effectInstance.transform.position = nearTower.transform.position;
+                    effectInstance.SetActive(true);
+                }
+            }
+        }
+        isAttacking = true; // 힐 시작
+        attackCooldown = tower.speed; // 쿨타임 설정
+        towerAnim.SetTrigger("Attack"); // 힐 애니메이션 실행
+    }
 }

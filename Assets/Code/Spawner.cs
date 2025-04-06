@@ -61,6 +61,7 @@ public class Spawner : MonoBehaviour
         currentEnemyCount--;
         if (currentEnemyCount <= 0 && enemyCount >= maxEnemies[level])
         {
+            currentEnemyCount = 0;
             enemyCount = 0;
             GameManager.instance.EndRound();
         }

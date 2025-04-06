@@ -11,6 +11,7 @@ TagManager:
   - GUARD
   - Wall
   - BackGround
+  - Goal
   layers:
   - Default
   - TransparentFX
