@@ -7,6 +7,7 @@ public class Spawner : MonoBehaviour
     public SpawnData[] spawnData;
     public GameObject[] itemPrefabs;
     public int EnemyIndex;
+    public int BossIndex;
     float timer;
     public int level;
 
@@ -36,23 +37,40 @@ public class Spawner : MonoBehaviour
 
     void Spawn()
     {
-        for (int i = Mathf.Max(level-2, 0); i <= level; i++)
+        if (level == 5) // 보스몬스터 소환
         {
             if (enemyCount >= maxEnemies[level])
             {
                 return;
             }
-            GameObject enemy = GameManager.instance.pool.Get(EnemyIndex); // 풀링될 프리팹 선택
-            if (enemy == null || currentEnemyCount >= 150)
-            {
-                continue;
-            }
 
+            GameObject enemy = GameManager.instance.pool.Get(BossIndex); // 풀링될 프리팹 선택
             Transform randomSpawnPoint = spawnPoint[Random.Range(1, spawnPoint.Length)];
             enemy.transform.position = randomSpawnPoint.position;
-            enemy.GetComponent<Enemy>().Init(spawnData[i]);
+            enemy.GetComponent<Enemy>().Init(spawnData[level]);
             enemyCount++;
             currentEnemyCount++;
+        }
+        else
+        {
+            for (int i = Mathf.Max(level - 2, 0); i <= level; i++)
+            {
+                if (enemyCount >= maxEnemies[level])
+                {
+                    return;
+                }
+                GameObject enemy = GameManager.instance.pool.Get(EnemyIndex); // 풀링될 프리팹 선택
+                if (enemy == null || currentEnemyCount >= 150)
+                {
+                    continue;
+                }
+
+                Transform randomSpawnPoint = spawnPoint[Random.Range(1, spawnPoint.Length)];
+                enemy.transform.position = randomSpawnPoint.position;
+                enemy.GetComponent<Enemy>().Init(spawnData[i]);
+                enemyCount++;
+                currentEnemyCount++;
+            }
         }
     }
 

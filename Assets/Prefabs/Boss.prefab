@@ -26,8 +26,8 @@ Transform:
   m_GameObject: {fileID: 6485025691127578896}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.3, z: 0.3}
+  m_LocalPosition: {x: -0.02, y: -1.27, z: 0}
+  m_LocalScale: {x: 3, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4398547249657760554}
@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 7968500085041120069}
   - component: {fileID: 4076967841588027805}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Boss
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -170,7 +170,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 4646173782046652310, guid: a22734ca9e862b84a9f56109f662f3c6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bd53f303bb044964a9e0e15656ff6724, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -264,8 +264,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.15}
-  m_Size: {x: 0.3, y: 0.5}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1, y: 2}
   m_Direction: 0
 --- !u!70 &-922349580229761821
 CapsuleCollider2D:
@@ -301,8 +301,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.15}
-  m_Size: {x: 0.3, y: 0.35}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1, y: 2}
   m_Direction: 0
 --- !u!114 &7968500085041120069
 MonoBehaviour:
@@ -326,11 +326,7 @@ MonoBehaviour:
   projectileIndex: 0
   attackCooldown: 1
   animCon:
-  - {fileID: 22100000, guid: 96796c07eb4bc9149b9e0f5a9c128000, type: 2}
-  - {fileID: 22100000, guid: 89d84e48753ab67428eacbe1989d9d2e, type: 2}
-  - {fileID: 22100000, guid: 1e861e4ed9348e24ea6466bc7fdab50e, type: 2}
-  - {fileID: 22100000, guid: 47e4553a3f472394380feb263ce55766, type: 2}
-  - {fileID: 22100000, guid: 4479be108e5fac848a581042da1f8279, type: 2}
+  - {fileID: 22100000, guid: b5d1c6379f75b3542b26b220c5a1bb7a, type: 2}
   target: {fileID: 0}
   detectionRange: 5
   destinationUpdateInterval: 0.5
