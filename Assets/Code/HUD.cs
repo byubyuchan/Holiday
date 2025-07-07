@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
-    public enum InfoType { Round, CurrentEnemy, Life, Gold, Time }
+    public enum InfoType { Round, CurrentEnemy, Life, Gold, Time, ProgressSlider, ProgressText }
     public InfoType type;
 
     Text myText;
@@ -17,6 +17,13 @@ public class HUD : MonoBehaviour
 
     void LateUpdate()
     {
+        float killCount = GameManager.instance.kill;
+        float maxEnemyCount = -1;
+        foreach (int count in Spawner.instance.maxEnemies)
+            maxEnemyCount += count;
+
+        float progress = maxEnemyCount > 0 ? killCount / maxEnemyCount : 0f;
+
         switch (type)
         {
             case InfoType.Round:
@@ -38,9 +45,13 @@ public class HUD : MonoBehaviour
                 // 자리수가 2개인 정수 표현
                 myText.text = string.Format("{0:D2}:{1:D2}", min, sec);
                 break;
-          //case 라운드 current / 6 으로 계산한 슬라이드 (보스몬스터까지 알림)
+            case InfoType.ProgressSlider:
+                mySlider.value = progress;
+                break;
+            case InfoType.ProgressText:
+                int progressPercent = Mathf.FloorToInt(progress * 100);
+                myText.text = string.Format("Progress {0:D0}%", progressPercent);
+                break;
         }
     }
-
-
 }

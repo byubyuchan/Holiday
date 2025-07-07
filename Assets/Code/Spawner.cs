@@ -76,6 +76,7 @@ public class Spawner : MonoBehaviour
 
     public void EnemyDefeated()
     {
+        GameManager.instance.kill++;
         currentEnemyCount--;
         if (currentEnemyCount <= 0 && enemyCount >= maxEnemies[level])
         {
