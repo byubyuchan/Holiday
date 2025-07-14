@@ -48,6 +48,7 @@ public class Spawner : MonoBehaviour
             Transform randomSpawnPoint = spawnPoint[Random.Range(1, spawnPoint.Length)];
             enemy.transform.position = randomSpawnPoint.position;
             enemy.GetComponent<Enemy>().Init(spawnData[level]);
+            GameManager.instance.bossEnemy = enemy.GetComponent<Enemy>();
             enemyCount++;
             currentEnemyCount++;
         }

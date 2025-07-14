@@ -46,11 +46,28 @@ public class HUD : MonoBehaviour
                 myText.text = string.Format("{0:D2}:{1:D2}", min, sec);
                 break;
             case InfoType.ProgressSlider:
-                mySlider.value = progress;
+                if (Spawner.instance.level != 5)
+                    mySlider.value = progress;
+                else {
+                    Enemy boss = GameManager.instance.bossEnemy;
+                    mySlider.maxValue = boss.maxHp;
+                    mySlider.value = boss.hp;
+                    mySlider.fillRect.GetComponent<Image>().color = Color.red;
+                }
                 break;
             case InfoType.ProgressText:
-                int progressPercent = Mathf.FloorToInt(progress * 100);
-                myText.text = string.Format("Progress {0:D0}%", progressPercent);
+                if (Spawner.instance.level != 5) {
+                    int progressPercent = Mathf.FloorToInt(progress * 100);
+                    myText.text = string.Format("Progress {0:D0}%", progressPercent);
+                }
+                else {
+                    Enemy bossHP = GameManager.instance.bossEnemy;
+                    float hp = Mathf.Max(0, bossHP.hp);
+                    // 보스 HP 비율로 표시
+                    myText.text = string.Format("Boss HP {0:D0}%", Mathf.FloorToInt((hp / bossHP.maxHp) * 100));
+                    // 보스 HP 숫자로 표시
+                    // myText.text = string.Format("Boss HP {0:D0}/{1:D0}", Mathf.FloorToInt(hp), Mathf.FloorToInt(bossHP.maxHp));
+                }
                 break;
         }
     }

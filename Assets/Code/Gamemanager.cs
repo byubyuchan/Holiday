@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
     public int level;
     public int kill;
 
+    public Enemy bossEnemy;
+
     private void Awake()
     {
         instance = this;
