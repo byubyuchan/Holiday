@@ -14,8 +14,6 @@ public class CameraShakeComponent : MonoBehaviour
     // magnitude: 흔들림의 강도 (흔들림의 최대 범위)
     public IEnumerator Shake(float duration, float magnitude)
     {
-        // 카메라의 원래 위치를 저장
-        Vector3 originalPosition = transform.localPosition;
 
         // 경과 시간을 추적하는 변수
         float elapsed = 0.0f;
@@ -29,7 +27,7 @@ public class CameraShakeComponent : MonoBehaviour
 
             // 카메라의 위치를 흔들림 값으로 업데이트
             // z축 위치는 원래 위치를 유지
-            transform.localPosition = new Vector3(x, y, originalPosition.z);
+            transform.localPosition = new Vector3(x, y, 0);
 
             // 경과 시간을 갱신
             elapsed += Time.deltaTime;
@@ -39,6 +37,6 @@ public class CameraShakeComponent : MonoBehaviour
         }
 
         // 흔들림이 끝난 후 카메라를 원래 위치로
-        transform.localPosition = originalPosition;
+        transform.localPosition = new Vector3();
     }
 }
