@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
     private const float positionCheckInterval = 5f;
     //private float speedTemp;
 
-    private bool isLive;
+    public bool isLive;
     private Animator anim;
     private Rigidbody2D rigid;
     private Collider2D col;

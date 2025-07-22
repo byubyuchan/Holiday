@@ -101,8 +101,8 @@ GameObject:
   - component: {fileID: 4797542887395449647}
   - component: {fileID: 8956148255800949857}
   - component: {fileID: -922349580229761821}
-  - component: {fileID: 7968500085041120069}
   - component: {fileID: 4076967841588027805}
+  - component: {fileID: 5707365530022803793}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Enemy
@@ -304,32 +304,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 2}
   m_Direction: 0
---- !u!114 &7968500085041120069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8526039864412694808}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e17692a7b2b4b84490541ab6b394675, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0
-  hp: 0
-  maxHp: 0
-  damage: 0
-  exp: 0
-  range: 0
-  attackType: 
-  projectileIndex: 0
-  attackCooldown: 1
-  animCon:
-  - {fileID: 22100000, guid: b5d1c6379f75b3542b26b220c5a1bb7a, type: 2}
-  target: {fileID: 0}
-  detectionRange: 5
-  destinationUpdateInterval: 0.5
 --- !u!114 &4076967841588027805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,3 +319,30 @@ MonoBehaviour:
   originalColor: {r: 0, g: 0, b: 0, a: 0}
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.2
+--- !u!114 &5707365530022803793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8526039864412694808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4529d84513a99f64aab49c8ddd0ae3fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  hp: 0
+  maxHp: 0
+  damage: 0
+  exp: 0
+  range: 0
+  attackType: 
+  projectileIndex: 0
+  attackCooldown: 0
+  animCon: []
+  target: {fileID: 0}
+  detectionRange: 10
+  destinationUpdateInterval: 0.5
+  isLive: 0
+  skills: []
