@@ -33523,6 +33523,7 @@ MonoBehaviour:
   - {fileID: 8900365330149694422, guid: 9384d4da17ecaef44a180c741ce36190, type: 3}
   - {fileID: 8900365330149694422, guid: 2f6781fd08ff5154584450f2ab996325, type: 3}
   - {fileID: 8526039864412694808, guid: 1dd5f093587d7224fba1f977ce71ef30, type: 3}
+  - {fileID: 8900365330149694422, guid: c5c8875955f628449966749dbe8f6f62, type: 3}
 --- !u!4 &1327216126
 Transform:
   m_ObjectHideFlags: 0
@@ -56076,16 +56077,16 @@ MonoBehaviour:
     AttackSpeed: 1
     AttackType: Melee
     projectileIndex: 0
-  - spawnTime: 3
+  - spawnTime: 0
     spriteType: 0
     hp: 100000
-    damage: 50
-    speed: 1.5
+    damage: 200
+    speed: 5
     exp: 1
-    Range: 3
-    AttackSpeed: 1
-    AttackType: Melee
-    projectileIndex: 0
+    Range: 5
+    AttackSpeed: 2
+    AttackType: Boss
+    projectileIndex: 14
   itemPrefabs: []
   EnemyIndex: 0
   BossIndex: 13

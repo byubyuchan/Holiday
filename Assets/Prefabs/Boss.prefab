@@ -102,7 +102,7 @@ GameObject:
   - component: {fileID: 8956148255800949857}
   - component: {fileID: -922349580229761821}
   - component: {fileID: 4076967841588027805}
-  - component: {fileID: 5707365530022803793}
+  - component: {fileID: 3725655539631865043}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Enemy
@@ -319,7 +319,7 @@ MonoBehaviour:
   originalColor: {r: 0, g: 0, b: 0, a: 0}
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.2
---- !u!114 &5707365530022803793
+--- !u!114 &3725655539631865043
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -338,11 +338,14 @@ MonoBehaviour:
   exp: 0
   range: 0
   attackType: 
-  projectileIndex: 0
+  projectileIndex: 14
   attackCooldown: 0
-  animCon: []
+  animCon:
+  - {fileID: 22100000, guid: b5d1c6379f75b3542b26b220c5a1bb7a, type: 2}
   target: {fileID: 0}
   detectionRange: 10
   destinationUpdateInterval: 0.5
+  tower: {fileID: 0}
   isLive: 0
+  anim: {fileID: 0}
   skills: []

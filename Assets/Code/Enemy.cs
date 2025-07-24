@@ -30,8 +30,9 @@ public class Enemy : MonoBehaviour
     private const float positionCheckInterval = 5f;
     //private float speedTemp;
 
+    public Tower tower; // 공격 대상 타워
     public bool isLive;
-    private Animator anim;
+    public Animator anim;
     private Rigidbody2D rigid;
     private Collider2D col;
     private SpriteRenderer spriter;
@@ -186,7 +187,7 @@ public class Enemy : MonoBehaviour
         {
             if (col.CompareTag("Tower"))
             {
-                Tower tower = col.GetComponent<Tower>();
+                tower = col.GetComponent<Tower>();
                 if (tower != null)
                 {
                     if (attackType == "Melee")
@@ -200,6 +201,12 @@ public class Enemy : MonoBehaviour
                     else if (attackType == "Range")
                     {
                         FireProjectile(tower.gameObject);
+                    }
+                    else if (attackType == "Boss")
+                    {
+                        TryUseSkill();
+                        lastAttackTime = Time.time;
+                        break;
                     }
                     anim.SetTrigger("Attack");
                     lastAttackTime = Time.time;
@@ -250,7 +257,7 @@ public class Enemy : MonoBehaviour
 
         }
     }
-    private void FireProjectile(GameObject tower)
+    public void FireProjectile(GameObject tower)
     {
         GameObject projectile = GameManager.instance.pool.Get(projectileIndex);
         projectile.transform.position = transform.position;
@@ -258,7 +265,8 @@ public class Enemy : MonoBehaviour
         Projectile proj = projectile.GetComponent<Projectile>();
         if (proj != null)
         {
-            proj.Init(damage, tower, 12);
+            proj.Init(damage, tower, 12); // 현재 하드코딩으로 지정됨.
         }
     }
+    public virtual void TryUseSkill() { }
 }

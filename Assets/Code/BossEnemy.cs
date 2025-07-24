@@ -20,19 +20,12 @@ public class BossEnemy : Enemy
     void Start()
     {
         // 스킬 초기 설정
-        skills.Add(new BossSkill { skillName = "Smash", cooldown = 5f, lastUseTime = -5f, weight = 30, useSkillAction = UseSmash });
-        skills.Add(new BossSkill { skillName = "Fireball", cooldown = 8f, lastUseTime = -8f, weight = 50, useSkillAction = UseFireball });
-        skills.Add(new BossSkill { skillName = "Roar", cooldown = 12f, lastUseTime = -12f, weight = 20, useSkillAction = UseRoar });
+        skills.Add(new BossSkill { skillName = "Normal Attack", cooldown = 2f, lastUseTime = -2f, weight = 20, useSkillAction = UseNormalAttack });
+        skills.Add(new BossSkill { skillName = "Flying Attack", cooldown = 5f, lastUseTime = -5f, weight = 40, useSkillAction = UseFlyingAttack });
+        skills.Add(new BossSkill { skillName = "Thunder Attack", cooldown = 8f, lastUseTime = -8f, weight = 40, useSkillAction = UseThunderAttack });
     }
 
-    void Update()
-    {
-        if (!isLive) return;
-
-        TryUseSkill();
-    }
-
-    void TryUseSkill()
+    public override void TryUseSkill()
     {
         // 사용 가능한 스킬 리스트
         List<BossSkill> availableSkills = new List<BossSkill>();
@@ -53,7 +46,6 @@ public class BossEnemy : Enemy
             selectedSkill.lastUseTime = Time.time;
         }
     }
-
     BossSkill ChooseWeightedSkill(List<BossSkill> skills)
     {
         int totalWeight = 0;
@@ -71,23 +63,32 @@ public class BossEnemy : Enemy
 
         return skills[0]; // fallback
     }
-
-    void UseSmash()
+    void UseNormalAttack()
     {
-        Debug.Log("보스: Smash 사용!");
-        // Smash 로직 구현
+        Debug.Log("보스: 일반 공격 사용!");
+        anim.SetTrigger("Attack");
+        tower.TakeDamage(damage);
+        GameObject effectInstance = GameManager.instance.pool.Get(12);
+        effectInstance.transform.position = tower.transform.position;
+        effectInstance.SetActive(true);
+    }
+    void UseFlyingAttack()
+    {
+        Debug.Log("보스: 공중 공격 사용!");
+        anim.SetTrigger("Hurt");
+        for (int i = 0; i < 10; i++)
+        {
+            tower.TakeDamage(damage/3);
+            GameObject effectInstance = GameManager.instance.pool.Get(12);
+            effectInstance.transform.position = tower.transform.position;
+            effectInstance.SetActive(true);
+        }
     }
 
-    void UseFireball()
+    void UseThunderAttack()
     {
-        Debug.Log("보스: Fireball 사용!");
-        // Fireball 로직 구현
-    }
-
-    void UseRoar()
-    {
-        Debug.Log("보스: Roar 사용!");
-        // Roar 로직 구현
+        Debug.Log("보스: 번개 공격 사용!");
+        FireProjectile(tower.gameObject);
     }
 
 }

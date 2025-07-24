@@ -58,7 +58,14 @@ public class Projectile : MonoBehaviour
         this.speed = speed;
         isEnemyProjectile = true;
         isActive = true;
-        StartCoroutine(MoveToTarget());
+        if (Enemy.instance.projectileIndex == 14)
+        {
+            Vector3 randomOffset = Random.insideUnitCircle * 5f;
+            Vector3 spawnPosition = target.transform.position + randomOffset;
+            transform.position = spawnPosition;
+            Invoke("DeactivateProjectile", 0.433f);
+        }
+        else StartCoroutine(MoveToTarget());
     }
 
     // 목표를 향해 이동하는 코루틴
@@ -90,7 +97,7 @@ public class Projectile : MonoBehaviour
     }
 
     // 충돌 처리 (OnCollisionEnter2D)
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision) // 트리거가 적용되지 않는 투사체 (닿았을 때)
     {
         if (isEnemyProjectile) return;
 
@@ -100,7 +107,7 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision) // 트리거(광역 공격)가 적용되는 투사체 (겹쳤을 때)
     {
         if (isEnemyProjectile)
         {
@@ -113,7 +120,11 @@ public class Projectile : MonoBehaviour
                     GameObject effectInstance = GameManager.instance.pool.Get(effectIndex);
                     effectInstance.transform.position = transform.position;
                     effectInstance.SetActive(true);
-                    DeactivateProjectile();
+                    if (Enemy.instance.projectileIndex == 14)
+                    {
+                        Invoke("DeactivateProjectile", 0.433f);
+                    } 
+                    else DeactivateProjectile();
                 }
             }
         }
@@ -127,7 +138,7 @@ public class Projectile : MonoBehaviour
                     enemy.TakeDamage(tower.damage); // 적에게 데미지 적용
                 }
 
-                if (tower.projectileIndex == 4 || tower.projectileIndex == 10)
+                if (tower.projectileIndex == 4 || tower.projectileIndex == 10) // S급 투사체
                 {
                     GameObject effectInstance = GameManager.instance.pool.Get(effectIndex);
                     effectInstance.transform.position = enemy.transform.position;
@@ -178,4 +189,5 @@ public class Projectile : MonoBehaviour
         isActive = false; // 활성 상태 변경
         gameObject.SetActive(false); // 투사체 비활성화
     }
+
 }
