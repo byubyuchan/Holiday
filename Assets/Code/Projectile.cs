@@ -60,9 +60,13 @@ public class Projectile : MonoBehaviour
         isActive = true;
         if (Enemy.instance.projectileIndex == 14)
         {
-            Vector3 randomOffset = Random.insideUnitCircle * 5f;
+            this.damage = damage / 8;
+            Vector3 randomOffset = Random.insideUnitCircle * 15f;
             Vector3 spawnPosition = target.transform.position + randomOffset;
             transform.position = spawnPosition;
+            CameraShakeComponent cameraShake = Camera.main.GetComponent<CameraShakeComponent>();
+            if (cameraShake != null)
+                StartCoroutine(cameraShake.Shake(0.5f, 0.5f));
             Invoke("DeactivateProjectile", 0.433f);
         }
         else StartCoroutine(MoveToTarget());

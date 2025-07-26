@@ -15,6 +15,8 @@ public class Spawner : MonoBehaviour
     public int currentEnemyCount = 0;  // 현재 몬스터 수
     public int enemyCount = 0;
 
+    public GameObject enemy;
+
     void Awake()
     {
         instance = this;
@@ -44,13 +46,15 @@ public class Spawner : MonoBehaviour
                 return;
             }
 
-            GameObject enemy = GameManager.instance.pool.Get(BossIndex); // 풀링될 프리팹 선택
+            enemy = GameManager.instance.pool.Get(BossIndex); // 풀링될 프리팹 선택
             Transform randomSpawnPoint = spawnPoint[Random.Range(1, spawnPoint.Length)];
             enemy.transform.position = randomSpawnPoint.position;
             enemy.GetComponent<Enemy>().Init(spawnData[level]);
             GameManager.instance.bossEnemy = enemy.GetComponent<Enemy>();
             enemyCount++;
             currentEnemyCount++;
+
+            CutsceneManager.instance.PlayBossCutscene(enemy.transform, "까마귀 왕");
         }
         else
         {

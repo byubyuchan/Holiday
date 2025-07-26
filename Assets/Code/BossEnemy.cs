@@ -88,7 +88,38 @@ public class BossEnemy : Enemy
     void UseThunderAttack()
     {
         Debug.Log("보스: 번개 공격 사용!");
-        FireProjectile(tower.gameObject);
+        for (int i = 0; i < 5; i++)
+        {
+            FireProjectile(tower.gameObject);
+        }
+    }
+
+    public override void Dead()
+    {
+        base.Dead(); // 기존 죽음 처리 먼저 실행
+        if (CutsceneManager.instance != null)
+        {
+            // 죽을 때 컷씬 실행
+            CutsceneManager.instance.PlayBossCutscene(this.transform, "Clear!");
+        }
+    }
+
+    public override void MoveTowardsTarget()
+    {
+        if (target != null)
+        {
+            Vector3 direction = (target.position - transform.position).normalized;
+            float distance = Vector3.Distance(transform.position, target.position);
+
+            if (distance > range) // range 보다 멀면 이동
+            {
+                this.rigid.linearVelocity = direction * speed;
+            }
+            else
+            {
+                this.rigid.linearVelocity = Vector2.zero; // 가까우면 멈춤
+            }
+        }
     }
 
 }

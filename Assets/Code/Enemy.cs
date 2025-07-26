@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour
     public Tower tower; // 공격 대상 타워
     public bool isLive;
     public Animator anim;
-    private Rigidbody2D rigid;
+    public Rigidbody2D rigid;
     private Collider2D col;
     private SpriteRenderer spriter;
 
@@ -136,7 +136,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void MoveTowardsTarget()
+    virtual public void MoveTowardsTarget()
     {
         if (target != null)
         {
@@ -145,13 +145,13 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void Dead()
+    virtual public void Dead()
     {
         anim.SetTrigger("Death");
         rigid.linearVelocity = Vector2.zero; // 이동 멈춤
         //col.enabled = false; // 충돌 비활성화
         rigid.simulated = false; // 물리 계산 비활성화
-
+        
         DamageFlashEffect flashEffect = GetComponent<DamageFlashEffect>();
 
         if (flashEffect != null)
@@ -168,6 +168,7 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogWarning($"코루틴을 시작할 수 없습니다. {gameObject.name}은 비활성화 상태입니다.");
         }
+        
     }
 
     private IEnumerator RemoveAfterDeath()

@@ -343,7 +343,7 @@ MonoBehaviour:
   animCon:
   - {fileID: 22100000, guid: b5d1c6379f75b3542b26b220c5a1bb7a, type: 2}
   target: {fileID: 0}
-  detectionRange: 10
+  detectionRange: 20
   destinationUpdateInterval: 0.5
   tower: {fileID: 0}
   isLive: 0
