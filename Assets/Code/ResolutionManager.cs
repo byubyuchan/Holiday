@@ -15,11 +15,6 @@ public class ResolutionManager : MonoBehaviour
         InitUI();
     }
 
-    private void Update()
-    {
-        Debug.Log("Current Resolution: " + Screen.currentResolution.width + " x " + Screen.currentResolution.height);
-    }
-
     void InitUI()
     {
         resolutions.AddRange(Screen.resolutions);
