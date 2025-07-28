@@ -265,7 +265,7 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 2, y: 3}
   m_Direction: 0
 --- !u!70 &-922349580229761821
 CapsuleCollider2D:
@@ -302,7 +302,7 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 4, y: 3}
   m_Direction: 0
 --- !u!114 &4076967841588027805
 MonoBehaviour:
@@ -348,4 +348,5 @@ MonoBehaviour:
   tower: {fileID: 0}
   isLive: 0
   anim: {fileID: 0}
+  rigid: {fileID: 0}
   skills: []
