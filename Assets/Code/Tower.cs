@@ -40,6 +40,10 @@ public class Tower : MonoBehaviour
         // 확률에 맞게 인덱스 번호 설정됨.
         Init(towerData[towerindex]);
         SortingOrder();
+        if (cost == "C") CutsceneManager.instance.PlayTowerCutscene(transform, cost + "급 용사 소환!!", 0.9f, 1);
+        if (cost == "B") CutsceneManager.instance.PlayTowerCutscene(transform, cost + "급 용사 소환!!", 0.7f, 2);
+        if (cost == "A") CutsceneManager.instance.PlayTowerCutscene(transform, cost + "급 용사 소환!!", 0.5f, 3);
+        if (cost == "S") CutsceneManager.instance.PlayTowerCutscene(transform, cost + "급 용사 소환!!", 0.3f, 4);
     }
 
     public void RemoveTower()

@@ -37,7 +37,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        Application.targetFrameRate = 120;
         PauseButton.gameObject.SetActive(true);
         StartRoundButton.gameObject.SetActive(true);
         isLive = true;
@@ -152,7 +151,7 @@ public class GameManager : MonoBehaviour
     {
         isLive = false;
         Time.timeScale = 0;
-        UIPause.localScale = Vector3.one/2;
+        UIPause.localScale = Vector3.one;
     }
 
     public void Pause_Resume()
@@ -168,5 +167,12 @@ public class GameManager : MonoBehaviour
         speedIndex = (speedIndex + 1) % gameSpeed.Length;
         GameSpeed.instance.speed = gameSpeed[speedIndex];
         
+    }
+    public IEnumerator ShowMessage(string message)
+    {
+        CutsceneManager.instance.bossNameText.text = message;
+        CutsceneManager.instance.bossNameText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        CutsceneManager.instance.bossNameText.gameObject.SetActive(false);
     }
 }

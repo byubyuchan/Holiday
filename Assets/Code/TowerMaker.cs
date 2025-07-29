@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TowerMaker : MonoBehaviour
@@ -34,15 +35,30 @@ public class TowerMaker : MonoBehaviour
 
     public void SpawnTower(Tile tile)
     {
-        if (selectedTowerPrefab == null) return;
-
-        if (tile.IsBuildTower)
+        if (tile.IsBuildTower) // 이미 타워가 설치된 타일인지 확인
         {
-            Debug.Log("이미 타워가 설치된 타일입니다!");
+            StartCoroutine(GameManager.instance.ShowMessage("이미 용사가 소환된 지역입니다."));
             return;
         }
-
-        if (GameManager.instance.Gold < 5) return;
+        else if (GameManager.instance.isStart)
+        {
+            StartCoroutine(GameManager.instance.ShowMessage("전투 중엔 용사를 부를 수 없습니다!"));
+            return;
+        }
+        else if (selectedTowerPrefab == null)
+        {
+            StartCoroutine(GameManager.instance.ShowMessage("용사가 결정되지 않았습니다!"));
+            return;
+        }
+        else if (GameManager.instance.Gold < 5)
+        {
+            StartCoroutine(GameManager.instance.ShowMessage("용사를 고용할 골드가 부족합니다."));
+            return;
+        }
+        else if (CutsceneManager.instance.cutsceneflag == 1) 
+        {
+            return;
+        }
 
         GameObject towerObject = Instantiate(selectedTowerPrefab, tile.transform.position, Quaternion.identity);
         towerObject.transform.SetParent(towerParent);
@@ -52,7 +68,7 @@ public class TowerMaker : MonoBehaviour
         if (tower != null)
         {
             tower.tile = tile; // 설치된 타일을 참조하도록 설정
-            tile.IsBuildTower = true; // 설치된 상태로 변경
+            tile.IsBuildTower = true; // 설치된 상태로 변경ㅒ
             tile.currentTower = tower;
         }
     }

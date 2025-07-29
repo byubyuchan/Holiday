@@ -54,7 +54,7 @@ public class Spawner : MonoBehaviour
             enemyCount++;
             currentEnemyCount++;
 
-            CutsceneManager.instance.PlayBossCutscene(enemy.transform, "±î¸¶±Í ¿Õ");
+            CutsceneManager.instance.PlayBossCutscene(enemy.transform, "±î¸¶±Í ¿Õ", 0.5f);
         }
         else
         {

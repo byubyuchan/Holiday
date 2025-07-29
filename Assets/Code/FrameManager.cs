@@ -18,8 +18,14 @@ public class FrameManager : MonoBehaviour
             case 1: // 60 FPS
                 Application.targetFrameRate = 60;
                 break;
-            default: // 기본값은 60 FPS
-                Application.targetFrameRate = 60;
+            case 2: // 144 FPS
+                Application.targetFrameRate = 144;
+                break;
+            case 3: // 240 FPS
+                Application.targetFrameRate = 240;
+                break;
+            default: // 기본값은 240 FPS 테스트용이므로 수정요망
+                Application.targetFrameRate = 240;
                 break;
         }
     }

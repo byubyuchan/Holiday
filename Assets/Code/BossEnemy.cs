@@ -100,7 +100,7 @@ public class BossEnemy : Enemy
         if (CutsceneManager.instance != null)
         {
             // Á×À» ¶§ ÄÆ¾À ½ÇÇà
-            CutsceneManager.instance.PlayBossCutscene(this.transform, "Clear!");
+            CutsceneManager.instance.PlayBossCutscene(this.transform, "Clear!",0.5f);
         }
     }
 
