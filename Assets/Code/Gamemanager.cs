@@ -1,7 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
+//database using
+
+//using UnityEngine;
+//using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,7 +26,22 @@ public class GameManager : MonoBehaviour
     public bool isLive;
     public bool isStart;
     public int Life;
-    public int Gold;
+    public int Gold
+    {
+        get => _gold;
+        set
+        {
+            if (_gold != value)
+            {
+                _gold = value;
+                OnGoldChanged?.Invoke(_gold);
+                Debug.Log("Gold Event Hppends!");
+                Debug.Log("Gold Event Hppends!");
+                Debug.Log("Gold Event Hppends!");
+                Debug.Log("Gold Event Hppends!");
+            }
+        }
+    }
     public int currentRound = 0; // 현재 라운드
     int speedIndex = 0;
     public float[] gameSpeed = { 1f, 1.5f, 2f, 2.5f, 3f };
@@ -175,4 +196,12 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         CutsceneManager.instance.bossNameText.gameObject.SetActive(false);
     }
+
+//DataBase Coeds
+
+    public UnityEvent<int> OnStageChanged;
+    public UnityEvent<int> OnGoldChanged;
+
+    private int _stage;
+    private int _gold;
 }

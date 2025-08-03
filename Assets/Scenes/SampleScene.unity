@@ -5425,56 +5425,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &182732305
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 182732307}
-  - component: {fileID: 182732306}
-  m_Layer: 0
-  m_Name: DataBaseChangeManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &182732306
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 182732305}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 055d4b4c112cc2e4e8a0c30fbf295d22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnStageChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  OnGoldChanged:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!4 &182732307
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 182732305}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 960, y: 540, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &189654685
 GameObject:
   m_ObjectHideFlags: 0
@@ -10923,7 +10873,8 @@ Transform:
   m_LocalPosition: {x: 628.743, y: 480.66965, z: -4.8313518}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1671033003}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &490922359
@@ -27602,7 +27553,6 @@ MonoBehaviour:
   isLive: 0
   isStart: 0
   Life: 100
-  Gold: 0
   currentRound: 0
   gameSpeed:
   - 1
@@ -27616,6 +27566,12 @@ MonoBehaviour:
   level: 0
   kill: 0
   bossEnemy: {fileID: 0}
+  OnStageChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGoldChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1126913709
 GameObject:
   m_ObjectHideFlags: 0
@@ -43231,12 +43187,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1671033001}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.230657, y: -0.8274168, z: -0.040965464}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -620.5123, y: -481.49707, z: 4.790386}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 485875044}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1681742062
 GameObject:
@@ -59527,7 +59483,6 @@ SceneRoots:
   - {fileID: 1327216126}
   - {fileID: 1361306517}
   - {fileID: 312433771}
-  - {fileID: 1671033003}
   - {fileID: 485875044}
   - {fileID: 1845517009}
   - {fileID: 1861912999}
@@ -59538,4 +59493,3 @@ SceneRoots:
   - {fileID: 1706544133}
   - {fileID: 932217056}
   - {fileID: 1945230619}
-  - {fileID: 182732307}
