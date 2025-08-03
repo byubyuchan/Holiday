@@ -40,10 +40,26 @@ public class Tower : MonoBehaviour
         // 확률에 맞게 인덱스 번호 설정됨.
         Init(towerData[towerindex]);
         SortingOrder();
-        if (cost == "C") CutsceneManager.instance.PlayTowerCutscene(transform, cost + "급 용사 소환!!", 0.9f, 1);
-        if (cost == "B") CutsceneManager.instance.PlayTowerCutscene(transform, cost + "급 용사 소환!!", 0.7f, 2);
-        if (cost == "A") CutsceneManager.instance.PlayTowerCutscene(transform, cost + "급 용사 소환!!", 0.5f, 3);
-        if (cost == "S") CutsceneManager.instance.PlayTowerCutscene(transform, cost + "급 용사 소환!!", 0.3f, 4);
+        if (cost == "C")
+        {
+            CutsceneManager.instance.PlayTowerCutscene(transform, cost + "급 용사 소환!!", 0.9f, 1);
+            AudioManager.instance.PlaySFX("Spawn_C");
+        }
+        if (cost == "B")
+        {
+            CutsceneManager.instance.PlayTowerCutscene(transform, cost + "급 용사 소환!!", 0.9f, 1);
+            AudioManager.instance.PlaySFX("Spawn_B");
+        }
+        if (cost == "A")
+        {
+            CutsceneManager.instance.PlayTowerCutscene(transform, cost + "급 용사 소환!!", 0.7f, 2);
+            AudioManager.instance.PlaySFX("Spawn_A");
+        }
+        if (cost == "S")
+        {
+            CutsceneManager.instance.PlayTowerCutscene(transform, cost + "급 용사 소환!!", 0.3f, 4);
+            AudioManager.instance.PlaySFX("Spawn_S");
+        }
     }
 
     public void RemoveTower()
@@ -85,9 +101,15 @@ public class Tower : MonoBehaviour
         if (flashEffect != null)
         {
             flashEffect.Flash();
+            string[] attackKeys = { "P_Hit1", "P_Hit2"};
+            string randomKey = attackKeys[Random.Range(0, attackKeys.Length)];
+            AudioManager.instance.PlaySFX(randomKey);
         }
         if (hp <= 0)
         {
+            string[] attackKeys = { "P_Dead1", "P_Dead2" };
+            string randomKey = attackKeys[Random.Range(0, attackKeys.Length)];
+            AudioManager.instance.PlaySFX(randomKey);
             RemoveTower();
         }
     }

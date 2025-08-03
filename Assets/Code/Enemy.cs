@@ -198,10 +198,15 @@ public class Enemy : MonoBehaviour
                         GameObject effectInstance = GameManager.instance.pool.Get(12);
                         effectInstance.transform.position = tower.transform.position;
                         effectInstance.SetActive(true);
+
+                        string[] attackKeys = { "E_Attack1", "E_Attack2" };
+                        string randomKey = attackKeys[Random.Range(0, attackKeys.Length)];
+                        AudioManager.instance.PlaySFX(randomKey);
                     }
                     else if (attackType == "Range")
                     {
                         FireProjectile(tower.gameObject);
+                        AudioManager.instance.PlaySFX("P_Fire");
                     }
                     else if (attackType == "Boss")
                     {
@@ -250,12 +255,17 @@ public class Enemy : MonoBehaviour
         if (flashEffect != null)
         {
             flashEffect.Flash();
+            string[] attackKeys = { "E_Hit1", "E_Hit2", "E_Hit3", "E_Hit4" };
+            string randomKey = attackKeys[Random.Range(0, attackKeys.Length)];
+            AudioManager.instance.PlaySFX(randomKey);
         }
 
         if (hp <= 0)
         {
+            string[] attackKeys = { "E_Dead1", "E_Dead2"};
+            string randomKey = attackKeys[Random.Range(0, attackKeys.Length)];
+            AudioManager.instance.PlaySFX(randomKey);
             Dead();
-
         }
     }
     public void FireProjectile(GameObject tower)

@@ -3,10 +3,17 @@ using UnityEngine;
 
 public class CameraShakeComponent : MonoBehaviour
 {
-    //외부에서 호출하여 카메라 쉐이크를 시작하는 함수
-    public void StartShake(float duration, float magnitude)
+    public static CameraShakeComponent instance;
+
+    private void Awake()
     {
-        StartCoroutine(Shake(duration, magnitude));
+        instance = this;
+    }
+    //외부에서 호출하여 카메라 쉐이크를 시작하는 함수
+    public void StartShake(float duration = 0.3f, float magnitude = 0.1f)
+    {
+        if (CutsceneManager.instance.cutsceneflag == 0)
+            StartCoroutine(Shake(duration, magnitude));
     }
 
     // 카메라를 흔드는 코루틴 함수

@@ -49,9 +49,28 @@ public class Projectile : MonoBehaviour
         {
             StartCoroutine(MoveToTarget());
         }
+
+        switch(tower.projectileIndex)
+        {
+            case 1: 
+                AudioManager.instance.PlaySFX("P_Fire");
+                break;
+            case 2:
+                AudioManager.instance.PlaySFX("P_Thunder");
+                break;
+            case 3:
+                AudioManager.instance.PlaySFX("P_Dark");
+                break;
+            case 4:
+                AudioManager.instance.PlaySFX("P_Lightning");   
+                break;
+            case 10:
+                AudioManager.instance.PlaySFX("P_Slash");
+                break;
+        }
     }
 
-    public void Init(float damage, GameObject target, float speed)
+    public void Init(float damage, GameObject target, float speed) // 몬스터 전용
     {
         this.damage = damage;
         this.target = target;
@@ -60,7 +79,7 @@ public class Projectile : MonoBehaviour
         isActive = true;
         if (Enemy.instance.projectileIndex == 14)
         {
-            this.damage = damage / 8;
+            this.damage = damage / 2;
             Vector3 randomOffset = Random.insideUnitCircle * 15f;
             Vector3 spawnPosition = target.transform.position + randomOffset;
             transform.position = spawnPosition;

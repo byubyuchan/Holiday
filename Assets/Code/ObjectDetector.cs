@@ -13,6 +13,7 @@ public class ObjectDetector : MonoBehaviour
 
     private void Update()
     {
+        if (CutsceneManager.instance.cutsceneflag == 1) return;
         if (Input.GetMouseButtonDown(0))
         {
             if (EventSystem.current.IsPointerOverGameObject())

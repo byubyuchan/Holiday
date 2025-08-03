@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.Analytics;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
@@ -14,19 +16,34 @@ public class AudioManager : MonoBehaviour
     AudioHighPassFilter BGMEffet;
 
     [Header("#SFX")]
-    public AudioClip[] SFXClips;
     public float SFXVolume;
     public int channels;
     AudioSource[] SFXPlayers;
     int channelIndex;
 
-    public enum SFX { Dead, Hit, LevelUp = 3, Lose, Melee, Range = 7, Select, Win }
     [Header("# Volume UI")]
     public Scrollbar BGMScrollbar;
     public Scrollbar SFXScrollbar;
 
+    [System.Serializable]
+    public class SFXPair
+    {
+        public string key;      // 효과음 이름
+        public AudioClip clip;  // 실제 클립
+    }
+
+    public List<SFXPair> SFXPairs = new List<SFXPair>();
+    Dictionary<string, AudioClip> SFXDict;
+
     void Awake()
     {
+        Debug.Assert(channels > 0, "Channels를 1 이상으로 설정하세요.");
+        instance = this;
+        Init();
+        Debug.Assert(SFXPlayers != null, "SFXPlayers 배열이 null입니다!");
+        foreach (var sfx in SFXPlayers)
+            Debug.Assert(sfx != null, "SFXPlayers 배열에 null AudioSource가 있습니다!");
+
         instance = this;
         Init();
 
@@ -40,6 +57,13 @@ public class AudioManager : MonoBehaviour
         {
             SFXScrollbar.value = SFXVolume;
             SFXScrollbar.onValueChanged.AddListener(SetSFXVolume);
+        }
+
+        SFXDict = new Dictionary<string, AudioClip>();
+        foreach (var pair in SFXPairs)
+        {
+            if (!SFXDict.ContainsKey(pair.key))
+                SFXDict.Add(pair.key, pair.clip);
         }
     }
 
@@ -69,21 +93,37 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlaySFX(SFX sfx)
+    public void PlaySFX(string key)
     {
+        if (SFXPlayers == null || SFXPlayers.Length == 0)
+        {
+            Debug.LogWarning("SFXPlayers가 초기화되지 않았거나 채널이 0입니다.");
+            return;
+        }
+        if (SFXDict == null)
+        {
+            Debug.LogWarning("SFXDict가 null입니다. 초기화 확인 필요!");
+            return;
+        }
+        if (!SFXDict.ContainsKey(key))
+        {
+            Debug.LogWarning($"SFXDict에 키 '{key}'가 없습니다.");
+            return;
+        }
+
+        // 일반적으로 사용: PlaySFX("Enemy_Die");
         for (int i = 0; i < SFXPlayers.Length; i++)
         {
-            int loopIndex = (i + channelIndex) % SFXPlayers.Length;
+            int idx = (i + channelIndex) % SFXPlayers.Length;
+            if (SFXPlayers[idx].isPlaying) continue;
 
-            if (SFXPlayers[loopIndex].isPlaying) continue;
-
-            int ranIndex = 0;
-            if (sfx == SFX.Hit || sfx == SFX.Melee) ranIndex = Random.Range(0, 2);
-
-            SFXPlayers[0].clip = SFXClips[(int)sfx + ranIndex];
-            SFXPlayers[0].Play();
+            if (SFXDict.TryGetValue(key, out AudioClip clip))
+            {
+                SFXPlayers[idx].clip = clip;
+                SFXPlayers[idx].Play();
+            }
+            channelIndex = (idx + 1) % SFXPlayers.Length;
             break;
-
         }
     }
 

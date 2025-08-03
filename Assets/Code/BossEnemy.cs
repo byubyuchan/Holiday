@@ -71,10 +71,12 @@ public class BossEnemy : Enemy
         GameObject effectInstance = GameManager.instance.pool.Get(12);
         effectInstance.transform.position = tower.transform.position;
         effectInstance.SetActive(true);
+        AudioManager.instance.PlaySFX("B_Attack");
+
     }
     void UseFlyingAttack()
     {
-        Debug.Log("보스: 공중 공격 사용!");
+        Debug.Log("보스: 공중 공격 사용!"); // 데미지 낮추고 광역 공격으로 변경!
         anim.SetTrigger("Hurt");
         for (int i = 0; i < 10; i++)
         {
@@ -83,6 +85,7 @@ public class BossEnemy : Enemy
             effectInstance.transform.position = tower.transform.position;
             effectInstance.SetActive(true);
         }
+        AudioManager.instance.PlaySFX("B_Attack2");
     }
 
     void UseThunderAttack()
@@ -91,7 +94,9 @@ public class BossEnemy : Enemy
         for (int i = 0; i < 5; i++)
         {
             FireProjectile(tower.gameObject);
+            AudioManager.instance.PlaySFX("B_Dark");
         }
+
     }
 
     public override void Dead()
@@ -102,6 +107,7 @@ public class BossEnemy : Enemy
             // 죽을 때 컷씬 실행
             CutsceneManager.instance.PlayBossCutscene(this.transform, "Clear!",0.5f);
         }
+        AudioManager.instance.PlaySFX("E_Dead1"); //B_Dead 바꿀 거 찾기
     }
 
     public override void MoveTowardsTarget()

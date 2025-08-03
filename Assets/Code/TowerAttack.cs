@@ -84,6 +84,10 @@ public class TowerAttack : MonoBehaviour
         attackCooldown = tower.speed; // 쿨타임 설정
         towerAnim.SetTrigger("Attack"); // 애니메이션 실행
 
+        string[] attackKeys = { "P_Attack1", "P_Attack2", "P_Attack3" };
+        string randomKey = attackKeys[Random.Range(0, attackKeys.Length)];
+        AudioManager.instance.PlaySFX(randomKey);
+
         GameObject effectInstance = GameManager.instance.pool.Get(meleeEffectIndex);
         effectInstance.transform.position = target.transform.position;
         effectInstance.SetActive(true); // 이펙트 활성화
@@ -104,9 +108,7 @@ public class TowerAttack : MonoBehaviour
 
         if (projectile.effectIndex == 5 || projectile.effectIndex == 9)
         {
-            CameraShakeComponent cameraShake = Camera.main.GetComponent<CameraShakeComponent>();
-            if (cameraShake != null)
-                StartCoroutine(cameraShake.Shake(0.3f, 0.3f));
+            CameraShakeComponent.instance.StartShake(0.3f, 0.3f);
         }
     }
 
@@ -129,6 +131,11 @@ public class TowerAttack : MonoBehaviour
                 }
             }
         }
+
+        string[] attackKeys = { "P_Attack1", "P_Attack2", "P_Attack3" };
+        string randomKey = attackKeys[Random.Range(0, attackKeys.Length)];
+        AudioManager.instance.PlaySFX(randomKey);
+
         isAttacking = true; // 공격 시작
         attackCooldown = tower.speed; // 쿨타임 설정
         towerAnim.SetTrigger("Attack"); // 애니메이션 실행
@@ -148,14 +155,15 @@ public class TowerAttack : MonoBehaviour
                 {
                     nearTower.hp += tower.damage; // 타워 회복
                     if (nearTower.hp >= nearTower.maxHp) nearTower.hp = nearTower.maxHp;
-                    GameObject effectInstance = GameManager.instance.pool.Get(meleeEffectIndex);
+                    GameObject effectInstance = GameManager.instance.pool.Get(15);
                     effectInstance.transform.position = nearTower.transform.position;
                     effectInstance.SetActive(true);
                 }
             }
         }
+        AudioManager.instance.PlaySFX("P_Heal");
         isAttacking = true; // 힐 시작
         attackCooldown = tower.speed; // 쿨타임 설정
-        towerAnim.SetTrigger("Attack"); // 힐 애니메이션 실행
+        //towerAnim.SetTrigger("Attack"); // 힐 애니메이션 실행
     }
 }

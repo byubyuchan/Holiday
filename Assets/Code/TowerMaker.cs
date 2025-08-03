@@ -38,21 +38,29 @@ public class TowerMaker : MonoBehaviour
         if (tile.IsBuildTower) // 이미 타워가 설치된 타일인지 확인
         {
             StartCoroutine(GameManager.instance.ShowMessage("이미 용사가 소환된 지역입니다."));
+            AudioManager.instance.PlaySFX("Cant");
+            CameraShakeComponent.instance.StartShake();
             return;
         }
         else if (GameManager.instance.isStart)
         {
             StartCoroutine(GameManager.instance.ShowMessage("전투 중엔 용사를 부를 수 없습니다!"));
+            AudioManager.instance.PlaySFX("Cant");
+            CameraShakeComponent.instance.StartShake();
             return;
         }
         else if (selectedTowerPrefab == null)
         {
             StartCoroutine(GameManager.instance.ShowMessage("용사가 결정되지 않았습니다!"));
+            AudioManager.instance.PlaySFX("Cant2");
+            CameraShakeComponent.instance.StartShake();
             return;
         }
         else if (GameManager.instance.Gold < 5)
         {
             StartCoroutine(GameManager.instance.ShowMessage("용사를 고용할 골드가 부족합니다."));
+            AudioManager.instance.PlaySFX("Cant2");
+            CameraShakeComponent.instance.StartShake();
             return;
         }
         else if (CutsceneManager.instance.cutsceneflag == 1) 
