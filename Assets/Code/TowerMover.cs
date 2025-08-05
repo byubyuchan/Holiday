@@ -20,6 +20,8 @@ public class TowerMover : MonoBehaviour
             return;
         }
 
+        GameManager.instance.ShowMessage("위치를 이동하였습니다!");
+
         if (tile.currentTower == null) // 빈 타일이면 이동
         {
             selectedTower.MoveToTile(tile, false);
@@ -41,6 +43,7 @@ public class TowerMover : MonoBehaviour
             selectedTower = null;
             TowerInfo.instance.HideUI();
             towerSelector.ResetTile();
+            GameManager.instance.ShowMessage("용사를 판매했습니다!");
         }
     }
 
@@ -48,6 +51,5 @@ public class TowerMover : MonoBehaviour
     {
         selectedTower = null;
         IsMoving = false;
-        Debug.Log("타워 이동 모드 비활성화");
     }
 }

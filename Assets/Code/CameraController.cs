@@ -15,6 +15,7 @@ public class CameraController : MonoBehaviour
 
     public void MoveCameraLeft()
     {
+        if (CutsceneManager.instance.cutsceneflag == 1) return;
         float currentX = cameraParent.position.x;
         float targetX = Mathf.Max(currentX - moveDistance, leftLimit);
         Vector3 targetPosition = new Vector3(targetX, cameraParent.position.y, cameraParent.position.z);
@@ -23,6 +24,7 @@ public class CameraController : MonoBehaviour
 
     public void MoveCameraRight()
     {
+        if (CutsceneManager.instance.cutsceneflag == 1) return;
         float currentX = cameraParent.position.x;
         float targetX = Mathf.Min(currentX + moveDistance, rightLimit);
         Vector3 targetPosition = new Vector3(targetX, cameraParent.position.y, cameraParent.position.z);
