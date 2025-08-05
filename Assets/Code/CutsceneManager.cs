@@ -6,7 +6,6 @@ public class CutsceneManager : MonoBehaviour
 {
     public static CutsceneManager instance;
     public Camera mainCamera;
-    public Text bossNameText; // Canvas에 있는 Text 연결
     public float cutsceneDuration = 4f;
     private Vector3 originalCamPos;
     private float originalCamSize;
@@ -31,12 +30,15 @@ public class CutsceneManager : MonoBehaviour
 
     private IEnumerator PlayBossCutsceneCoroutine(Transform bossTransform, string bossName, float power) // 파워는 확대량
     {
+        if (TowerInfo.instance != null)
+        {
+            TowerInfo.instance.HideUI();
+        }
         cutsceneflag = 1;
         originalCamPos = mainCamera.transform.position;
         originalCamSize = mainCamera.orthographicSize;
 
-        bossNameText.text = bossName;
-        bossNameText.gameObject.SetActive(true);
+        GameManager.instance.ShowMessage(bossName, 4f);
 
         float elapsed = 0f;
         float targetCamSize = originalCamSize * power; // 확대 (수치는 조절)
@@ -53,7 +55,6 @@ public class CutsceneManager : MonoBehaviour
             mainCamera.orthographicSize = Mathf.Lerp(originalCamSize, targetCamSize, elapsed / (cutsceneDuration * power));
             yield return null;
         }
-        bossNameText.gameObject.SetActive(false);
         // 원래 화면으로 되돌리기
         mainCamera.transform.position = originalCamPos;
         mainCamera.orthographicSize = originalCamSize;
@@ -61,14 +62,16 @@ public class CutsceneManager : MonoBehaviour
     }
     private IEnumerator PlayTowerCutsceneCoroutine(Transform towerTransform, string towerName, float power, int time)
     {
+        if (TowerInfo.instance != null)
+        {
+            TowerInfo.instance.HideUI();
+        }
         cutsceneflag = 1; // 컷신이 이미 실행되었는지 확인하는 플래그
         originalCamPos = mainCamera.transform.position;
         originalCamSize = mainCamera.orthographicSize;
 
-        bossNameText.text = towerName;
-        bossNameText.gameObject.SetActive(true);
-
         float interval = 0.44f;
+        GameManager.instance.ShowMessage(towerName, time * 0.54f);
 
         for (int i = 1; i <= time; i++)
         {
@@ -90,8 +93,6 @@ public class CutsceneManager : MonoBehaviour
             // 약간 텀 주기
             yield return new WaitForSeconds(0.1f);
         }
-
-        bossNameText.gameObject.SetActive(false);
         // 원래 화면으로 완전히 되돌리기
         mainCamera.transform.position = originalCamPos;
         mainCamera.orthographicSize = originalCamSize;

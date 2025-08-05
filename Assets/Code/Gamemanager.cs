@@ -11,6 +11,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    private Coroutine messageCoroutine;
+
     [Header("# Game Object")]
     public GameObject goal;
     public PoolManager pool;
@@ -20,6 +22,7 @@ public class GameManager : MonoBehaviour
     public Transform UIPause;
     public Button PauseButton;
     public Button StartRoundButton;
+    public Text NoticeText;
 
     [Header("# Game Control")]
     public float gameTime;
@@ -71,6 +74,7 @@ public class GameManager : MonoBehaviour
         isLive = true;
         Gold = 50;
         currentRound = 0;
+        AudioManager.instance.PlayBGM(true);
     }
 
     void Update()
@@ -82,6 +86,7 @@ public class GameManager : MonoBehaviour
     public void StartRound()
     {
         if (isStart) return;
+        if (CutsceneManager.instance.cutsceneflag == 1) return;
 
         currentRound++;
         Spawner.instance.level = currentRound - 1;
@@ -199,12 +204,23 @@ public class GameManager : MonoBehaviour
         GameSpeed.instance.speed = gameSpeed[speedIndex];
         
     }
-    public IEnumerator ShowMessage(string message)
+    public void ShowMessage(string message, float time = 2)
     {
-        CutsceneManager.instance.bossNameText.text = message;
-        CutsceneManager.instance.bossNameText.gameObject.SetActive(true);
-        yield return new WaitForSeconds(2f);
-        CutsceneManager.instance.bossNameText.gameObject.SetActive(false);
+        // 이미 실행 중인 메시지 코루틴이 있다면 중지
+        if (messageCoroutine != null)
+        {
+            StopCoroutine(messageCoroutine);
+        }
+        messageCoroutine = StartCoroutine(ShowMessageCoroutine(message, time));
+    }
+
+    public IEnumerator ShowMessageCoroutine(string message, float time)
+    {
+        NoticeText.text = message;
+        NoticeText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(time);
+        NoticeText.gameObject.SetActive(false);
+        messageCoroutine = null;
     }
 
     [Header("# DataBase")]

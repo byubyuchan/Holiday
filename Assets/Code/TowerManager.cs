@@ -6,6 +6,7 @@ public class TowerManager : MonoBehaviour
 
     public void HealAllTowers()
     {
+        if (CutsceneManager.instance.cutsceneflag == 1) return;
         Tower[] towers = towerParent.GetComponentsInChildren<Tower>(); // 부모의 모든 자식 타워 가져오기
         if (GameManager.instance.Gold < 5)
         {

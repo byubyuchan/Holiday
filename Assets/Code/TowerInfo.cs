@@ -14,7 +14,7 @@ public class TowerInfo : MonoBehaviour
     public Tower infoTower;
     public static TowerInfo instance;
 
-    private void Awake()
+    private void Start()
     {
         instance = this;
     }
@@ -77,6 +77,9 @@ public class TowerInfo : MonoBehaviour
 
     public void HideUI()
     {
-        infoPanel.SetActive(false);
+        if (infoPanel != null && infoPanel.activeSelf)
+        {
+            infoPanel.SetActive(false);
+        }
     }
 }
