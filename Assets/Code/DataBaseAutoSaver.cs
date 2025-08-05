@@ -1,25 +1,30 @@
-using System.Collections.Generic;
-using System.Data.Common;
 using UnityEngine;
+
 
 public class AutoSaver : MonoBehaviour
 {
-    private DataBaseConnectingTest db;
-
+    public GameManager gameManager;
+    public DataBaseConnectingTest dbConnectingT;
+    
     void Start()
     {
-        //DB 연결 설정
-        db = new DataBaseConnectingTest();
-        db.Connect("127.0.0.1", "holiday_db", "root", "0000");
-    }
-    //변화된 값 넣기
-    public void SaveStage(int stage)
-    {
-        db.Save("stage", stage);
+        // gameManager 인스턴스가 없으면 찾기 없으면 오류가 뜸
+        if (gameManager == null)
+        {
+            gameManager = GameManager.instance;
+        }
+        Debug.Log("자동저장을 시작함");
+        gameManager.OnGoldChanged.AddListener(SaveGold);
+        gameManager.OnStageChanged.AddListener(SaveStage);
     }
 
-    public void SaveGold(int gold)
+    //변화된 값 넣기
+    private void SaveStage(int stage)
     {
-        db.Save("gold", gold);
+        dbConnectingT.saveStage(stage);
+    }
+    private void SaveGold(int value)
+    {
+        dbConnectingT?.saveGold(value);
     }
 }
