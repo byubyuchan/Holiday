@@ -35,14 +35,22 @@ public class GameManager : MonoBehaviour
             {
                 _gold = value;
                 OnGoldChanged?.Invoke(_gold);
-                Debug.Log("Gold Event Hppends!");
-                Debug.Log("Gold Event Hppends!");
-                Debug.Log("Gold Event Hppends!");
-                Debug.Log("Gold Event Hppends!");
             }
         }
     }
-    public int currentRound = 0; // 현재 라운드
+    public int currentRound // 현재 라운드
+    {
+        get => _stage;
+        set
+        {
+            if (_stage != value)
+            {
+                _stage = value;
+                OnStageChanged?.Invoke(_stage);
+            }
+        }
+    } 
+
     int speedIndex = 0;
     public float[] gameSpeed = { 1f, 1.5f, 2f, 2.5f, 3f };
 
@@ -62,6 +70,7 @@ public class GameManager : MonoBehaviour
         StartRoundButton.gameObject.SetActive(true);
         isLive = true;
         Gold = 50;
+        currentRound = 0;
     }
 
     void Update()
@@ -76,7 +85,6 @@ public class GameManager : MonoBehaviour
 
         currentRound++;
         Spawner.instance.level = currentRound - 1;
-
         StartRoundButton.gameObject.SetActive(false); // 버튼 비활성화
         isStart = true;
     }
@@ -86,6 +94,8 @@ public class GameManager : MonoBehaviour
         isStart = false;
         StartRoundButton.gameObject.SetActive(true); // 버튼 활성화
         Gold += 50;
+        dbConnector.saveTime((int)gameTime);
+        Debug.Log("Time save!");
     }
 
     //public void GameStart(int id)
@@ -197,10 +207,10 @@ public class GameManager : MonoBehaviour
         CutsceneManager.instance.bossNameText.gameObject.SetActive(false);
     }
 
-//DataBase Coeds
-
+    [Header("# DataBase")]
     public UnityEvent<int> OnStageChanged;
     public UnityEvent<int> OnGoldChanged;
+    public DataBaseConnectingTest dbConnector;
 
     private int _stage;
     private int _gold;
