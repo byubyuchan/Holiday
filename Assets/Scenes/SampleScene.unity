@@ -28076,7 +28076,6 @@ MonoBehaviour:
   isLive: 0
   isStart: 0
   Life: 100
-  currentRound: 0
   gameSpeed:
   - 1
   - 1.5
@@ -28095,6 +28094,7 @@ MonoBehaviour:
   OnGoldChanged:
     m_PersistentCalls:
       m_Calls: []
+  dbConnector: {fileID: 1123679828}
 --- !u!114 &1123679828
 MonoBehaviour:
   m_ObjectHideFlags: 0
