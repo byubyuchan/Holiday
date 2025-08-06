@@ -69,11 +69,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        PauseButton.gameObject.SetActive(true);
-        StartRoundButton.gameObject.SetActive(true);
-        isLive = true;
-        Gold = 50;
-        currentRound = 0;
         AudioManager.instance.PlayBGM(true);
     }
 
@@ -103,16 +98,15 @@ public class GameManager : MonoBehaviour
         Debug.Log("Time save!");
     }
 
-    //public void GameStart(int id)
-    //{
-    //    playerId = id;
-    //    hp = maxHp;
-    //    isLive = true;
-    //    Resume();
-    //    PauseButton.gameObject.SetActive(true);
-    //    //AudioManager.instance.PlayBGM(true);
-    //    //AudioManager.instance.PlaySFX(AudioManager.SFX.Select);
-    //}
+    public void GameStart(int id)
+    {
+        playerId = id;
+        PauseButton.gameObject.SetActive(true);
+        StartRoundButton.gameObject.SetActive(true);
+        isLive = true;
+        Gold = 50;
+        currentRound = 0;
+    }
 
     public void GameOver()
     {
