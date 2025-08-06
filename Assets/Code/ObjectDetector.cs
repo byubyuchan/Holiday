@@ -18,7 +18,6 @@ public class ObjectDetector : MonoBehaviour
         {
             if (EventSystem.current.IsPointerOverGameObject())
             {
-                Debug.Log("UI 클릭으로 인해 Raycast 차단됨");
                 return;
             }
 

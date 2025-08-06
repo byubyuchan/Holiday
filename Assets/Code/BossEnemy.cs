@@ -67,6 +67,7 @@ public class BossEnemy : Enemy
     {
         Debug.Log("보스: 일반 공격 사용!");
         anim.SetTrigger("Attack");
+        CameraShakeComponent.instance.StartShake(0.5f, 0.3f);
         tower.TakeDamage(damage);
         GameObject effectInstance = GameManager.instance.pool.Get(12);
         effectInstance.transform.position = tower.transform.position;
@@ -78,8 +79,10 @@ public class BossEnemy : Enemy
     {
         Debug.Log("보스: 공중 공격 사용!"); // 데미지 낮추고 광역 공격으로 변경!
         anim.SetTrigger("Hurt");
+        CameraShakeComponent.instance.StartShake(0.5f, 0.5f);
         for (int i = 0; i < 10; i++)
         {
+            CameraShakeComponent.instance.StartShake(0.5f, 0.4f);
             tower.TakeDamage(damage/3);
             GameObject effectInstance = GameManager.instance.pool.Get(12);
             effectInstance.transform.position = tower.transform.position;
@@ -90,7 +93,7 @@ public class BossEnemy : Enemy
 
     void UseThunderAttack()
     {
-        Debug.Log("보스: 번개 공격 사용!");
+        CameraShakeComponent.instance.StartShake(0.5f, 1f);
         for (int i = 0; i < 5; i++)
         {
             FireProjectile(tower.gameObject);
