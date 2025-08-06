@@ -82,7 +82,10 @@ public class GameManager : MonoBehaviour
     {
         if (isStart) return;
         if (CutsceneManager.instance.cutsceneflag == 1) return;
-
+        if (Spawner.instance.level == 4)
+        {
+            Spawner.instance.spriteRenderer.enabled = false;
+        }
         currentRound++;
         Spawner.instance.level = currentRound - 1;
         StartRoundButton.gameObject.SetActive(false); // 버튼 비활성화
@@ -94,6 +97,11 @@ public class GameManager : MonoBehaviour
         isStart = false;
         StartRoundButton.gameObject.SetActive(true); // 버튼 활성화
         Gold += 50;
+        if (Spawner.instance.level == 4)
+        {
+            Spawner.instance.anim.runtimeAnimatorController = Spawner.instance.animCon;
+            Spawner.instance.transform.localScale = new Vector3(4, 4, 4);
+        }
         dbConnector.saveTime((int)gameTime);
         Debug.Log("Time save!");
     }

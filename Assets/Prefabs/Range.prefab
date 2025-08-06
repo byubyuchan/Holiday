@@ -308,17 +308,17 @@ MonoBehaviour:
     HP: 100
     Speed: 1.5
     Range: 15
-    Damage: 50
+    Damage: 150
     Cost: A
     Star: 0
     ProjectileIndex: 3
     FlipX: 1
     Desc: 
   - towerType: Range
-    HP: 100
+    HP: 1000
     Speed: 1.5
     Range: 15
-    Damage: 100
+    Damage: 500
     Cost: S
     Star: 0
     ProjectileIndex: 4

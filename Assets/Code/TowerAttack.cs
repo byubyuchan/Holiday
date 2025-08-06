@@ -106,10 +106,10 @@ public class TowerAttack : MonoBehaviour
         attackCooldown = tower.speed; // 쿨타임 설정
         towerAnim.SetTrigger("Attack"); // 애니메이션 실행
 
-        //if (projectile.effectIndex == 5 || projectile.effectIndex == 9)
-        //{
-        //    CameraShakeComponent.instance.StartShake(0.3f, 0.3f);
-        //}
+        if (projectile.effectIndex == 5 || projectile.effectIndex == 9)
+        {
+            CameraShakeComponent.instance.StartShake(0.3f, 0.3f);
+        }
     }
 
     private void PerformRoundAttack()

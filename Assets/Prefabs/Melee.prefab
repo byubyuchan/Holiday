@@ -343,10 +343,10 @@ MonoBehaviour:
   anim: {fileID: 0}
   towerindex: 0
   probabilities:
-  - 25
-  - 25
-  - 25
-  - 25
+  - 67
+  - 20
+  - 10
+  - 3
   - 0
 --- !u!114 &2238410380428710349
 MonoBehaviour:

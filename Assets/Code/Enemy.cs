@@ -154,8 +154,6 @@ public class Enemy : MonoBehaviour
         
         DamageFlashEffect flashEffect = GetComponent<DamageFlashEffect>();
 
-        CameraShakeComponent.instance.StartShake(0.05f, 0.2f);
-
         if (flashEffect != null)
         {
             flashEffect.StopAllCoroutines(); // 모든 깜빡임 코루틴 중지

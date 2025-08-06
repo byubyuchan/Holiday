@@ -86,8 +86,6 @@ public class TowerMaker : MonoBehaviour
         LoadTower();
         GameManager.instance.Gold -= Pay;
          
-
-
         if (Pay == 5)
         {
             GameObject[] TowerArr = { meleeTowerPrefab, rangedTowerPrefab, tankTowerPrefab };

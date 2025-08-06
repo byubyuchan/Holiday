@@ -13,7 +13,7 @@ public class CameraShakeComponent : MonoBehaviour
     //외부에서 호출하여 카메라 쉐이크를 시작하는 함수
     public void StartShake(float duration = 0.3f, float magnitude = 0.1f)
     {
-        
+
         if (magnitude <= currentmag) return;
 
         currentmag = magnitude;
@@ -30,6 +30,7 @@ public class CameraShakeComponent : MonoBehaviour
         // 경과 시간을 추적하는 변수
         float elapsed = 0.0f;
 
+
         // 경과 시간이 지정된 지속 시간보다 작을 동안 반복
         while (elapsed < duration)
         {
@@ -45,10 +46,12 @@ public class CameraShakeComponent : MonoBehaviour
             elapsed += Time.deltaTime;
 
             // 다음 프레임까지 대기
-            yield return null;
+            //yield return null;
+            yield return new WaitForSeconds(0.01f);
         }
 
         // 흔들림이 끝난 후 카메라를 원래 위치로
         transform.localPosition = new Vector3();
+        currentmag = -1f;
     }
 }
