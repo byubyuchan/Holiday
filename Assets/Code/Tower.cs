@@ -111,6 +111,7 @@ public class Tower : MonoBehaviour
             string[] attackKeys = { "P_Dead1", "P_Dead2" };
             string randomKey = attackKeys[Random.Range(0, attackKeys.Length)];
             AudioManager.instance.PlaySFX(randomKey);
+            CameraShakeComponent.instance.StartShake(0.1f, 1f);
             RemoveTower();
         }
     }

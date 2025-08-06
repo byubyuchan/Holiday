@@ -17,10 +17,16 @@ public class Spawner : MonoBehaviour
 
     public GameObject enemy;
 
+    public SpriteRenderer spriteRenderer;
+    public RuntimeAnimatorController animCon;
+    public Animator anim;
+
     void Awake()
     {
         instance = this;
         spawnPoint = GetComponentsInChildren<Transform>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
