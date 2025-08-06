@@ -38,7 +38,7 @@ public class Tower : MonoBehaviour
     {
         towerindex = GetRandomIndex();
         // 확률에 맞게 인덱스 번호 설정됨.
-        Init(towerData[towerindex]);
+        Init(towerData[towerindex]); // 소환 로직
         SortingOrder();
         if (cost == "C")
         {
@@ -92,6 +92,7 @@ public class Tower : MonoBehaviour
             anim.runtimeAnimatorController = animCon[towerindex];
         }
     }
+
     public void TakeDamage(float damage)
     {
         hp -= damage;

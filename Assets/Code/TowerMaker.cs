@@ -10,6 +10,8 @@ public class TowerMaker : MonoBehaviour
 
     private GameObject selectedTowerPrefab;
     private int Pay;
+    private Tile loadtile;
+    private Tower loadtower;
 
     public void SelectMeleeTower()
     {
@@ -80,23 +82,31 @@ public class TowerMaker : MonoBehaviour
             return;
         }
 
-        GameObject towerObject = Instantiate(selectedTowerPrefab, tile.transform.position, Quaternion.identity);
-        towerObject.transform.SetParent(towerParent);
-        Tower tower = towerObject.GetComponent<Tower>();
+        loadtile = tile;
+        LoadTower();
         GameManager.instance.Gold -= Pay;
+         
 
-        if (tower != null)
-        {
-            tower.tile = tile; // 설치된 타일을 참조하도록 설정
-            tile.IsBuildTower = true; // 설치된 상태로 변경ㅒ
-            tile.currentTower = tower;
-        }
 
         if (Pay == 5)
         {
             GameObject[] TowerArr = { meleeTowerPrefab, rangedTowerPrefab, tankTowerPrefab };
             GameObject RandomPrefab = TowerArr[Random.Range(0, TowerArr.Length)];
             selectedTowerPrefab = RandomPrefab;
+        }
+    }
+
+    public void LoadTower()
+    {
+        GameObject towerObject = Instantiate(selectedTowerPrefab, loadtile.transform.position, Quaternion.identity);
+        towerObject.transform.SetParent(towerParent);
+        Tower tower = towerObject.GetComponent<Tower>();
+
+        if (tower != null)
+        {
+            tower.tile = loadtile; // 설치된 타일을 참조하도록 설정
+            loadtile.IsBuildTower = true; // 설치된 상태로 변경
+            loadtile.currentTower = tower;
         }
     }
 }

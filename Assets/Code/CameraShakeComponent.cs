@@ -4,6 +4,7 @@ using UnityEngine;
 public class CameraShakeComponent : MonoBehaviour
 {
     public static CameraShakeComponent instance;
+    private float currentmag = -1f;
 
     private void Awake()
     {
@@ -12,6 +13,11 @@ public class CameraShakeComponent : MonoBehaviour
     //외부에서 호출하여 카메라 쉐이크를 시작하는 함수
     public void StartShake(float duration = 0.3f, float magnitude = 0.1f)
     {
+        
+        if (magnitude <= currentmag) return;
+
+        currentmag = magnitude;
+
         if (CutsceneManager.instance.cutsceneflag == 0)
             StartCoroutine(Shake(duration, magnitude));
     }
@@ -21,7 +27,6 @@ public class CameraShakeComponent : MonoBehaviour
     // magnitude: 흔들림의 강도 (흔들림의 최대 범위)
     public IEnumerator Shake(float duration, float magnitude)
     {
-
         // 경과 시간을 추적하는 변수
         float elapsed = 0.0f;
 
