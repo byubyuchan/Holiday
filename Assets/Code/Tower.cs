@@ -84,8 +84,8 @@ public class Tower : MonoBehaviour
         cost = towerData.Cost;
         projectileIndex = towerData.ProjectileIndex;
 
-
         spriteRenderer.flipX = flipX;
+
         // 애니메이터 컨트롤러를 확률적으로 선택
         if (animCon.Length > 0 && anim != null)
         {

@@ -164,6 +164,6 @@ public class TowerAttack : MonoBehaviour
         AudioManager.instance.PlaySFX("P_Heal");
         isAttacking = true; // 힐 시작
         attackCooldown = tower.speed; // 쿨타임 설정
-        //towerAnim.SetTrigger("Attack"); // 힐 애니메이션 실행
+        towerAnim.SetTrigger("Attack"); // 힐 애니메이션 실행
     }
 }
