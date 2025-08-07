@@ -70,6 +70,11 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         AudioManager.instance.PlayBGM(true);
+        PauseButton.gameObject.SetActive(true);
+        StartRoundButton.gameObject.SetActive(true);
+        isLive = true;
+        Gold = 50;
+        currentRound = 0;
     }
 
     void Update()
