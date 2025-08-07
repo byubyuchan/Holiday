@@ -1,8 +1,10 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using System;
 
 public class TowerMaker : MonoBehaviour
 {
+    [SerializeField] private DataBaseConnectingTest dbConnect;
     [SerializeField] private GameObject meleeTowerPrefab;
     [SerializeField] private GameObject rangedTowerPrefab;
     [SerializeField] private GameObject tankTowerPrefab;
@@ -41,7 +43,7 @@ public class TowerMaker : MonoBehaviour
     {
         if (CutsceneManager.instance.cutsceneflag == 1) return;
         GameObject[] TowerArr = { meleeTowerPrefab, rangedTowerPrefab, tankTowerPrefab};
-        GameObject RandomPrefab = TowerArr[Random.Range(0, TowerArr.Length)];
+        GameObject RandomPrefab = TowerArr[UnityEngine.Random.Range(0, TowerArr.Length)];
         selectedTowerPrefab = RandomPrefab;
         GameManager.instance.ShowMessage("무작위 영웅을 모집합니다!");
         Pay = 5;
@@ -89,7 +91,7 @@ public class TowerMaker : MonoBehaviour
         if (Pay == 5)
         {
             GameObject[] TowerArr = { meleeTowerPrefab, rangedTowerPrefab, tankTowerPrefab };
-            GameObject RandomPrefab = TowerArr[Random.Range(0, TowerArr.Length)];
+            GameObject RandomPrefab = TowerArr[UnityEngine.Random.Range(0, TowerArr.Length)];
             selectedTowerPrefab = RandomPrefab;
         }
     }
@@ -106,5 +108,12 @@ public class TowerMaker : MonoBehaviour
             loadtile.IsBuildTower = true; // 설치된 상태로 변경
             loadtile.currentTower = tower;
         }
+        string towerName = "Tower_" + Guid.NewGuid().ToString("N"); // PK
+        int towerType = tower.towerindex;
+        string tileName = loadtile.name;
+        string areaName = loadtile.transform.parent.name;
+
+        dbConnect.SaveTowerData(towerName, towerType, areaName, tileName);
+
     }
 }

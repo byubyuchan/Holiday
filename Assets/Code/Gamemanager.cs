@@ -4,10 +4,6 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-//database using
-
-//using UnityEngine;
-//using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -62,7 +58,18 @@ public class GameManager : MonoBehaviour
     public float hp;
     public float maxHp;
     public int level;
-    public int kill;
+    public int kill
+    {
+        get => _kill;
+        set
+        {
+             if (_kill != value)
+            {
+                _kill = value;
+                OnKillChanged?.Invoke(_kill);
+            }
+        }
+    }
 
     public Enemy bossEnemy;
 
@@ -107,7 +114,7 @@ public class GameManager : MonoBehaviour
             Spawner.instance.anim.runtimeAnimatorController = Spawner.instance.animCon;
             Spawner.instance.transform.localScale = new Vector3(4, 4, 4);
         }
-        dbConnector.saveTime((int)gameTime);
+        dbConnector.saveValue("time", (int)gameTime);
         Debug.Log("Time save!");
     }
 
@@ -119,11 +126,15 @@ public class GameManager : MonoBehaviour
         isLive = true;
         Gold = 50;
         currentRound = 0;
+        dbConnector.defaultSetting();
     }
 
     public void GameOver()
     {
+        dbConnector.saveValue("time", (int)gameTime);
+        dbConnector.saveValue("kill", kill);
         StartCoroutine(GameOverRoutine());
+        dbConnector.Close();
     }
 
     IEnumerator GameOverRoutine()
@@ -165,6 +176,10 @@ public class GameManager : MonoBehaviour
     public void GameRetry()
     {
         SceneManager.LoadScene(0);
+        Gold = dbConnector.LoadValue("gold");
+        kill = dbConnector.LoadValue("kill");
+        currentRound = dbConnector.LoadValue("stage");
+        hp = dbConnector.LoadValue("hp");
     }
 
     public void GameQuit()
@@ -233,8 +248,10 @@ public class GameManager : MonoBehaviour
     [Header("# DataBase")]
     public UnityEvent<int> OnStageChanged;
     public UnityEvent<int> OnGoldChanged;
+    public UnityEvent<int> OnKillChanged;
     public DataBaseConnectingTest dbConnector;
 
     private int _stage;
     private int _gold;
+    private int _kill;
 }
