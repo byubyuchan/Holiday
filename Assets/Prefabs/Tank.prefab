@@ -310,7 +310,7 @@ MonoBehaviour:
     Range: 5
     Damage: 100
     Cost: A
-    Star: 0
+    Star: 1
     ProjectileIndex: 0
     FlipX: 1
     Desc: 

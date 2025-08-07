@@ -1,12 +1,5 @@
 fileFormatVersion: 2
-guid: cf4d6ac7b070d484fa7b90c92bbcba93
-AssetOrigin:
-  serializedVersion: 1
-  productId: 147117
-  packageName: GothicVania Church Pack
-  packageVersion: 1.0
-  assetPath: Assets/GothicVania Church/Sprites/Enemies/Angel-Attack/angel-attack-3.png
-  uploadId: 312869
+guid: d20aab96177f35b42a07b6ea307b1474
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -112,7 +105,7 @@ TextureImporter:
     overridden: 0
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 1
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
     buildTarget: Android
     maxTextureSize: 2048
@@ -133,8 +126,8 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: ecbfdb3f8d3294f61b43e7c868277de3
-    internalID: 869866301
+    spriteID: 769265c732c314ac881b74a775a7021b
+    internalID: -277234137
     vertices: []
     indices: 
     edges: []
