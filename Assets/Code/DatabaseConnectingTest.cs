@@ -7,6 +7,8 @@ public class DataBaseConnectingTest : MonoBehaviour
     //DB 연결을 위한 생성자
     private string connectionString;
     private MySqlConnection connection;
+    //
+    public static DataBaseConnectingTest Instance;
 
     private void Awake()
     {
@@ -24,15 +26,58 @@ public class DataBaseConnectingTest : MonoBehaviour
         {
             connection.Open();
             Debug.Log("DB connecting Success!");
-            saveGold(50);
-            saveStage(0);
-            saveTime(0);
-            Debug.Log("DB Setting Success!");
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
             Close();
         }
         catch (Exception ex)
         {
             Debug.LogError("DB Connecting Fail ! : " + ex.Message);
+            Debug.LogError("DB Connecting Fail ! : " + ex.Message);
+            Debug.LogError("DB Connecting Fail ! : " + ex.Message);
+            Debug.LogError("DB Connecting Fail ! : " + ex.Message);
+            Debug.LogError("DB Connecting Fail ! : " + ex.Message);
+            Debug.LogError("DB Connecting Fail ! : " + ex.Message);
+            Debug.LogError("DB Connecting Fail ! : " + ex.Message);
+        }
+    }
+    //기본 데이터 저장 함수
+
+    public void defaultSetting()
+    {
+        try
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                Debug.Log("DB connecting Success!");
+
+                string query = "INSERT INTO information (name, value) VALUES " +
+                               "('gold', 50), " +
+                               "('stage', 0), " +
+                               "('time', 0) " +
+                               "ON DUPLICATE KEY UPDATE value = VALUES(value);";
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    int result = cmd.ExecuteNonQuery();
+                    Debug.Log($"Default values inserted or updated. Rows affected: {result}");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error to saving!!: " + ex.Message);
+            Debug.LogError("Error to saving!!: " + ex.Message);
+            Debug.LogError("Error to saving!!: " + ex.Message);
+            Debug.LogError("Error to saving!!: " + ex.Message);
+            Debug.LogError("Error to saving!!: " + ex.Message);
         }
     }
 
@@ -58,7 +103,7 @@ public class DataBaseConnectingTest : MonoBehaviour
 
                 if(name == "stage")
                 {
-                    compareStage(value,LoadMaxStage());
+                    compareStage(value,LoadValue("maxStage"));
                 }
 
                 
@@ -71,10 +116,7 @@ public class DataBaseConnectingTest : MonoBehaviour
     }
 
     //DB 퀴리 실행을 위한 함수2
-    public void saveGold(int gold) => Execute("gold", gold);
-    public void saveStage(int stage) => Execute("stage", stage);
-    public void saveTime(int gameTime) => Execute("time", gameTime);
-    public void saveMaxStage(int mStage) => Execute("maxStage", mStage);
+    public void saveValue(string name, int value) => Execute(name, value);
 
     //닫는 함수
     public void Close()
@@ -93,8 +135,7 @@ public class DataBaseConnectingTest : MonoBehaviour
         if (currentstage > savedstage)
         {
             Debug.Log("New Record is updated!!");
-            saveMaxStage(currentstage);
-
+            saveValue("maxStage", currentstage);
         }
         else
         {
@@ -103,10 +144,10 @@ public class DataBaseConnectingTest : MonoBehaviour
     }
 
     //DB에서 maxStage 값을 불러오는 함수
-    private int LoadMaxStage()
+    public int LoadValue(string name)
     {
         int stageValue = 0; // 기본값 (불러오지 못했을 경우 대비)
-        string query = "SELECT value FROM information WHERE name = 'maxStage'";
+        string query = $"SELECT value FROM information WHERE name = '{name}'";
 
         try
         {
@@ -119,20 +160,57 @@ public class DataBaseConnectingTest : MonoBehaviour
                     if (reader.Read())
                     {
                         stageValue = reader.GetInt32("value");
-                        Debug.Log("maxStage 값을 불러옴: " +stageValue);
+                        Debug.Log($"{name} 값을 불러옴: " +stageValue);
                     }
                     else
                     {
-                        Debug.LogWarning( "maxStage is null.");
+                        Debug.LogWarning( $"{name} is null.");
                     }
                 }
             }
         }
         catch (Exception ex)
         {
-            Debug.LogError("Error loading stage: " + ex.Message);
+            Debug.LogError("Error loading: " + ex.Message);
         }
         return stageValue;
+    }
+
+    public void SaveTowerData(string towerName, int towerType, string areaName, string tileName)
+    {
+        using (MySqlConnection conn = new MySqlConnection(connectionString))
+        {
+            try
+            {
+
+                Debug.Log($"[DB] 타워 저장 시작: {towerName}, {towerType}, {areaName}, {tileName}");
+                conn.Open();
+
+                string query = @"
+                    INSERT INTO information (name, tower_type, area_name, tile_name)
+                    VALUES (@name, @type, @area, @tile)
+                    ON DUPLICATE KEY UPDATE
+                        tower_type = VALUES(tower_type),
+                        area_name = VALUES(area_name),
+                        tile_name = VALUES(tile_name);";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@name", towerName);
+                    cmd.Parameters.AddWithValue("@type", towerType);
+                    cmd.Parameters.AddWithValue("@area", areaName);
+                    cmd.Parameters.AddWithValue("@tile", tileName);
+
+                    cmd.ExecuteNonQuery();
+                }
+
+                Debug.Log($"[DB] 타워 저장 성공: {towerName}");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("[DB] 타워 저장 실패: " + ex.Message);
+            }
+        }
     }
 
 }
