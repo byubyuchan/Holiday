@@ -173,7 +173,8 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator RemoveAfterDeath()
     {
-        yield return new WaitForSeconds(1.5f); // 사망 애니메이션 길이에 맞게 대기
+        if (Spawner.instance.level >= 5) yield return new WaitForSeconds(4f);
+        else yield return new WaitForSeconds(1.5f); // 사망 애니메이션 길이에 맞게 대기
         Spawner.instance.EnemyDefeated(); // 스포너에 몬스터 사망 알림
         StopAllCoroutines();
         gameObject.SetActive(false); // 비활성화하여 풀링 시스템으로 반환
