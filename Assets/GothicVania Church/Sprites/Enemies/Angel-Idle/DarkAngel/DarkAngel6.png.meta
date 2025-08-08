@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      DarkAngel6_0: 5763816645129362482
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
