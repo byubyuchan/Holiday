@@ -58,36 +58,37 @@ public class GameManager : MonoBehaviour
     public float hp;
     public float maxHp;
     public int level;
-    public int kill
-    {
-        get => _kill;
-        set
-        {
-             if (_kill != value)
-            {
-                _kill = value;
-                OnKillChanged?.Invoke(_kill);
-            }
-        }
-    }
+    public int kill;
+    //{
+    //    get => _kill;
+    //    set
+    //    {
+    //         if (_kill != value)
+    //        {
+    //            _kill = value;
+    //            OnKillChanged?.Invoke(_kill);
+    //        }
+    //    }
+    //}
 
     public Enemy bossEnemy;
 
-    private void Awake()
+    private void Awake() // 씬이 변경될 때, 인트로 씬 -> 메인 씬으로 갈 때 생성되기에 불러오기가 불가능함.
     {
         instance = this;
         AudioManager.instance.PlayBGM(true);
         PauseButton.gameObject.SetActive(true);
         StartRoundButton.gameObject.SetActive(true);
-        isLive = true;
         Gold = 50;
         currentRound = 0;
+        isLive = true;
     }
 
     void Update()
     {
         if (!isLive) return;
         gameTime += Time.deltaTime;
+        if(gameTime > 0 && gameTime < 1) dbConnector.defaultSetting();
     }
 
     public void StartRound()
