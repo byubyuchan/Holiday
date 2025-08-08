@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    public int currentRound // ÇöÀç ¶ó¿îµå
+    public int currentRound // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         get => _stage;
         set
@@ -59,21 +59,9 @@ public class GameManager : MonoBehaviour
     public float maxHp;
     public int level;
     public int kill;
-    //{
-    //    get => _kill;
-    //    set
-    //    {
-    //         if (_kill != value)
-    //        {
-    //            _kill = value;
-    //            OnKillChanged?.Invoke(_kill);
-    //        }
-    //    }
-    //}
-
     public Enemy bossEnemy;
 
-    private void Awake() // ¾ÀÀÌ º¯°æµÉ ¶§, ÀÎÆ®·Î ¾À -> ¸ÞÀÎ ¾ÀÀ¸·Î °¥ ¶§ »ý¼ºµÇ±â¿¡ ºÒ·¯¿À±â°¡ ºÒ°¡´ÉÇÔ.
+    private void Awake() // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç±â¿¡ ï¿½Ò·ï¿½ï¿½ï¿½ï¿½â°¡ ï¿½Ò°ï¿½ï¿½ï¿½ï¿½ï¿½.
     {
         instance = this;
         AudioManager.instance.PlayBGM(true);
@@ -101,14 +89,14 @@ public class GameManager : MonoBehaviour
         }
         currentRound++;
         Spawner.instance.level = currentRound - 1;
-        StartRoundButton.gameObject.SetActive(false); // ¹öÆ° ºñÈ°¼ºÈ­
+        StartRoundButton.gameObject.SetActive(false); // ï¿½ï¿½Æ° ï¿½ï¿½È°ï¿½ï¿½È­
         isStart = true;
     }
 
     public void EndRound()
     {
         isStart = false;
-        StartRoundButton.gameObject.SetActive(true); // ¹öÆ° È°¼ºÈ­
+        StartRoundButton.gameObject.SetActive(true); // ï¿½ï¿½Æ° È°ï¿½ï¿½È­
         Gold += 50;
         if (Spawner.instance.level == 4)
         {
@@ -116,6 +104,7 @@ public class GameManager : MonoBehaviour
             Spawner.instance.transform.localScale = new Vector3(4, 4, 4);
         }
         dbConnector.saveValue("time", (int)gameTime);
+        dbConnector.saveValue("kill", kill);
         Debug.Log("Time save!");
     }
 
@@ -127,7 +116,7 @@ public class GameManager : MonoBehaviour
         isLive = true;
         Gold = 50;
         currentRound = 0;
-        dbConnector.defaultSetting();
+
     }
 
     public void GameOver()
@@ -191,7 +180,7 @@ public class GameManager : MonoBehaviour
     public void Stop()
     {
         isLive = false;
-        // ½Ã°£ ¼Óµµ (¹èÀ²)
+        // ï¿½Ã°ï¿½ ï¿½Óµï¿½ (ï¿½ï¿½ï¿½ï¿½)
         Time.timeScale = 0;
         UIJoy.localScale = Vector3.zero;
         PauseButton.gameObject.SetActive(false);
@@ -200,7 +189,7 @@ public class GameManager : MonoBehaviour
     public void Resume()
     {
         isLive = true;
-        // ½Ã°£ ¼Óµµ (¹èÀ²)
+        // ï¿½Ã°ï¿½ ï¿½Óµï¿½ (ï¿½ï¿½ï¿½ï¿½)
         Time.timeScale = gameSpeed[speedIndex];
         UIJoy.localScale = Vector3.one;
         PauseButton.gameObject.SetActive(true);
@@ -216,7 +205,7 @@ public class GameManager : MonoBehaviour
     public void Pause_Resume()
     {
         isLive = true;
-        // ½Ã°£ ¼Óµµ (¹èÀ²)
+        // ï¿½Ã°ï¿½ ï¿½Óµï¿½ (ï¿½ï¿½ï¿½ï¿½)
         Time.timeScale = gameSpeed[speedIndex];
         UIPause.localScale = Vector3.zero;
     }
@@ -229,7 +218,7 @@ public class GameManager : MonoBehaviour
     }
     public void ShowMessage(string message, float time = 2)
     {
-        // ÀÌ¹Ì ½ÇÇà ÁßÀÎ ¸Þ½ÃÁö ÄÚ·çÆ¾ÀÌ ÀÖ´Ù¸é ÁßÁö
+        // ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½Æ¾ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½
         if (messageCoroutine != null)
         {
             StopCoroutine(messageCoroutine);
