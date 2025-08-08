@@ -58,18 +58,7 @@ public class GameManager : MonoBehaviour
     public float hp;
     public float maxHp;
     public int level;
-    public int kill
-    {
-        get => _kill;
-        set
-        {
-             if (_kill != value)
-            {
-                _kill = value;
-                OnKillChanged?.Invoke(_kill);
-            }
-        }
-    }
+    public int kill;
 
     public Enemy bossEnemy;
 
@@ -115,6 +104,7 @@ public class GameManager : MonoBehaviour
             Spawner.instance.transform.localScale = new Vector3(4, 4, 4);
         }
         dbConnector.saveValue("time", (int)gameTime);
+        dbConnector.saveValue("kill", kill);
         Debug.Log("Time save!");
     }
 
@@ -126,7 +116,7 @@ public class GameManager : MonoBehaviour
         isLive = true;
         Gold = 50;
         currentRound = 0;
-        dbConnector.defaultSetting();
+
     }
 
     public void GameOver()
