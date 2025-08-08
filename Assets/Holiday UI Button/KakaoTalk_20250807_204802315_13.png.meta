@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      KakaoTalk_20250807_204802315_13_0: -1973549540008049521
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

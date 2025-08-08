@@ -21,6 +21,9 @@ public class Spawner : MonoBehaviour
     public RuntimeAnimatorController animCon;
     public Animator anim;
 
+    [Header("# Game Object")]
+    public Talent RoundUp;
+
     void Awake()
     {
         instance = this;
@@ -94,6 +97,7 @@ public class Spawner : MonoBehaviour
             currentEnemyCount = 0;
             enemyCount = 0;
             GameManager.instance.EndRound();
+            RoundUp.Show();
         }
     }
 }
