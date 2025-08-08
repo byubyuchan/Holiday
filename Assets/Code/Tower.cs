@@ -24,7 +24,7 @@ public class Tower : MonoBehaviour
     public RuntimeAnimatorController[] animCon;
     public Animator anim;
 
-    public int towerindex;
+    public int towerindex; // 김태현 maker로 이전
     public float[] probabilities = { 50f, 20f, 15f, 10f, 5f };
 
     private void Awake()
