@@ -7,7 +7,7 @@ public class DataBaseConnectingTest : MonoBehaviour
     //DB 연결을 위한 생성자
     private string connectionString;
     private MySqlConnection connection;
-    //
+    private int playerId = 1; // 기본 플레이어 ID
     public static DataBaseConnectingTest Instance;
 
     private void Awake()
@@ -25,7 +25,7 @@ public class DataBaseConnectingTest : MonoBehaviour
         try
         {
             connection.Open();
-            Debug.Log("DB connecting Success!");
+            Debug.Log("first DB connecting Success!!!");
             if (Instance == null)
             {
                 Instance = this;
@@ -35,7 +35,7 @@ public class DataBaseConnectingTest : MonoBehaviour
             {
                 Destroy(gameObject);
             }
-            Close();
+            Close(); 
         }
         catch (Exception ex)
         {
@@ -50,27 +50,43 @@ public class DataBaseConnectingTest : MonoBehaviour
     }
     //기본 데이터 저장 함수
 
-    public void defaultSetting()
+    public void defaultSetting(int playerID)
     {
+        string query = @"
+            INSERT INTO info (Player, name, gold, stage, kill_cnt, clear, time)
+            VALUES (@Player, @name, @gold, @stage, @kill_cnt, @clear, @time)
+            ON DUPLICATE KEY UPDATE
+                name = VALUES(name),
+                gold = VALUES(gold),
+                stage = VALUES(stage),
+                kill_cnt = VALUES(kill_cnt),
+                clear = VALUES(clear),
+                time = VALUES(time);";
+
         try
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                conn.Open();
-                Debug.Log("DB connecting Success!");
+                connection.Open();
 
-                string query = "INSERT INTO information (name, value) VALUES " +
-                               "('gold', 50), " +
-                               "('stage', 0), " +
-                               "('time', 0) " +
-                               "ON DUPLICATE KEY UPDATE value = VALUES(value);";
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
-                    int result = cmd.ExecuteNonQuery();
-                    Debug.Log($"Default values inserted or updated. Rows affected: {result}");
+                    Debug.Log("DB Default Setting!");
+                    // SQL Injection 방지를 위한 파라미터 바인딩
+                    command.Parameters.AddWithValue("@Player", playerID);
+                    command.Parameters.AddWithValue("@name", "none");
+                    command.Parameters.AddWithValue("@gold", 50);
+                    command.Parameters.AddWithValue("@stage", 0);
+                    command.Parameters.AddWithValue("@kill_cnt", 0);
+                    command.Parameters.AddWithValue("@clear", 0);
+                    command.Parameters.AddWithValue("@time", 0);
+                    playerId = playerID;
+                    int rowsAffected = command.ExecuteNonQuery();
+                    Debug.Log("DB Default Setting! succuesss!!!!");
                 }
             }
         }
+
         catch (Exception ex)
         {
             Debug.LogError("Error to saving!!: " + ex.Message);
@@ -82,7 +98,7 @@ public class DataBaseConnectingTest : MonoBehaviour
     }
 
     //DB 퀴리 실행을 위한 함수1
-    public void Execute(string name, int value)
+    private void Execute(int playerId, string name, int value)
     {
         Debug.Log("excute 시작");
         try
@@ -90,23 +106,40 @@ public class DataBaseConnectingTest : MonoBehaviour
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "UPDATE information SET value = @value WHERE name = @name";
+                //switch (fieldName.ToLower()) // 소문자로 비교하여 실수 방지
+                //{
+                //    case "gold":
+                //        query = "INSERT INTO info (Player, gold) VALUES (@playerID, @value) ON DUPLICATE KEY UPDATE gold = @value";
+                //        break;
+                //    case "stage":
+                //        query = "INSERT INTO info (Player, stage) VALUES (@playerID, @value) ON DUPLICATE KEY UPDATE stage = @value";
+                //        break;
+                //    case "kill_cnt":
+                //        query = "INSERT INTO info (Player, kill_cnt) VALUES (@playerID, @value) ON DUPLICATE KEY UPDATE kill_cnt = @value";
+                //        break;
+                //    case "clear":
+                //        query = "INSERT INTO info (Player, clear) VALUES (@playerID, @value) ON DUPLICATE KEY UPDATE clear = @value";
+                //        break;
+                //    case "time":
+                //        query = "INSERT INTO info (Player, time) VALUES (@playerID, @value) ON DUPLICATE KEY UPDATE time = @value";
+                //        break;
+                //    // 중요: 'name' 컬럼은 VARCHAR 타입이므로 별도의 메소드로 관리하는 것이 좋습니다.
+                //    // case "name":
+                //    //     ...
+                //    //     break;
+                //    default: 
+                //원래 해야하는 방식이지만, 속도를 높이기 위해 아래의 보안에 취약한 방식으로 사용함.
+
+                string query = $"INSERT INTO info (Player, {name}) VALUES (@playerID, @value) ON DUPLICATE KEY UPDATE {name} = @value";
                 Debug.Log($"Saving to DB → {name} = {value}");
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@value", value);
-                    cmd.Parameters.AddWithValue("@name", name);
+                    cmd.Parameters.AddWithValue("@playerID", playerId);
                     cmd.ExecuteNonQuery();
                 }
-                Debug.Log($"Saved '{name}' = {value} to DB");
-
-                if(name == "stage")
-                {
-                    compareStage(value,LoadValue("maxStage"));
-                }
-
-                
+                Debug.Log($"Saved {playerId}, '{name}' = {value} to DB");                
             }
         }
         catch (Exception ex)
@@ -116,7 +149,7 @@ public class DataBaseConnectingTest : MonoBehaviour
     }
 
     //DB 퀴리 실행을 위한 함수2
-    public void saveValue(string name, int value) => Execute(name, value);
+    public void saveValue(int playerId, string name, int value) => Execute(playerId, name, value);
 
     //닫는 함수
     public void Close()
@@ -128,21 +161,6 @@ public class DataBaseConnectingTest : MonoBehaviour
             Debug.Log("DB connection end");
         }
     }
-
-    //DB에서 maxStage 값을 비교하는 함수
-    public void compareStage(int currentstage, int savedstage)
-    {
-        if (currentstage > savedstage)
-        {
-            Debug.Log("New Record is updated!!");
-            saveValue("maxStage", currentstage);
-        }
-        else
-        {
-            Debug.Log("Stage is not updated");
-        }
-    }
-
     //DB에서 maxStage 값을 불러오는 함수
     public int LoadValue(string name)
     {
@@ -175,42 +193,48 @@ public class DataBaseConnectingTest : MonoBehaviour
         }
         return stageValue;
     }
-
-    public void SaveTowerData(string towerName, int towerType, string areaName, string tileName)
+    
+    public void saveGold(int gold)
     {
-        using (MySqlConnection conn = new MySqlConnection(connectionString))
-        {
-            try
-            {
+        Execute(playerId,"gold",gold);
 
-                Debug.Log($"[DB] 타워 저장 시작: {towerName}, {towerType}, {areaName}, {tileName}");
-                conn.Open();
-
-                string query = @"
-                    INSERT INTO information (name, tower_type, area_name, tile_name)
-                    VALUES (@name, @type, @area, @tile)
-                    ON DUPLICATE KEY UPDATE
-                        tower_type = VALUES(tower_type),
-                        area_name = VALUES(area_name),
-                        tile_name = VALUES(tile_name);";
-
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@name", towerName);
-                    cmd.Parameters.AddWithValue("@type", towerType);
-                    cmd.Parameters.AddWithValue("@area", areaName);
-                    cmd.Parameters.AddWithValue("@tile", tileName);
-
-                    cmd.ExecuteNonQuery();
-                }
-
-                Debug.Log($"[DB] 타워 저장 성공: {towerName}");
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError("[DB] 타워 저장 실패: " + ex.Message);
-            }
-        }
     }
+
+    //public void SaveTowerData(string towerName, int towerType, string areaName, string tileName)
+    //{
+    //    using (MySqlConnection conn = new MySqlConnection(connectionString))
+    //    {
+    //        try
+    //        {
+
+    //            Debug.Log($"[DB] 타워 저장 시작: {towerName}, {towerType}, {areaName}, {tileName}");
+    //            conn.Open();
+
+    //            string query = @"
+    //                INSERT INTO information (name, tower_type, area_name, tile_name)
+    //                VALUES (@name, @type, @area, @tile)
+    //                ON DUPLICATE KEY UPDATE
+    //                    tower_type = VALUES(tower_type),
+    //                    area_name = VALUES(area_name),
+    //                    tile_name = VALUES(tile_name);";
+
+    //            using (MySqlCommand cmd = new MySqlCommand(query, conn))
+    //            {
+    //                cmd.Parameters.AddWithValue("@name", towerName);
+    //                cmd.Parameters.AddWithValue("@type", towerType);
+    //                cmd.Parameters.AddWithValue("@area", areaName);
+    //                cmd.Parameters.AddWithValue("@tile", tileName);
+
+    //                cmd.ExecuteNonQuery();
+    //            }
+
+    //            Debug.Log($"[DB] 타워 저장 성공: {towerName}");
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            Debug.LogError("[DB] 타워 저장 실패: " + ex.Message);
+    //        }
+    //    }
+    //}
 
 }
