@@ -4,6 +4,7 @@ public class Talent : MonoBehaviour
 {
     RectTransform rect;
     Transform[] talents;
+    private int RandomGold;
 
     void Awake()
     {
@@ -31,6 +32,8 @@ public class Talent : MonoBehaviour
 
     public void Talent1()
     {
-        GameManager.instance.Gold += Random.Range(0, 101);
+        RandomGold = Random.Range(0, 101);
+        GameManager.instance.Gold += RandomGold;
+        GameManager.instance.ShowMessage($"{RandomGold}∏∏≈≠ ∞ÒµÂ∏¶ »πµÊ«ﬂΩ¿¥œ¥Ÿ!");
     }
 }

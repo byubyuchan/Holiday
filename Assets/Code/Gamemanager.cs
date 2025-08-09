@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
     public int kill;
     public Enemy bossEnemy;
 
-    private void Awake() // ���� ����� ��, ��Ʈ�� �� -> ���� ������ �� �� �����Ǳ⿡ �ҷ����Ⱑ �Ұ�����.
+    private void Awake()
     {
         instance = this;
         AudioManager.instance.PlayBGM(true);
@@ -95,6 +95,7 @@ public class GameManager : MonoBehaviour
         {
             Spawner.instance.anim.runtimeAnimatorController = Spawner.instance.animCon;
             Spawner.instance.transform.localScale = new Vector3(4, 4, 4);
+            ImageChanger.instance.ChangeMonsterImage();
         }
         dbConnector.saveValue(playerId, "time", (int)gameTime);
         dbConnector.saveValue(playerId, "kill_cnt", kill);

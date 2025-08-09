@@ -19,6 +19,7 @@ public class Tower : MonoBehaviour
     public string cost;
     public int projectileIndex;
     public bool flipX;
+    public int price;
 
     public TowerAttack towerattack;
     public RuntimeAnimatorController[] animCon;
@@ -82,6 +83,7 @@ public class Tower : MonoBehaviour
         speed = towerData.Speed;
         flipX = towerData.FlipX;
         cost = towerData.Cost;
+        price = towerData.Star;
         projectileIndex = towerData.ProjectileIndex;
 
         spriteRenderer.flipX = flipX;
