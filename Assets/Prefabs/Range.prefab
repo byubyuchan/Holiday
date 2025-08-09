@@ -290,7 +290,7 @@ MonoBehaviour:
     Range: 7
     Damage: 50
     Cost: C
-    Star: 0
+    Star: 2
     ProjectileIndex: 1
     FlipX: 1
     Desc: 
@@ -300,7 +300,7 @@ MonoBehaviour:
     Range: 10
     Damage: 100
     Cost: B
-    Star: 0
+    Star: 4
     ProjectileIndex: 2
     FlipX: 1
     Desc: 
@@ -310,7 +310,7 @@ MonoBehaviour:
     Range: 15
     Damage: 150
     Cost: A
-    Star: 0
+    Star: 10
     ProjectileIndex: 3
     FlipX: 1
     Desc: 
@@ -320,7 +320,7 @@ MonoBehaviour:
     Range: 15
     Damage: 500
     Cost: S
-    Star: 0
+    Star: 100
     ProjectileIndex: 4
     FlipX: 1
     Desc: 

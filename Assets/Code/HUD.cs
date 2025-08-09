@@ -3,7 +3,8 @@ using UnityEngine.UI;
 
 public class HUD : MonoBehaviour
 {
-    public enum InfoType { Round, CurrentEnemy, Life, Gold, Time, ProgressSlider, ProgressText }
+    static public HUD instance;
+    public enum InfoType { Round, CurrentEnemy, Life, Gold, Time, ProgressSlider, ProgressText}
     public InfoType type;
 
     Text myText;
@@ -11,6 +12,7 @@ public class HUD : MonoBehaviour
 
     void Awake()
     {
+        instance = this;
         myText = GetComponent<Text>();
         mySlider = GetComponent<Slider>();
     }

@@ -1061,8 +1061,9 @@ GameObject:
   - component: {fileID: 39889126}
   - component: {fileID: 39889128}
   - component: {fileID: 39889127}
+  - component: {fileID: 39889129}
   m_Layer: 0
-  m_Name: Boss Image
+  m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1107,7 +1108,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2626225283513565156, guid: 825c4a8fe4e0a5e4ebd9884c911a3dda, type: 3}
+  m_Sprite: {fileID: -8853814979877873080, guid: 474babc48e17c9447870dcf94ded395d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1125,6 +1126,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 39889125}
   m_CullTransparentMesh: 1
+--- !u!114 &39889129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 39889125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bac1804facaf51b43a4af4e73148e661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BossImage: {fileID: 2626225283513565156, guid: 825c4a8fe4e0a5e4ebd9884c911a3dda, type: 3}
 --- !u!1 &43884801
 GameObject:
   m_ObjectHideFlags: 0
@@ -14276,6 +14290,7 @@ MonoBehaviour:
   speedText: {fileID: 1522026892}
   damageText: {fileID: 1313337437}
   rangeText: {fileID: 728820461}
+  SellText: {fileID: 775826663}
   towerIcon: {fileID: 1652782608}
   infoTower: {fileID: 0}
 --- !u!1 &589394363
@@ -37811,7 +37826,7 @@ MonoBehaviour:
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: Heal
+            m_StringArgument: P_Heal
             m_BoolArgument: 0
           m_CallState: 2
 --- !u!1 &1375359841
@@ -56918,7 +56933,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\uACE8\uB4DC \uD68D\uB4DD"
+  m_Text: "\uAF5D\uC5C6\uB294 \uB3C4\uBC15"
 --- !u!222 &1887708308
 CanvasRenderer:
   m_ObjectHideFlags: 0

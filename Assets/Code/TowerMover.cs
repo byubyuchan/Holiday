@@ -39,7 +39,7 @@ public class TowerMover : MonoBehaviour
         if (selectedTower != null)
         {
             selectedTower.RemoveTower();
-            GameManager.instance.Gold += 5;
+            GameManager.instance.Gold += selectedTower.price;
             selectedTower = null;
             TowerInfo.instance.HideUI();
             towerSelector.ResetTile();

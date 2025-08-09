@@ -1,43 +1,36 @@
 fileFormatVersion: 2
-guid: 5cdfcef2d5ef97347a8d7935407f81ab
-AssetOrigin:
-  serializedVersion: 1
-  productId: 167949
-  packageName: Monsters_Creatures_Fantasy
-  packageVersion: 1.0
-  assetPath: Assets/Monsters Creatures Fantasy/Sprites/Mushroom/Attack1.png
-  uploadId: 365724
+guid: d252717c4278ab745abd05bf1c660957
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7008412969330441016
-    second: Attack_0
+      213: -2306845893092735450
+    second: blob idle-Photoroom_0
   - first:
-      213: -7763475090823894447
-    second: Attack_1
+      213: 7687635475598998116
+    second: blob idle-Photoroom_1
   - first:
-      213: 302641331129538988
-    second: Attack_2
+      213: -1592204141323729057
+    second: blob idle-Photoroom_2
   - first:
-      213: -6329420634031446844
-    second: Attack_3
+      213: 2324963534234981369
+    second: blob idle-Photoroom_3
   - first:
-      213: -910092549403018386
-    second: Attack_4
+      213: -3310205446258961566
+    second: blob idle-Photoroom_4
   - first:
-      213: 221524225039350300
-    second: Attack_5
+      213: 3610407366976967291
+    second: blob idle-Photoroom_5
   - first:
-      213: 1290532464073988732
-    second: Attack_6
+      213: -897609865635272331
+    second: blob idle-Photoroom_6
   - first:
-      213: 4780903288873104255
-    second: Attack_7
+      213: 37300984505022841
+    second: blob idle-Photoroom_7
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -65,7 +58,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -94,9 +87,9 @@ TextureImporter:
   compressionQualitySet: 0
   textureFormatSet: 0
   ignorePngGamma: 0
-  applyGammaDecoding: 1
+  applyGammaDecoding: 0
   swizzle: 50462976
-  cookieLightType: 1
+  cookieLightType: 0
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
@@ -125,45 +118,6 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
-    buildTarget: WindowsStoreApps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Lumin
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -180,177 +134,177 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Attack_0
+      name: Slime_Idle_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 150
-        height: 150
+        width: 80
+        height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.32}
+      pivot: {x: 0.5, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bdd5ec74f3067e54e8668ca818a2cc21
-      internalID: -7008412969330441016
+      spriteID: 15476ebd3752a684abd6c1c32dc35d8f
+      internalID: -56832402
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Attack_1
+      name: Slime_Idle_1
       rect:
         serializedVersion: 2
-        x: 150
+        x: 80
         y: 0
-        width: 150
-        height: 150
+        width: 80
+        height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.32}
+      pivot: {x: 0.5, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: af1c4e6c45044a94a9e7d5ec356dc97c
-      internalID: -7763475090823894447
+      spriteID: 11ea6712e686ad54ab8eed2589d22486
+      internalID: -241401135
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Attack_2
+      name: Slime_Idle_2
       rect:
         serializedVersion: 2
-        x: 300
+        x: 160
         y: 0
-        width: 150
-        height: 150
+        width: 80
+        height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.32}
+      pivot: {x: 0.5, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c0b6967bd2c937f4eb1cebeb08181b42
-      internalID: 302641331129538988
+      spriteID: 09326420a34fd3e4b8740c0de84b12ed
+      internalID: 229960411
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Attack_3
+      name: Slime_Idle_3
       rect:
         serializedVersion: 2
-        x: 450
+        x: 240
         y: 0
-        width: 150
-        height: 150
+        width: 80
+        height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.32}
+      pivot: {x: 0.5, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 94db320c8a3dce549bf4020884d93925
-      internalID: -6329420634031446844
+      spriteID: bb70e78f8d0160447bd8c9879a1e95e0
+      internalID: -807203595
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Attack_4
+      name: Slime_Idle_4
       rect:
         serializedVersion: 2
-        x: 600
+        x: 320
         y: 0
-        width: 150
-        height: 150
+        width: 80
+        height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.32}
+      pivot: {x: 0.5, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 47a1f875ed5dc414d94f782ab5c0b9b7
-      internalID: -910092549403018386
+      spriteID: b448bd570382cae49a44bec8483e4616
+      internalID: -2045581290
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Attack_5
+      name: Slime_Idle_5
       rect:
         serializedVersion: 2
-        x: 750
+        x: 400
         y: 0
-        width: 150
-        height: 150
+        width: 80
+        height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.32}
+      pivot: {x: 0.5, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 543e8d9afe19a5b4b81fdb82fad04d64
-      internalID: 221524225039350300
+      spriteID: ff14e0ae79e70eb45b2784f1ff3bf1ec
+      internalID: 1048674258
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Attack_6
+      name: Slime_Idle_6
       rect:
         serializedVersion: 2
-        x: 900
+        x: 480
         y: 0
-        width: 150
-        height: 150
+        width: 80
+        height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.32}
+      pivot: {x: 0.5, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 04772ce1c331b474ba66f073ecfca82e
-      internalID: 1290532464073988732
+      spriteID: e900aa2dc91afb148a27b2953990ad98
+      internalID: 848622753
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Attack_7
+      name: Slime_Idle_7
       rect:
         serializedVersion: 2
-        x: 1050
+        x: 560
         y: 0
-        width: 150
-        height: 150
+        width: 80
+        height: 80
       alignment: 9
-      pivot: {x: 0.5, y: 0.32}
+      pivot: {x: 0.5, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 75042db146f24af42bc2abddf0bcf845
-      internalID: 4780903288873104255
+      spriteID: f70c1546176783f40a4e6afc2a69f33d
+      internalID: -1445465520
       vertices: []
       indices: 
       edges: []
@@ -359,7 +313,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 8d7e1cbe200c3f44e864d63c5589a53a
     internalID: 0
     vertices: []
     indices: 
@@ -369,14 +323,14 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Attack_0: -7008412969330441016
-      Attack_1: -7763475090823894447
-      Attack_2: 302641331129538988
-      Attack_3: -6329420634031446844
-      Attack_4: -910092549403018386
-      Attack_5: 221524225039350300
-      Attack_6: 1290532464073988732
-      Attack_7: 4780903288873104255
+      Slime_Idle_0: -56832402
+      Slime_Idle_1: -241401135
+      Slime_Idle_2: 229960411
+      Slime_Idle_3: -807203595
+      Slime_Idle_4: -2045581290
+      Slime_Idle_5: 1048674258
+      Slime_Idle_6: 848622753
+      Slime_Idle_7: -1445465520
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -9,7 +9,9 @@ public class TowerInfo : MonoBehaviour
     [SerializeField] private Text speedText; // 속도 텍스트
     [SerializeField] private Text damageText; // 공격력 텍스트
     [SerializeField] private Text rangeText; // 사거리 텍스트
+    [SerializeField] private Text SellText; // 판매용 텍스트
     [SerializeField] private Image towerIcon; // 타워 아이콘 이미지
+
 
     public Tower infoTower;
     public static TowerInfo instance;
@@ -35,6 +37,7 @@ public class TowerInfo : MonoBehaviour
         speedText.text = $"공격속도 : {tower.speed}";
         damageText.text = $"공격력 : {tower.damage}";
         rangeText.text = $"사거리 : {tower.range}";
+        SellText.text = $"판매 : (+{tower.price}G)";
 
         // 아이콘 업데이트
         SpriteRenderer spriteRenderer = tower.GetComponent<SpriteRenderer>(); // 타워의 SpriteRenderer 가져오기
@@ -54,6 +57,7 @@ public class TowerInfo : MonoBehaviour
             speedText.text = $"공격속도 : {infoTower.speed}";
             damageText.text = $"공격력 : {infoTower.damage}";
             rangeText.text = $"사거리 : {infoTower.range}";
+            SellText.text = $"판매 : (+{infoTower.price}G)";
 
             // 실시간으로 아이콘 업데이트 (필요 시)
             SpriteRenderer spriteRenderer = infoTower.GetComponent<SpriteRenderer>();

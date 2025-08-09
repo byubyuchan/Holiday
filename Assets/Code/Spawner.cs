@@ -97,7 +97,7 @@ public class Spawner : MonoBehaviour
             currentEnemyCount = 0;
             enemyCount = 0;
             GameManager.instance.EndRound();
-            RoundUp.Show();
+            if (level<=4) RoundUp.Show();
         }
     }
 }
