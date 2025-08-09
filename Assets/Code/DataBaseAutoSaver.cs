@@ -5,7 +5,7 @@ public class AutoSaver : MonoBehaviour
 {
     public GameManager gameManager;
     public DataBaseConnectingTest dbConnectingT;
-    
+
     void Start()
     {
         // gameManager 인스턴스가 없으면 찾기 없으면 오류가 뜸
@@ -28,6 +28,6 @@ public class AutoSaver : MonoBehaviour
     //변화된 값 넣기
     private void SaveGold(int gold)
     {
-        dbConnectingT?.saveValue("gold", gold);
+        dbConnectingT?.saveGold(gold);
     }
 }

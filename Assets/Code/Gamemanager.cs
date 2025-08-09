@@ -5,9 +5,11 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
+
 public class GameManager : MonoBehaviour
 {
     private Coroutine messageCoroutine;
+
 
     [Header("# Game Object")]
     public GameObject goal;
@@ -37,18 +39,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    public int currentRound // ���� ����
-    {
-        get => _stage;
-        set
-        {
-            if (_stage != value)
-            {
-                _stage = value;
-                OnStageChanged?.Invoke(_stage);
-            }
-        }
-    } 
+    public int currentRound; // ���� ����
 
     int speedIndex = 0;
     public float[] gameSpeed = { 1f, 1.5f, 2f, 2.5f, 3f };
@@ -70,13 +61,14 @@ public class GameManager : MonoBehaviour
         Gold = 50;
         currentRound = 0;
         isLive = true;
+        playerId = Random.Range(1,400000000);
+        dbConnector.defaultSetting(playerId);
     }
 
     void Update()
     {
         if (!isLive) return;
         gameTime += Time.deltaTime;
-        if(gameTime > 0 && gameTime < 1) dbConnector.defaultSetting();
     }
 
     public void StartRound()
@@ -91,6 +83,7 @@ public class GameManager : MonoBehaviour
         Spawner.instance.level = currentRound - 1;
         StartRoundButton.gameObject.SetActive(false); // ��ư ��Ȱ��ȭ
         isStart = true;
+
     }
 
     public void EndRound()
@@ -103,8 +96,9 @@ public class GameManager : MonoBehaviour
             Spawner.instance.anim.runtimeAnimatorController = Spawner.instance.animCon;
             Spawner.instance.transform.localScale = new Vector3(4, 4, 4);
         }
-        dbConnector.saveValue("time", (int)gameTime);
-        dbConnector.saveValue("kill", kill);
+        dbConnector.saveValue(playerId, "time", (int)gameTime);
+        dbConnector.saveValue(playerId, "kill_cnt", kill);
+        dbConnector.saveValue(playerId, "stage", currentRound);
         Debug.Log("Time save!");
     }
 
@@ -116,14 +110,10 @@ public class GameManager : MonoBehaviour
         isLive = true;
         Gold = 50;
         currentRound = 0;
-
     }
 
     public void GameOver()
     {
-        dbConnector.saveValue("time", (int)gameTime);
-        dbConnector.saveValue("kill", kill);
-        StartCoroutine(GameOverRoutine());
         dbConnector.Close();
     }
 
@@ -236,12 +226,8 @@ public class GameManager : MonoBehaviour
     }
 
     [Header("# DataBase")]
-    public UnityEvent<int> OnStageChanged;
     public UnityEvent<int> OnGoldChanged;
-    public UnityEvent<int> OnKillChanged;
     public DataBaseConnectingTest dbConnector;
 
-    private int _stage;
     private int _gold;
-    private int _kill;
 }

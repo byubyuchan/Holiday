@@ -113,7 +113,5 @@ public class TowerMaker : MonoBehaviour
         string tileName = loadtile.name;
         string areaName = loadtile.transform.parent.name;
 
-        dbConnect.SaveTowerData(towerName, towerType, areaName, tileName);
-
     }
 }
