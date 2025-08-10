@@ -1041,7 +1041,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\uD2B9\uC131 \uC124\uBA85"
+  m_Text: "\uD68C\uBCF5\uC5D0 \uD544\uC694\uD55C \uACE8\uB4DC\uC758 \uC591\uC744
+    3G\uB85C \uBCC0\uACBD\uD569\uB2C8\uB2E4"
 --- !u!222 &37021032
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11625,6 +11626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerParent: {fileID: 1706544133}
+  sale: 0
 --- !u!4 &485875044
 Transform:
   m_ObjectHideFlags: 0
@@ -11835,7 +11837,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\uD2B9\uC131\uBA85"
+  m_Text: "\uD68C\uBCF5 \uACE8\uB4DC\uB7C9 \uD560\uC778"
 --- !u!222 &494874632
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19838,6 +19840,7 @@ GameObject:
   - component: {fileID: 921287169}
   - component: {fileID: 921287168}
   - component: {fileID: 921287167}
+  - component: {fileID: 921287170}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -19861,8 +19864,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 50, y: 0}
+  m_SizeDelta: {x: -100, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &921287167
 MonoBehaviour:
@@ -19912,7 +19915,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "      \uD68C\uBCF5(5G)"
+  m_Text: "\uD68C\uBCF5(5G)"
 --- !u!222 &921287169
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19921,6 +19924,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 921287165}
   m_CullTransparentMesh: 1
+--- !u!114 &921287170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 921287165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 388367a871479ff4cb06129700ff931a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healButtonText: {fileID: 921287168}
 --- !u!1 &922781192
 GameObject:
   m_ObjectHideFlags: 0
@@ -58032,6 +58048,18 @@ MonoBehaviour:
       - m_Target: {fileID: 941681427}
         m_TargetAssemblyTypeName: Talent, Assembly-CSharp
         m_MethodName: Hide
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 941681427}
+        m_TargetAssemblyTypeName: Talent, Assembly-CSharp
+        m_MethodName: Talent2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -36,4 +36,9 @@ public class Talent : MonoBehaviour
         GameManager.instance.Gold += RandomGold;
         GameManager.instance.ShowMessage($"{RandomGold}∏∏≈≠ ∞ÒµÂ∏¶ »πµÊ«ﬂΩ¿¥œ¥Ÿ!");
     }
+
+    public void Talent2()
+    {
+        TowerManager.instance.sale = true;
+    }
 }
