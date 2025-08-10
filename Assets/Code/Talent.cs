@@ -47,4 +47,30 @@ public class Talent : MonoBehaviour
         TowerMaker.instance.RandomPay = 4;
         TowerMaker.instance.selectedTowerPrefab = null;
     }
+
+    public void Talent4()
+    {
+        TowerMaker.instance.MeleePay = 6;
+        TowerMaker.instance.selectedTowerPrefab = null;
+    }
+
+    public void Talent5()
+    {
+        TowerMaker.instance.RangedPay = 6;
+        TowerMaker.instance.selectedTowerPrefab = null;
+    }
+
+    public void Talent6()
+    {
+        TowerMaker.instance.TankPay = 6;
+        TowerMaker.instance.selectedTowerPrefab = null;
+    }
+
+    public void Talent7()
+    {
+        RandomGold = Random.Range(2, 11);
+        TowerMaker.instance.RandomPay = RandomGold;
+        TowerMaker.instance.selectedTowerPrefab = null;
+        GameManager.instance.ShowMessage($"랜덤 타워의 가격이 {RandomGold}G로 변경되었습니다!");
+    }
 }
