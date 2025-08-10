@@ -182,11 +182,16 @@ public class DataBaseConnectingTest : MonoBehaviour
             Debug.Log("DB connection end");
         }
     }
-    //DB에서 maxStage 값을 불러오는 함수
-    public int LoadValue(string name)
+
+    public void clearCnt()
     {
-        int stageValue = 0; // 기본값 (불러오지 못했을 경우 대비)
-        string query = $"SELECT value FROM information WHERE name = '{name}'";
+        Execute(playerId, "clear", LoadValue(0));
+        Execute(0, "clear", LoadValue(0)+1);
+    }
+    public int LoadValue(int playerID)
+    {
+        int defalutValue = -1; // 기본값 (불러오지 못했을 경우 대비)
+        string query = $"SELECT clear FROM info WHERE Player = @playerID";
 
         try
         {
@@ -194,25 +199,30 @@ public class DataBaseConnectingTest : MonoBehaviour
             { 
                 conn.Open();
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
-                    if (reader.Read())
+                    cmd.Parameters.AddWithValue("@playerID", playerID);
+
+                    // ExecuteScalar: 단일 값(첫 번째 행의 첫 번째 컬럼)만 가져올 때 편리합니다.
+                    object result = cmd.ExecuteScalar();
+
+                    // 결과가 null이 아니고 DBNull이 아닐 경우
+                    if (result != null && result != DBNull.Value)
                     {
-                        stageValue = reader.GetInt32("value");
-                        Debug.Log($"{name} 값을 불러옴: " +stageValue);
+                        defalutValue = Convert.ToInt32(result);
+                        Debug.Log("[DB Success] clear 값을 불러옴:");
                     }
                     else
                     {
-                        Debug.LogWarning( $"{name} is null.");
+                        Debug.LogWarning($"[DB Info] Player {playerID}의 clear값이 존재하지 않거나 NULL입니다.");
                     }
                 }
             }
         }
         catch (Exception ex)
         {
-            Debug.LogError("Error loading: " + ex.Message);
+            Debug.LogError("DB Error loading to clear" + ex.Message);
         }
-        return stageValue;
+        return defalutValue;
     }
 
     public void saveGold(int gold)

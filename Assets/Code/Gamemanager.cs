@@ -165,6 +165,8 @@ public class GameManager : MonoBehaviour
     public void GameWin()
     {
         StartCoroutine(GameWinRoutine());
+        //dbConnector.loadValue(playerId);//플레이어의 clear 순위를 가져옴(int로)
+        dbConnector.clearCnt();//플레이어의 클리어 순서를 저장하고, 전체 클리어 횟수를 하나 올림
     }
 
     IEnumerator GameWinRoutine()
