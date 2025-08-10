@@ -112,6 +112,7 @@ public class BossEnemy : Enemy
         }
         AudioManager.instance.PlaySFX("E_Dead1"); //B_Dead ¹Ù²Ü °Å Ã£±â
         GameManager.instance.ShowRetryButton();
+        GameManager.instance.isLive = false;
     }
 
     public override void MoveTowardsTarget()
