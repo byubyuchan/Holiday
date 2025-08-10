@@ -9238,8 +9238,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BGMClip: {fileID: 8300000, guid: 5bbd3c2dce81db9419831c9b1892d607, type: 3}
-  BGMVolume: 0
-  SFXVolume: 0
+  BGMVolume: 0.1
+  SFXVolume: 0.2
   channels: 300
   BGMScrollbar: {fileID: 1170197995}
   SFXScrollbar: {fileID: 521112385}
@@ -63941,9 +63941,11 @@ MonoBehaviour:
   EnemyIndex: 0
   BossIndex: 13
   level: 0
-  maxEnemies: 6400000096000000c80000002c010000f401000001000000
+  maxEnemies: 320000006400000096000000c80000002c01000001000000
   currentEnemyCount: 0
   enemyCount: 0
+  SpawnCount: 0
+  isEnd: 0
   enemy: {fileID: 0}
   spriteRenderer: {fileID: 0}
   animCon: {fileID: 22100000, guid: b5d1c6379f75b3542b26b220c5a1bb7a, type: 2}

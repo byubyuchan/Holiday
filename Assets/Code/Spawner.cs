@@ -14,6 +14,8 @@ public class Spawner : MonoBehaviour
     public int[] maxEnemies;  // 최대 몬스터 수
     public int currentEnemyCount = 0;  // 현재 몬스터 수
     public int enemyCount = 0;
+    public int SpawnCount = 1;
+    public bool isEnd = false;
 
     public GameObject enemy;
 
@@ -34,10 +36,14 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
+
+        if (enemyCount >= maxEnemies[level]) return;
+
+        if (isEnd) return;
+
         if (!GameManager.instance.isStart) return;
 
         timer += Time.deltaTime;
-
 
         if (timer > spawnData[level].spawnTime)
         {
@@ -71,19 +77,29 @@ public class Spawner : MonoBehaviour
             {
                 if (enemyCount >= maxEnemies[level])
                 {
-                    return;
+                    break;
                 }
                 GameObject enemy = GameManager.instance.pool.Get(EnemyIndex); // 풀링될 프리팹 선택
-                if (enemy == null || currentEnemyCount >= 150)
-                {
-                    continue;
-                }
+
+                    // 문제 되는 부분 !! //
+                //if (enemy == null || currentEnemyCount >= 150)
+                //{
+                //    break;
+                //}
 
                 Transform randomSpawnPoint = spawnPoint[Random.Range(1, spawnPoint.Length)];
                 enemy.transform.position = randomSpawnPoint.position;
                 enemy.GetComponent<Enemy>().Init(spawnData[i]);
+                enemy.GetComponent<Enemy>().number = SpawnCount;
+                if (enemy.GetComponent<Enemy>().number >= maxEnemies[level])
+                {
+                    // 현재 스포너 카운트 먼저 보정
+                    enemy.GetComponent<Enemy>().Dead();
+                    return;
+                }
                 enemyCount++;
                 currentEnemyCount++;
+                SpawnCount++;
             }
         }
     }
@@ -91,13 +107,14 @@ public class Spawner : MonoBehaviour
     public void EnemyDefeated()
     {
         GameManager.instance.kill++;
-        currentEnemyCount--;
+        currentEnemyCount = Mathf.Max(0, currentEnemyCount - 1);
         if (currentEnemyCount <= 0 && enemyCount >= maxEnemies[level])
         {
-            currentEnemyCount = 0;
-            enemyCount = 0;
+            if (isEnd) return;
+            isEnd = true;
             GameManager.instance.EndRound();
             if (level<=4) RoundUp.Show();
+            PoolManager.instance.DeactivateAll();
         }
     }
 }

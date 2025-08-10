@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
     public float attackCooldown; // 공격 쿨타임
     public RuntimeAnimatorController[] animCon; // 애니메이션 컨트롤러 배열
     private float lastAttackTime = 0f; // 마지막 공격 시간
+    public int number;
 
     [Header("# Check Info")]
     public Transform target; // 현재 목표 (타워 또는 Goal)
@@ -36,6 +37,7 @@ public class Enemy : MonoBehaviour
     public Rigidbody2D rigid;
     private Collider2D col;
     private SpriteRenderer spriter;
+    private bool isDead = false;
 
 
     void Start()
@@ -48,11 +50,11 @@ public class Enemy : MonoBehaviour
     {
         isLive = true;
         hp = maxHp;
-        isLive = true;
         col.enabled = true;
         rigid.simulated = true;
         spriter.sortingOrder = 5;
         col.enabled = true;
+        isDead = false;
 
         transform.position = new Vector3(transform.position.x, transform.position.y, 0); // Z 축 고정
     }
@@ -147,6 +149,9 @@ public class Enemy : MonoBehaviour
 
     virtual public void Dead()
     {
+        if (isDead) return;  // 중복 호출 방지
+        isDead = true;
+
         anim.SetTrigger("Death");
         rigid.linearVelocity = Vector2.zero; // 이동 멈춤
         //col.enabled = false; // 충돌 비활성화
@@ -244,6 +249,8 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
+        if (isDead) return;
+
         hp -= damage;
 
         if (!gameObject.activeInHierarchy) // 활성 상태 확인
