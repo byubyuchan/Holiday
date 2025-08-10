@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PoolManager : MonoBehaviour
 {
+    public static PoolManager instance;
     // 프리펩들을 보관할 배열
     public GameObject[] prefabs;
     // 풀 담당을 하는 리스트 배열
@@ -10,6 +11,7 @@ public class PoolManager : MonoBehaviour
     // 변수와 리스트는 1:1 비율
     private void Awake()
     {
+        instance = this;
         pools = new List<GameObject>[prefabs.Length];
         for (int i = 0; i < pools.Length; i++)
         {
@@ -41,5 +43,19 @@ public class PoolManager : MonoBehaviour
         }
 
         return select;
+    }
+
+    public void DeactivateAll()
+    {
+        for (int i = 0; i < pools.Length; i++)
+        {
+            foreach (GameObject obj in pools[i])
+            {
+                if (obj.activeSelf)
+                {
+                    obj.SetActive(false);
+                }
+            }
+        }
     }
 }

@@ -82,6 +82,10 @@ public class GameManager : MonoBehaviour
         }
         currentRound++;
         Spawner.instance.level = currentRound - 1;
+        Spawner.instance.currentEnemyCount = 0;
+        Spawner.instance.enemyCount = 0;
+        Spawner.instance.SpawnCount = 0;
+        Spawner.instance.isEnd = false;
         StartRoundButton.gameObject.SetActive(false); // ��ư ��Ȱ��ȭ
         isStart = true;
 
