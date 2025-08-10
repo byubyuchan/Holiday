@@ -28,7 +28,6 @@ public class Goal : MonoBehaviour
         {
             CutsceneManager.instance.PlayDeathCutscene(this.transform, "패배하였습니다...",0.5f);
             GameManager.instance.ShowRetryButton(4f, false);
-            AudioManager.instance.PlaySFX("P_Hit4");
             GameManager.instance.isLive = false;
         }
     }

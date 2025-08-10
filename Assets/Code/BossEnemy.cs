@@ -110,7 +110,6 @@ public class BossEnemy : Enemy
             // Á×À» ¶§ ÄÆ¾À ½ÇÇà
             CutsceneManager.instance.PlayDeathCutscene(this.transform, "Clear!",0.5f);
         }
-        AudioManager.instance.PlaySFX("E_Dead1"); //B_Dead ¹Ù²Ü °Å Ã£±â
         GameManager.instance.ShowRetryButton(4f, true);
         GameManager.instance.isLive = false;
     }

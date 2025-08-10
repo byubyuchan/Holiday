@@ -285,9 +285,9 @@ MonoBehaviour:
   tile: {fileID: 0}
   towerData:
   - towerType: Range
-    HP: 50
+    HP: 150
     Speed: 1.5
-    Range: 7
+    Range: 8
     Damage: 50
     Cost: C
     Star: 2
@@ -295,7 +295,7 @@ MonoBehaviour:
     FlipX: 1
     Desc: 
   - towerType: Range
-    HP: 100
+    HP: 250
     Speed: 1.5
     Range: 10
     Damage: 100
@@ -305,7 +305,7 @@ MonoBehaviour:
     FlipX: 1
     Desc: 
   - towerType: Range
-    HP: 100
+    HP: 300
     Speed: 1.5
     Range: 15
     Damage: 150
@@ -315,10 +315,10 @@ MonoBehaviour:
     FlipX: 1
     Desc: 
   - towerType: Range
-    HP: 1000
+    HP: 9999
     Speed: 1.5
     Range: 15
-    Damage: 500
+    Damage: 999
     Cost: S
     Star: 100
     ProjectileIndex: 4
@@ -333,6 +333,7 @@ MonoBehaviour:
   cost: 
   projectileIndex: 0
   flipX: 0
+  price: 0
   towerattack: {fileID: 0}
   animCon:
   - {fileID: 22100000, guid: 496d3d1e1ce3f8e4690a459d6ecb044f, type: 2}
@@ -342,10 +343,10 @@ MonoBehaviour:
   anim: {fileID: 0}
   towerindex: 0
   probabilities:
-  - 25
-  - 25
-  - 25
-  - 25
+  - 59.8
+  - 30
+  - 10
+  - 0.2
   - 0
 --- !u!114 &3621588929993815978
 MonoBehaviour:
