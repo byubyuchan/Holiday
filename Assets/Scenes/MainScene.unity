@@ -20777,6 +20777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f80effe79ec47448938f8685d2277f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dbConnector: {fileID: 1123679828}
 --- !u!114 &941681428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38199,7 +38200,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5eff5dd8b495a54b88567d6dcb6d676, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dbConnect: {fileID: 1123679828}
   meleeTowerPrefab: {fileID: 5415422783019143891, guid: 8068ccaae1a75d4448ffca7be0677491, type: 3}
   rangedTowerPrefab: {fileID: 3997594930731219279, guid: fae30dd1bab60b14b93bdb0319d31436, type: 3}
   tankTowerPrefab: {fileID: 5415422783019143891, guid: 9e624c6256c8f0948bbccd5db3a1f4b7, type: 3}

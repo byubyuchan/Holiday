@@ -4,7 +4,6 @@ using System;
 
 public class TowerMaker : MonoBehaviour
 {
-    [SerializeField] private DataBaseConnectingTest dbConnect;
     [SerializeField] private GameObject meleeTowerPrefab;
     [SerializeField] private GameObject rangedTowerPrefab;
     [SerializeField] private GameObject tankTowerPrefab;
@@ -18,7 +17,6 @@ public class TowerMaker : MonoBehaviour
     public int TankPay = 8;
     public int RandomPay = 5;
     private Tile loadtile;
-    private Tower loadtower;
     private bool isRandom;
 
     private void Awake()
@@ -127,6 +125,5 @@ public class TowerMaker : MonoBehaviour
         int towerType = tower.towerindex;
         string tileName = loadtile.name;
         string areaName = loadtile.transform.parent.name;
-
     }
 }
