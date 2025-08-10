@@ -109,6 +109,7 @@ public class CutsceneManager : MonoBehaviour
         {
             TowerInfo.instance.HideUI();
         }
+        string[] attackKeys = { "P_Dead1", "P_Dead2" };
 
         cutsceneflag = 1;
         originalCamPos = mainCamera.transform.position;
@@ -148,6 +149,9 @@ public class CutsceneManager : MonoBehaviour
                 GameObject effectInstance = GameManager.instance.pool.Get(5);
                 effectInstance.transform.position = bossTransform.position + randomOffset;
                 effectInstance.SetActive(true);
+
+                string randomKey = attackKeys[Random.Range(0, attackKeys.Length)];
+                AudioManager.instance.PlaySFX(randomKey);
             }
 
             yield return null;

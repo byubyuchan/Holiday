@@ -285,27 +285,27 @@ MonoBehaviour:
   tile: {fileID: 0}
   towerData:
   - towerType: Round
-    HP: 300
+    HP: 500
     Speed: 5
-    Range: 3
-    Damage: 15
+    Range: 5
+    Damage: 10
     Cost: C
     Star: 2
     ProjectileIndex: 0
     FlipX: 0
     Desc: 
   - towerType: Round
-    HP: 500
+    HP: 1000
     Speed: 5
-    Range: 3
-    Damage: 30
+    Range: 5
+    Damage: 50
     Cost: B
     Star: 4
     ProjectileIndex: 0
     FlipX: 1
     Desc: 
   - towerType: Round
-    HP: 1000
+    HP: 2500
     Speed: 5
     Range: 5
     Damage: 100
@@ -315,10 +315,10 @@ MonoBehaviour:
     FlipX: 0
     Desc: 
   - towerType: Heal
-    HP: 3333
+    HP: 9999
     Speed: 3
-    Range: 10
-    Damage: 100
+    Range: 20
+    Damage: 999
     Cost: S
     Star: 100
     ProjectileIndex: 0
@@ -343,10 +343,10 @@ MonoBehaviour:
   anim: {fileID: 0}
   towerindex: 0
   probabilities:
-  - 25
-  - 25
-  - 25
-  - 25
+  - 59.8
+  - 30
+  - 10
+  - 0.2
   - 0
 --- !u!114 &2238410380428710349
 MonoBehaviour:
