@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Goal : MonoBehaviour
 {
@@ -10,19 +11,24 @@ public class Goal : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            GameObject enemy = collision.gameObject;
+            GameManager.instance.Life --;
+            // GameObject enemy = collision.gameObject;
 
             // 이미 처리된 적은 무시
-            if (Enemies.Contains(enemy)) return;
+            //if (Enemies.Contains(enemy)) return;
 
-            // 처음 들어온 적만 처리
-            Enemies.Add(enemy);
-            GameManager.instance.Life--;
-            GameManager.instance.Gold++;
-            enemy.GetComponent<Enemy>().Dead();
+            //Enemies.Add(enemy);
+            //enemy.GetComponent<Enemy>().Dead();
 
             // 적이 비활성화되면 HashSet에서 제거
-            StartCoroutine(RemoveEnemyWhenDeactivated(enemy));
+            //StartCoroutine(RemoveEnemyWhenDeactivated(enemy));
+        }
+
+        if(GameManager.instance.Life == 0)
+        {
+            CutsceneManager.instance.PlayDeathCutscene(this.transform, "패배하였습니다...",0.5f);
+            GameManager.instance.ShowRetryButton();
+            GameManager.instance.isLive = false;
         }
     }
 

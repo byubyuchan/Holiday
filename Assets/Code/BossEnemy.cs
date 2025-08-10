@@ -111,6 +111,7 @@ public class BossEnemy : Enemy
             CutsceneManager.instance.PlayDeathCutscene(this.transform, "Clear!",0.5f);
         }
         AudioManager.instance.PlaySFX("E_Dead1"); //B_Dead ¹Ù²Ü °Å Ã£±â
+        GameManager.instance.ShowRetryButton();
     }
 
     public override void MoveTowardsTarget()
