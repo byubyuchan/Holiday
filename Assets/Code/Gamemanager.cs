@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public Transform UIPause;
     public Button PauseButton;
     public Button StartRoundButton;
+    public GameObject retryButton;
     public Text NoticeText;
 
     [Header("# Game Control")]
@@ -154,14 +155,14 @@ public class GameManager : MonoBehaviour
         //AudioManager.instance.PlaySFX(AudioManager.SFX.Win);
     }
 
-    public void GameRetry()
-    {
-        SceneManager.LoadScene(0);
-        Gold = dbConnector.LoadValue("gold");
-        kill = dbConnector.LoadValue("kill");
-        currentRound = dbConnector.LoadValue("stage");
-        hp = dbConnector.LoadValue("hp");
-    }
+    //public void GameRetry()
+    //{
+    //    SceneManager.LoadScene(0);
+    //    Gold = dbConnector.LoadValue("gold");
+    //    kill = dbConnector.LoadValue("kill");
+    //    currentRound = dbConnector.LoadValue("stage");
+    //    hp = dbConnector.LoadValue("hp");
+    //}
 
     public void GameQuit()
     {
@@ -217,6 +218,11 @@ public class GameManager : MonoBehaviour
         messageCoroutine = StartCoroutine(ShowMessageCoroutine(message, time));
     }
 
+    public void ShowRetryButton()
+    {
+        StartCoroutine(ShowButtonAfterDelay(4f));
+    }
+
     public IEnumerator ShowMessageCoroutine(string message, float time)
     {
         NoticeText.text = message;
@@ -224,6 +230,17 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(time);
         NoticeText.gameObject.SetActive(false);
         messageCoroutine = null;
+    }
+
+    private IEnumerator ShowButtonAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        retryButton.SetActive(true);
+    }
+
+    public void GoToIntroScene()
+    {
+        SceneManager.LoadScene("IntroScene"); // 인트로 씬 이름
     }
 
     [Header("# DataBase")]
