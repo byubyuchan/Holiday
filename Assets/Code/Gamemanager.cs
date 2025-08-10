@@ -240,6 +240,7 @@ public class GameManager : MonoBehaviour
 
     public void GoToIntroScene()
     {
+        Destroy(instance.gameObject);
         SceneManager.LoadScene("IntroScene"); // 인트로 씬 이름
     }
 
