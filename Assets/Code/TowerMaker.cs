@@ -39,7 +39,7 @@ public class TowerMaker : MonoBehaviour
         Pay = 8;
     }
 
-    public void SelevtRandomTower()
+    public void SelectRandomTower()
     {
         if (CutsceneManager.instance.cutsceneflag == 1) return;
         GameObject[] TowerArr = { meleeTowerPrefab, rangedTowerPrefab, tankTowerPrefab};
