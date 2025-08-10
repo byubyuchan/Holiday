@@ -41,4 +41,10 @@ public class Talent : MonoBehaviour
     {
         TowerManager.instance.sale = true;
     }
+
+    public void Talent3()
+    {
+        TowerMaker.instance.RandomPay = 4;
+        TowerMaker.instance.selectedTowerPrefab = null;
+    }
 }

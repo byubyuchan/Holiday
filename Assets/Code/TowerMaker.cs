@@ -10,17 +10,29 @@ public class TowerMaker : MonoBehaviour
     [SerializeField] private GameObject tankTowerPrefab;
     [SerializeField] private Transform towerParent;
 
-    private GameObject selectedTowerPrefab;
+    public GameObject selectedTowerPrefab;
+    public static TowerMaker instance;
     private int Pay;
+    public int MeleePay = 8;
+    public int RangedPay = 8;
+    public int TankPay = 8;
+    public int RandomPay = 5;
     private Tile loadtile;
     private Tower loadtower;
+    private bool isRandom;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     public void SelectMeleeTower()
     {
         if (CutsceneManager.instance.cutsceneflag == 1) return;
         selectedTowerPrefab = meleeTowerPrefab;
         GameManager.instance.ShowMessage("전사 영웅을 모집합니다!");
-        Pay = 8;
+        Pay = MeleePay;
+        isRandom = false;
     }
 
     public void SelectRangedTower()
@@ -28,7 +40,8 @@ public class TowerMaker : MonoBehaviour
         if (CutsceneManager.instance.cutsceneflag == 1) return;
         selectedTowerPrefab = rangedTowerPrefab;
         GameManager.instance.ShowMessage("마법사 영웅을 모집합니다!");
-        Pay = 8;
+        Pay = RangedPay;
+        isRandom = false;
     }
 
     public void SelectTankTower()
@@ -36,7 +49,8 @@ public class TowerMaker : MonoBehaviour
         if (CutsceneManager.instance.cutsceneflag == 1) return;
         selectedTowerPrefab = tankTowerPrefab;
         GameManager.instance.ShowMessage("전위 영웅을 모집합니다!");
-        Pay = 8;
+        Pay = TankPay;
+        isRandom = false;
     }
 
     public void SelectRandomTower()
@@ -46,7 +60,8 @@ public class TowerMaker : MonoBehaviour
         GameObject RandomPrefab = TowerArr[UnityEngine.Random.Range(0, TowerArr.Length)];
         selectedTowerPrefab = RandomPrefab;
         GameManager.instance.ShowMessage("무작위 영웅을 모집합니다!");
-        Pay = 5;
+        Pay = RandomPay;
+        isRandom = true;
     }
 
     public void SpawnTower(Tile tile)
@@ -87,8 +102,8 @@ public class TowerMaker : MonoBehaviour
         loadtile = tile;
         LoadTower();
         GameManager.instance.Gold -= Pay;
-         
-        if (Pay == 5)
+        
+        if (isRandom)
         {
             GameObject[] TowerArr = { meleeTowerPrefab, rangedTowerPrefab, tankTowerPrefab };
             GameObject RandomPrefab = TowerArr[UnityEngine.Random.Range(0, TowerArr.Length)];
