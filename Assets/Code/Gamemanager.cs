@@ -127,7 +127,6 @@ public class GameManager : MonoBehaviour
             Background.color = Color.Lerp(Background.color, targetBGColor, 0.33f);
         }
         dbConnector.saveValue(playerId, "time", (int)gameTime);
-        dbConnector.saveValue(playerId, "kill_cnt", kill);
         dbConnector.saveValue(playerId, "stage", currentRound);
         Debug.Log("Time save!");
     }

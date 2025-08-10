@@ -8,6 +8,7 @@ public class DataBaseConnectingTest : MonoBehaviour
     private string connectionString;
     private MySqlConnection connection;
     private int playerId = 1; // 기본 플레이어 ID
+    private int num = 0; // talent 순서
     public static DataBaseConnectingTest Instance;
 
     private void Awake()
@@ -53,13 +54,12 @@ public class DataBaseConnectingTest : MonoBehaviour
     public void defaultSetting(int playerID)
     {
         string query = @"
-            INSERT INTO info (Player, name, gold, stage, kill_cnt, clear, time)
-            VALUES (@Player, @name, @gold, @stage, @kill_cnt, @clear, @time)
+            INSERT INTO info (Player, name, gold, stage, clear, time)
+            VALUES (@Player, @name, @gold, @stage, @clear, @time)
             ON DUPLICATE KEY UPDATE
                 name = VALUES(name),
                 gold = VALUES(gold),
                 stage = VALUES(stage),
-                kill_cnt = VALUES(kill_cnt),
                 clear = VALUES(clear),
                 time = VALUES(time);";
 
@@ -77,7 +77,6 @@ public class DataBaseConnectingTest : MonoBehaviour
                     command.Parameters.AddWithValue("@name", "none");
                     command.Parameters.AddWithValue("@gold", 50);
                     command.Parameters.AddWithValue("@stage", 0);
-                    command.Parameters.AddWithValue("@kill_cnt", 0);
                     command.Parameters.AddWithValue("@clear", 0);
                     command.Parameters.AddWithValue("@time", 0);
                     playerId = playerID;
@@ -114,16 +113,7 @@ public class DataBaseConnectingTest : MonoBehaviour
                 //    case "stage":
                 //        query = "INSERT INTO info (Player, stage) VALUES (@playerID, @value) ON DUPLICATE KEY UPDATE stage = @value";
                 //        break;
-                //    case "kill_cnt":
-                //        query = "INSERT INTO info (Player, kill_cnt) VALUES (@playerID, @value) ON DUPLICATE KEY UPDATE kill_cnt = @value";
-                //        break;
-                //    case "clear":
-                //        query = "INSERT INTO info (Player, clear) VALUES (@playerID, @value) ON DUPLICATE KEY UPDATE clear = @value";
-                //        break;
-                //    case "time":
-                //        query = "INSERT INTO info (Player, time) VALUES (@playerID, @value) ON DUPLICATE KEY UPDATE time = @value";
-                //        break;
-                //    // 중요: 'name' 컬럼은 VARCHAR 타입이므로 별도의 메소드로 관리하는 것이 좋습니다.
+                //    // 중요: 'name' 컬럼은 VARCHAR 타입이므로 별도의 메소드로 관리하는 것이 좋음.
                 //    // case "name":
                 //    //     ...
                 //    //     break;
@@ -148,9 +138,40 @@ public class DataBaseConnectingTest : MonoBehaviour
         }
     }
 
+    private void ExecuteTalent(int playerId, string name, string value)
+    {
+        Debug.Log("excute 시작");
+        try
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                conn.Open();
+                string query = $"INSERT INTO info (Player, {name}) VALUES (@playerID, @value) ON DUPLICATE KEY UPDATE {name} = @value";
+                Debug.Log($"Saving to DB → {name} = {value}");
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@value", value);
+                    cmd.Parameters.AddWithValue("@playerID", playerId);
+                    cmd.ExecuteNonQuery();
+                }
+                Debug.Log($"Saved {playerId}, '{name}' = {value} to DB");
+                num++;
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error to saving: " + ex.Message);
+        }
+    }
+
     //DB 퀴리 실행을 위한 함수2
     public void saveValue(int playerId, string name, int value) => Execute(playerId, name, value);
 
+    public void saveTalent(string talent)
+    {
+        ExecuteTalent(playerId, "talent_"+num, talent);
+    }
     //닫는 함수
     public void Close()
     {
@@ -193,48 +214,10 @@ public class DataBaseConnectingTest : MonoBehaviour
         }
         return stageValue;
     }
-    
+
     public void saveGold(int gold)
     {
         Execute(playerId,"gold",gold);
 
     }
-
-    //public void SaveTowerData(string towerName, int towerType, string areaName, string tileName)
-    //{
-    //    using (MySqlConnection conn = new MySqlConnection(connectionString))
-    //    {
-    //        try
-    //        {
-
-    //            Debug.Log($"[DB] 타워 저장 시작: {towerName}, {towerType}, {areaName}, {tileName}");
-    //            conn.Open();
-
-    //            string query = @"
-    //                INSERT INTO information (name, tower_type, area_name, tile_name)
-    //                VALUES (@name, @type, @area, @tile)
-    //                ON DUPLICATE KEY UPDATE
-    //                    tower_type = VALUES(tower_type),
-    //                    area_name = VALUES(area_name),
-    //                    tile_name = VALUES(tile_name);";
-
-    //            using (MySqlCommand cmd = new MySqlCommand(query, conn))
-    //            {
-    //                cmd.Parameters.AddWithValue("@name", towerName);
-    //                cmd.Parameters.AddWithValue("@type", towerType);
-    //                cmd.Parameters.AddWithValue("@area", areaName);
-    //                cmd.Parameters.AddWithValue("@tile", tileName);
-
-    //                cmd.ExecuteNonQuery();
-    //            }
-
-    //            Debug.Log($"[DB] 타워 저장 성공: {towerName}");
-    //        }
-    //        catch (Exception ex)
-    //        {
-    //            Debug.LogError("[DB] 타워 저장 실패: " + ex.Message);
-    //        }
-    //    }
-    //}
-
 }
