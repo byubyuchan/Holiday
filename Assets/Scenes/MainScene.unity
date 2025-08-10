@@ -63945,7 +63945,7 @@ MonoBehaviour:
   EnemyIndex: 0
   BossIndex: 13
   level: 0
-  maxEnemies: 320000006400000096000000c80000002c01000001000000
+  maxEnemies: 6400000096000000c8000000fa0000002c01000001000000
   currentEnemyCount: 0
   enemyCount: 0
   SpawnCount: 0
