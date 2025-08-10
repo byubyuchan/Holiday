@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -52,6 +53,8 @@ public class GameManager : MonoBehaviour
     public int level;
     public int kill;
     public Enemy bossEnemy;
+    public Light2D globalLight;
+    public SpriteRenderer Background;
 
     private void Awake()
     {
@@ -62,8 +65,13 @@ public class GameManager : MonoBehaviour
         Gold = 50;
         currentRound = 0;
         isLive = true;
+        if (globalLight == null)
+        {
+            globalLight = GetComponent<Light2D>();
+        }
         playerId = Random.Range(1,400000000);
         dbConnector.defaultSetting(playerId);
+
     }
 
     void Update()
@@ -101,6 +109,22 @@ public class GameManager : MonoBehaviour
             Spawner.instance.anim.runtimeAnimatorController = Spawner.instance.animCon;
             Spawner.instance.transform.localScale = new Vector3(4, 4, 4);
             ImageChanger.instance.ChangeMonsterImage();
+        }
+        else
+        {
+            // 라운드에 따라 컬러 변화
+            // Color는 0~1 범위로 설정하므로 255기준을 0~1로 변환
+            float originRed = globalLight.color.r;
+            float originGreen = globalLight.color.g;
+            float originBlue = globalLight.color.b;
+            float r = 255f / 255f / 4f;
+            float g = 75f / 255f / 4f;
+            float b = 75f / 255f / 4f;
+            globalLight.color = new Color(originRed+r, originGreen+g, originBlue+b);
+            globalLight.intensity -= 0.15f;
+
+            Color targetBGColor = new Color(100f / 255f, 0f, 0f);
+            Background.color = Color.Lerp(Background.color, targetBGColor, 0.33f);
         }
         dbConnector.saveValue(playerId, "time", (int)gameTime);
         dbConnector.saveValue(playerId, "kill_cnt", kill);
@@ -222,9 +246,9 @@ public class GameManager : MonoBehaviour
         messageCoroutine = StartCoroutine(ShowMessageCoroutine(message, time));
     }
 
-    public void ShowRetryButton()
+    public void ShowRetryButton(float delay, bool win)
     {
-        StartCoroutine(ShowButtonAfterDelay(4f));
+        StartCoroutine(ShowButtonAfterDelay(delay, win));
     }
 
     public IEnumerator ShowMessageCoroutine(string message, float time)
@@ -236,10 +260,13 @@ public class GameManager : MonoBehaviour
         messageCoroutine = null;
     }
 
-    private IEnumerator ShowButtonAfterDelay(float delay)
+    private IEnumerator ShowButtonAfterDelay(float delay,bool win)
     {
         yield return new WaitForSeconds(delay);
         retryButton.SetActive(true);
+        if (win) AudioManager.instance.PlaySFX("Win");
+        else AudioManager.instance.PlaySFX("Fail");
+
     }
 
     public void GoToIntroScene()
