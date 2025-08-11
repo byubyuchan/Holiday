@@ -287,27 +287,27 @@ MonoBehaviour:
   - towerType: Range
     HP: 150
     Speed: 1.5
-    Range: 8
+    Range: 10
     Damage: 50
     Cost: C
-    Star: 2
+    Star: 1
     ProjectileIndex: 1
     FlipX: 1
     Desc: 
   - towerType: Range
     HP: 250
     Speed: 1.5
-    Range: 10
+    Range: 12
     Damage: 100
     Cost: B
-    Star: 4
+    Star: 2
     ProjectileIndex: 2
     FlipX: 1
     Desc: 
   - towerType: Range
     HP: 300
     Speed: 1.5
-    Range: 15
+    Range: 20
     Damage: 150
     Cost: A
     Star: 10
@@ -317,7 +317,7 @@ MonoBehaviour:
   - towerType: Range
     HP: 9999
     Speed: 1.5
-    Range: 15
+    Range: 20
     Damage: 999
     Cost: S
     Star: 100
