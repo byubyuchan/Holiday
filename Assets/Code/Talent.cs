@@ -88,7 +88,7 @@ public class Talent : MonoBehaviour
     public void Talent2()
     {
         TowerManager.instance.sale = true;
-        dbConnector.saveTalent("선택하지 않습니다.");
+        dbConnector.saveTalent("회복 골드가 3골드가 됩니다.");
         OnPicked(2);
     }
 
