@@ -79,7 +79,7 @@ public class Projectile : MonoBehaviour
         isActive = true;
         if (Enemy.instance.projectileIndex == 14)
         {
-            this.damage = damage / 2;
+            this.damage = damage / 3;
             Vector3 randomOffset = Random.insideUnitCircle * 15f;
             Vector3 spawnPosition = target.transform.position + randomOffset;
             transform.position = spawnPosition;

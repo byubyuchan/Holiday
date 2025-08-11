@@ -26,6 +26,7 @@ public class TowerManager : MonoBehaviour
             GameManager.instance.Gold -= 3;
             GameManager.instance.ShowMessage("회복 마법을 걸었습니다!");
             CameraShakeComponent.instance.StartShake();
+            AudioManager.instance.PlaySFX("P_Heal");
         }
         else
         {
@@ -37,6 +38,7 @@ public class TowerManager : MonoBehaviour
             GameManager.instance.Gold -= 5;
             GameManager.instance.ShowMessage("회복 마법을 걸었습니다!");
             CameraShakeComponent.instance.StartShake();
+            AudioManager.instance.PlaySFX("P_Heal");
         }
 
             foreach (Tower tower in towers)

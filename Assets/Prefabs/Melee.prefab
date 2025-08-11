@@ -287,27 +287,27 @@ MonoBehaviour:
   - towerType: Melee
     HP: 200
     Speed: 1
-    Range: 6
+    Range: 7
     Damage: 100
     Cost: C
-    Star: 2
+    Star: 1
     ProjectileIndex: 0
     FlipX: 0
     Desc: 
   - towerType: Melee
     HP: 300
     Speed: 1
-    Range: 6
+    Range: 7
     Damage: 100
     Cost: B
-    Star: 4
+    Star: 2
     ProjectileIndex: 0
     FlipX: 0
     Desc: 
   - towerType: Round
     HP: 700
     Speed: 1
-    Range: 6
+    Range: 8
     Damage: 200
     Cost: A
     Star: 10
@@ -317,7 +317,7 @@ MonoBehaviour:
   - towerType: Range
     HP: 9999
     Speed: 1
-    Range: 15
+    Range: 20
     Damage: 999
     Cost: S
     Star: 100

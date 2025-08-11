@@ -38706,18 +38706,6 @@ MonoBehaviour:
             m_StringArgument: Select
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 346984961}
-          m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-          m_MethodName: PlaySFX
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: P_Heal
-            m_BoolArgument: 0
-          m_CallState: 2
   - eventID: 2
     callback:
       m_PersistentCalls:
@@ -40611,10 +40599,10 @@ RectTransform:
   - {fileID: 199567194}
   m_Father: {fileID: 2047518529}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -192.96002}
-  m_SizeDelta: {x: -1524.1342, y: -994.076}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 395.86584, y: 85.92401}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1439767450
 MonoBehaviour:
@@ -63936,10 +63924,10 @@ MonoBehaviour:
   - spawnTime: 0
     spriteType: 0
     hp: 100000
-    damage: 200
+    damage: 250
     speed: 5
     exp: 1
-    Range: 5
+    Range: 4
     AttackSpeed: 2
     AttackType: Boss
     projectileIndex: 14

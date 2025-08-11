@@ -287,27 +287,27 @@ MonoBehaviour:
   - towerType: Round
     HP: 500
     Speed: 5
-    Range: 5
+    Range: 7
     Damage: 10
     Cost: C
-    Star: 2
+    Star: 1
     ProjectileIndex: 0
     FlipX: 0
     Desc: 
   - towerType: Round
     HP: 1000
     Speed: 5
-    Range: 5
+    Range: 7
     Damage: 50
     Cost: B
-    Star: 4
+    Star: 2
     ProjectileIndex: 0
     FlipX: 1
     Desc: 
   - towerType: Round
     HP: 2500
     Speed: 5
-    Range: 5
+    Range: 7
     Damage: 100
     Cost: A
     Star: 10
