@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public Button PauseButton;
     public Button StartRoundButton;
     public GameObject retryButton;
+    public GameObject nameInput;
     public Text NoticeText;
 
     [Header("# Game Control")]
@@ -48,6 +49,7 @@ public class GameManager : MonoBehaviour
 
     [Header("# Player Info")]
     public int playerId;
+    public string playerName;
     public float hp;
     public float maxHp;
     public int level;
@@ -265,6 +267,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         retryButton.SetActive(true);
+        nameInput.SetActive(true);
         if (win) AudioManager.instance.PlaySFX("Win");
         else AudioManager.instance.PlaySFX("Fail");
 
