@@ -230,4 +230,8 @@ public class DataBaseConnectingTest : MonoBehaviour
         Execute(playerId,"gold",gold);
 
     }
+    public void saveName(string name)
+    {
+        ExecuteTalent(playerId, "name", name);
+    }
 }
