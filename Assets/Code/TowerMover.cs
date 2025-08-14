@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class TowerMover : MonoBehaviour
@@ -132,7 +133,7 @@ public class TowerMover : MonoBehaviour
 
         foreach (Tower tower in allTowers)
         {
-            if (tower.cost == selectedTower.cost)
+            if (tower.cost == selectedTower.cost && tower.anim.runtimeAnimatorController == selectedTower.anim.runtimeAnimatorController)
             {
                 matchingTowers.Add(tower);
             }
@@ -140,13 +141,16 @@ public class TowerMover : MonoBehaviour
 
         if (matchingTowers.Count >= 5)
         {
+            int removeCnt = 4;
             // selectedTower를 제외한 나머지 제거
             foreach (Tower tower in matchingTowers)
             {
                 if (tower != selectedTower)
                 {
                     tower.RemoveTower();
+                    removeCnt--;
                 }
+                if (removeCnt == 0) break;
             }
             selectedTower.LevelUp();
         }
