@@ -286,7 +286,7 @@ MonoBehaviour:
   towerData:
   - towerType: Melee
     HP: 200
-    Speed: 1
+    Speed: 0.75
     Range: 7
     Damage: 100
     Cost: C
@@ -295,8 +295,8 @@ MonoBehaviour:
     FlipX: 0
     Desc: 
   - towerType: Melee
-    HP: 300
-    Speed: 1
+    HP: 500
+    Speed: 0.75
     Range: 7
     Damage: 100
     Cost: B
@@ -305,8 +305,8 @@ MonoBehaviour:
     FlipX: 0
     Desc: 
   - towerType: Round
-    HP: 700
-    Speed: 1
+    HP: 1000
+    Speed: 0.75
     Range: 8
     Damage: 200
     Cost: A
@@ -316,7 +316,7 @@ MonoBehaviour:
     Desc: 
   - towerType: Range
     HP: 9999
-    Speed: 1
+    Speed: 0.5
     Range: 20
     Damage: 999
     Cost: S
@@ -344,9 +344,9 @@ MonoBehaviour:
   anim: {fileID: 0}
   towerindex: 0
   probabilities:
-  - 59.8
-  - 30
+  - 88.8
   - 10
+  - 1
   - 0.2
   - 0
 --- !u!114 &2238410380428710349
