@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class CutsceneManager : MonoBehaviour
 {
@@ -27,9 +28,9 @@ public class CutsceneManager : MonoBehaviour
     {
         StartCoroutine(PlayTowerCutsceneCoroutine(towerTransform, towerName, power, time));
     }
-    public void PlayDeathCutscene(Transform bossTransform, string bossName, float power)
+    public void PlayDeathCutscene(Transform bossTransform, string bossName, float power, Action onCutsceneEnd = null)
     {
-        StartCoroutine(PlayDeathCutsceneCoroutine(bossTransform, bossName, power));
+        StartCoroutine(PlayDeathCutsceneCoroutine(bossTransform, bossName, power, onCutsceneEnd));
     }
 
     private IEnumerator PlayBossCutsceneCoroutine(Transform bossTransform, string bossName, float power) // 파워는 확대량
@@ -103,7 +104,7 @@ public class CutsceneManager : MonoBehaviour
         cutsceneflag = 0;
     }
 
-    private IEnumerator PlayDeathCutsceneCoroutine(Transform bossTransform, string bossName, float power)
+    private IEnumerator PlayDeathCutsceneCoroutine(Transform bossTransform, string bossName, float power, Action onCutsceneEnd)
     {
         if (TowerInfo.instance != null)
         {
@@ -141,8 +142,8 @@ public class CutsceneManager : MonoBehaviour
 
                 // 랜덤한 위치로 이펙트 생성
                 Vector3 randomOffset = new Vector3(
-                    Random.Range(-5f, 5f),
-                    Random.Range(-5f, 5f),
+                    UnityEngine.Random.Range(-5f, 5f),
+                    UnityEngine.Random.Range(-5f, 5f),
                     0f // Z는 고정
                 );
 
@@ -150,7 +151,7 @@ public class CutsceneManager : MonoBehaviour
                 effectInstance.transform.position = bossTransform.position + randomOffset;
                 effectInstance.SetActive(true);
 
-                string randomKey = attackKeys[Random.Range(0, attackKeys.Length)];
+                string randomKey = attackKeys[UnityEngine.Random.Range(0, attackKeys.Length)];
                 AudioManager.instance.PlaySFX(randomKey);
             }
 
@@ -161,5 +162,7 @@ public class CutsceneManager : MonoBehaviour
         mainCamera.transform.position = originalCamPos;
         mainCamera.orthographicSize = originalCamSize;
         cutsceneflag = 0;
+
+        onCutsceneEnd?.Invoke();
     }
 }

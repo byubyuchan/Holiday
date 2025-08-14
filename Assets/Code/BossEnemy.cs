@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
@@ -65,7 +66,6 @@ public class BossEnemy : Enemy
     }
     void UseNormalAttack()
     {
-        Debug.Log("보스: 일반 공격 사용!");
         anim.SetTrigger("Attack");
         CameraShakeComponent.instance.StartShake(0.5f, 0.3f);
         tower.TakeDamage(damage);
@@ -77,7 +77,6 @@ public class BossEnemy : Enemy
     }
     void UseFlyingAttack()
     {
-        Debug.Log("보스: 공중 공격 사용!"); // 데미지 낮추고 광역 공격으로 변경!
         anim.SetTrigger("Hurt");
         CameraShakeComponent.instance.StartShake(0.5f, 0.5f);
         for (int i = 0; i < 10; i++)
@@ -107,11 +106,13 @@ public class BossEnemy : Enemy
         base.Dead(); // 기존 죽음 처리 먼저 실행
         if (CutsceneManager.instance != null)
         {
+            GameManager.instance.isLive = false;
             // 죽을 때 컷씬 실행
-            CutsceneManager.instance.PlayDeathCutscene(this.transform, "Clear!",0.5f);
+            CutsceneManager.instance.PlayDeathCutscene(this.transform, "Clear!", 0.5f, () =>
+            {
+                GameManager.instance.ShowRetryButton(0.5f, true);
+            });
         }
-        GameManager.instance.ShowRetryButton(4f, true);
-        GameManager.instance.isLive = false;
     }
 
     public override void MoveTowardsTarget()

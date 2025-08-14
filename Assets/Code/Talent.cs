@@ -4,6 +4,12 @@ using System.Collections.Generic;
 
 public class Talent : MonoBehaviour
 {
+    [SerializeField] ButtonText healButton;
+    [SerializeField] ButtonText meleeButton;
+    [SerializeField] ButtonText rangeButton;
+    [SerializeField] ButtonText tankButton;
+    [SerializeField] ButtonText randomButton;
+
     RectTransform rect;
     Transform[] talents;
 
@@ -88,6 +94,8 @@ public class Talent : MonoBehaviour
     public void Talent2()
     {
         TowerManager.instance.sale = true;
+        healButton.PrideChange(3);
+        GameManager.instance.ShowMessage("회복 골드가 3이 됩니다.");
         dbConnector.saveTalent("회복 골드가 3골드가 됩니다.");
         OnPicked(2);
     }
@@ -96,6 +104,8 @@ public class Talent : MonoBehaviour
     {
         TowerMaker.instance.RandomPay = 4;
         TowerMaker.instance.selectedTowerPrefab = null;
+        randomButton.PrideChange(4);
+        GameManager.instance.ShowMessage($"랜덤 타워의 골드가 {TowerMaker.instance.RandomPay}이 됩니다.");
         dbConnector.saveTalent("랜덤가격이 4가됩니다.");
         OnPicked(3);
     }
@@ -104,6 +114,8 @@ public class Talent : MonoBehaviour
     {
         TowerMaker.instance.MeleePay = 6;
         TowerMaker.instance.selectedTowerPrefab = null;
+        meleeButton.PrideChange(6);
+        GameManager.instance.ShowMessage($"전사 타워의 골드가  {TowerMaker.instance.MeleePay}이 됩니다.");
         dbConnector.saveTalent("전사의 가격이 6이됩니다.");
         OnPicked(4);
     }
@@ -112,6 +124,8 @@ public class Talent : MonoBehaviour
     {
         TowerMaker.instance.RangedPay = 6;
         TowerMaker.instance.selectedTowerPrefab = null;
+        rangeButton.PrideChange(6);
+        GameManager.instance.ShowMessage($"마법사 타워의 골드가  {TowerMaker.instance.RangedPay}이 됩니다.");
         dbConnector.saveTalent("마법사의 가격이 6이됩니다.");
         OnPicked(5);
     }
@@ -120,6 +134,8 @@ public class Talent : MonoBehaviour
     {
         TowerMaker.instance.TankPay = 6;
         TowerMaker.instance.selectedTowerPrefab = null;
+        tankButton.PrideChange(6);
+        GameManager.instance.ShowMessage($"전위 타워의 골드가  {TowerMaker.instance.TankPay}이 됩니다.");
         dbConnector.saveTalent("전위 가격이 6이 됩니다.");
         OnPicked(6);
     }
@@ -129,7 +145,8 @@ public class Talent : MonoBehaviour
         RandomGold = Random.Range(2, 11);
         TowerMaker.instance.RandomPay = RandomGold;
         TowerMaker.instance.selectedTowerPrefab = null;
-        GameManager.instance.ShowMessage($"랜덤 타워의 가격이 {RandomGold}G로 변경되었습니다!");
+        randomButton.PrideChange(RandomGold);
+        GameManager.instance.ShowMessage($"랜덤 타워의 골드가  {RandomGold}G로 변경되었습니다!");
         dbConnector.saveTalent($"'랜덤의 랜덤_랜덤' 타워의 가격이 {RandomGold}G로 변경되었습니다!");
         OnPicked(7);
     }

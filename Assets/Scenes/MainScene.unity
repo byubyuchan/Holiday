@@ -5947,7 +5947,7 @@ GameObject:
   m_Component:
   - component: {fileID: 199567194}
   m_Layer: 5
-  m_Name: Tower Info
+  m_Name: Pannel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14894,7 +14894,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\uB2F9\uC2E0\uC758 \uC774\uB984\uC740?"
+  m_Text: "\uB7AD\uD0B9\uB4F1\uB85D"
 --- !u!222 &606665424
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18993,7 +18993,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC785\uB825"
+  m_Text: "\uB2E4\uC2DC\uC2DC\uC791"
 --- !u!222 &855236636
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20262,6 +20262,7 @@ GameObject:
   - component: {fileID: 898716281}
   - component: {fileID: 898716280}
   - component: {fileID: 898716279}
+  - component: {fileID: 898716282}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -20336,7 +20337,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "   \uC804\uC704"
+  m_Text: "     \uC804\uC704(8G)"
 --- !u!222 &898716281
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20345,6 +20346,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 898716277}
   m_CullTransparentMesh: 1
+--- !u!114 &898716282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 898716277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 388367a871479ff4cb06129700ff931a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 3
+  BText: {fileID: 898716280}
 --- !u!1 &911461209
 GameObject:
   m_ObjectHideFlags: 0
@@ -20643,7 +20658,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 388367a871479ff4cb06129700ff931a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healButtonText: {fileID: 921287168}
+  type: 0
+  BText: {fileID: 921287168}
 --- !u!1 &922781192
 GameObject:
   m_ObjectHideFlags: 0
@@ -21186,6 +21202,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f80effe79ec47448938f8685d2277f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healButton: {fileID: 921287170}
+  meleeButton: {fileID: 1330156397}
+  rangeButton: {fileID: 1760170023}
+  tankButton: {fileID: 898716282}
+  randomButton: {fileID: 1823647889}
   talentGroup: {fileID: 1314911187}
   layoutRoot: {fileID: 1314911187}
   dbConnector: {fileID: 1123679828}
@@ -29871,7 +29892,6 @@ MonoBehaviour:
   UIPause: {fileID: 631066479}
   PauseButton: {fileID: 289845918}
   StartRoundButton: {fileID: 2064484707}
-  retryButton: {fileID: 1439767448}
   nameInput: {fileID: 233500096}
   NoticeText: {fileID: 303912165}
   gameTime: 0
@@ -36973,6 +36993,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1123679827}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: GoToIntroScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1290186985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38224,6 +38256,7 @@ GameObject:
   - component: {fileID: 1330156394}
   - component: {fileID: 1330156395}
   - component: {fileID: 1330156396}
+  - component: {fileID: 1330156397}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -38291,7 +38324,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "  \uC804\uC0AC"
+  m_Text: "    \uC804\uC0AC(8G)"
 --- !u!114 &1330156396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38307,6 +38340,20 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 3, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!114 &1330156397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1330156391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 388367a871479ff4cb06129700ff931a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  BText: {fileID: 1330156395}
 --- !u!1 &1337939209
 GameObject:
   m_ObjectHideFlags: 0
@@ -41122,7 +41169,7 @@ GameObject:
   - component: {fileID: 1439767450}
   - component: {fileID: 1439767453}
   m_Layer: 5
-  m_Name: Retry
+  m_Name: Retry_(Don'yUse)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53772,6 +53819,7 @@ GameObject:
   - component: {fileID: 1760170020}
   - component: {fileID: 1760170021}
   - component: {fileID: 1760170022}
+  - component: {fileID: 1760170023}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -53839,7 +53887,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "  \uB9C8\uBC95\uC0AC"
+  m_Text: "   \uB9C8\uBC95\uC0AC(8G)"
 --- !u!114 &1760170022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53855,6 +53903,20 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 3, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!114 &1760170023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1760170017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 388367a871479ff4cb06129700ff931a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 2
+  BText: {fileID: 1760170021}
 --- !u!1 &1761886307
 GameObject:
   m_ObjectHideFlags: 0
@@ -58178,6 +58240,7 @@ GameObject:
   - component: {fileID: 1823647888}
   - component: {fileID: 1823647887}
   - component: {fileID: 1823647886}
+  - component: {fileID: 1823647889}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -58252,7 +58315,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "    \uB79C\uB364"
+  m_Text: "     \uB79C\uB364(5G)"
 --- !u!222 &1823647888
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -58261,6 +58324,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1823647884}
   m_CullTransparentMesh: 1
+--- !u!114 &1823647889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823647884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 388367a871479ff4cb06129700ff931a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 4
+  BText: {fileID: 1823647887}
 --- !u!1 &1830496342
 GameObject:
   m_ObjectHideFlags: 0
