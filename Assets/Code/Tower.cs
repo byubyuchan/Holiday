@@ -41,26 +41,6 @@ public class Tower : MonoBehaviour
         // 확률에 맞게 인덱스 번호 설정됨.
         Init(towerData[towerindex]); // 소환 로직
         SortingOrder();
-        if (cost == "C")
-        {
-            CutsceneManager.instance.PlayTowerCutscene(transform, cost + "급 용사 소환!!", 0.9f, 1);
-            AudioManager.instance.PlaySFX("Spawn_C");
-        }
-        if (cost == "B")
-        {
-            CutsceneManager.instance.PlayTowerCutscene(transform, cost + "급 용사 소환!!", 0.9f, 1);
-            AudioManager.instance.PlaySFX("Spawn_B");
-        }
-        if (cost == "A")
-        {
-            CutsceneManager.instance.PlayTowerCutscene(transform, cost + "급 용사 소환!!", 0.7f, 2);
-            AudioManager.instance.PlaySFX("Spawn_A");
-        }
-        if (cost == "S")
-        {
-            CutsceneManager.instance.PlayTowerCutscene(transform, cost + "급 용사 소환!!", 0.3f, 4);
-            AudioManager.instance.PlaySFX("Spawn_S");
-        }
     }
 
     public void RemoveTower()
@@ -92,6 +72,27 @@ public class Tower : MonoBehaviour
         if (animCon.Length > 0 && anim != null)
         {
             anim.runtimeAnimatorController = animCon[towerindex];
+        }
+
+        if (cost == "C")
+        {
+            CutsceneManager.instance.PlayTowerCutscene(transform, cost + "급 용사 소환!!", 0.9f, 1);
+            AudioManager.instance.PlaySFX("Spawn_C");
+        }
+        if (cost == "B")
+        {
+            CutsceneManager.instance.PlayTowerCutscene(transform, cost + "급 용사 소환!!", 0.9f, 1);
+            AudioManager.instance.PlaySFX("Spawn_B");
+        }
+        if (cost == "A")
+        {
+            CutsceneManager.instance.PlayTowerCutscene(transform, cost + "급 용사 소환!!", 0.7f, 2);
+            AudioManager.instance.PlaySFX("Spawn_A");
+        }
+        if (cost == "S")
+        {
+            CutsceneManager.instance.PlayTowerCutscene(transform, cost + "급 용사 소환!!", 0.3f, 4);
+            AudioManager.instance.PlaySFX("Spawn_S");
         }
     }
 
@@ -169,6 +170,12 @@ public class Tower : MonoBehaviour
         Transform parentTransform = tile.transform.parent; // 부모 오브젝트 가져오기
         float order = (parentTransform.position.y - 2.5f) / 1.5f;
         spriteRenderer.sortingOrder = Mathf.RoundToInt(-order);
+    }
+
+    public void LevelUp()
+    {
+        towerindex++;
+        Init(towerData[towerindex]);
     }
 }
 

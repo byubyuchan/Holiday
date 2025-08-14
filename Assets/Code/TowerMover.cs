@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TowerMover : MonoBehaviour
@@ -18,6 +19,11 @@ public class TowerMover : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             TowerSell();
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            TowerLevelUp();
         }
 
         // 필요하면 다른 단축키도 추가 가능
@@ -82,6 +88,7 @@ public class TowerMover : MonoBehaviour
             CameraShakeComponent.instance.StartShake();
             return;
         }
+
         if (selectedTower != null || GameManager.instance.isStart)
         {
             selectedTower.RemoveTower();
@@ -98,5 +105,56 @@ public class TowerMover : MonoBehaviour
     {
         selectedTower = null;
         IsMoving = false;
+    }
+
+    public void TowerLevelUp()
+    {
+        if (GameManager.instance.isStart)
+        {
+            GameManager.instance.ShowMessage("전투 중에는 강화가 불가능합니다!");
+            AudioManager.instance.PlaySFX("Cant2");
+            CameraShakeComponent.instance.StartShake();
+            return;
+        }
+
+        if (CutsceneManager.instance.cutsceneflag == 1) return;
+
+        if (selectedTower.cost == "A")
+        {
+            GameManager.instance.ShowMessage("이미 최고 등급입니다!");
+            AudioManager.instance.PlaySFX("Cant");
+            CameraShakeComponent.instance.StartShake();
+            return;
+        }
+
+        Tower[] allTowers = Object.FindObjectsByType<Tower>(FindObjectsSortMode.None);
+        List<Tower> matchingTowers = new List<Tower>();
+
+        foreach (Tower tower in allTowers)
+        {
+            if (tower.cost == selectedTower.cost)
+            {
+                matchingTowers.Add(tower);
+            }
+        }
+
+        if (matchingTowers.Count >= 5)
+        {
+            // selectedTower를 제외한 나머지 제거
+            foreach (Tower tower in matchingTowers)
+            {
+                if (tower != selectedTower)
+                {
+                    tower.RemoveTower();
+                }
+            }
+            selectedTower.LevelUp();
+        }
+        else
+        {
+            GameManager.instance.ShowMessage("같은 종류의 타워가 5개 이상 필요합니다!");
+            AudioManager.instance.PlaySFX("Cant");
+            CameraShakeComponent.instance.StartShake();
+        }
     }
 }
