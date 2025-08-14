@@ -102,45 +102,35 @@ public class Talent : MonoBehaviour
 
     public void Talent3()
     {
-        TowerMaker.instance.RandomPay = 4;
-        TowerMaker.instance.selectedTowerPrefab = null;
-        randomButton.PrideChange(4);
-        GameManager.instance.ShowMessage($"랜덤 타워의 골드가 {TowerMaker.instance.RandomPay}이 됩니다.");
-        dbConnector.saveTalent("랜덤가격이 4가됩니다.");
-        OnPicked(3);
-    }
-
-    public void Talent4()
-    {
         TowerMaker.instance.MeleePay = 6;
         TowerMaker.instance.selectedTowerPrefab = null;
         meleeButton.PrideChange(6);
         GameManager.instance.ShowMessage($"전사 타워의 골드가  {TowerMaker.instance.MeleePay}이 됩니다.");
         dbConnector.saveTalent("전사의 가격이 6이됩니다.");
-        OnPicked(4);
+        OnPicked(3);
     }
 
-    public void Talent5()
+    public void Talent4()
     {
         TowerMaker.instance.RangedPay = 6;
         TowerMaker.instance.selectedTowerPrefab = null;
         rangeButton.PrideChange(6);
         GameManager.instance.ShowMessage($"마법사 타워의 골드가  {TowerMaker.instance.RangedPay}이 됩니다.");
         dbConnector.saveTalent("마법사의 가격이 6이됩니다.");
-        OnPicked(5);
+        OnPicked(4);
     }
 
-    public void Talent6()
+    public void Talent5()
     {
         TowerMaker.instance.TankPay = 6;
         TowerMaker.instance.selectedTowerPrefab = null;
         tankButton.PrideChange(6);
         GameManager.instance.ShowMessage($"전위 타워의 골드가  {TowerMaker.instance.TankPay}이 됩니다.");
         dbConnector.saveTalent("전위 가격이 6이 됩니다.");
-        OnPicked(6);
+        OnPicked(5);
     }
 
-    public void Talent7()
+    public void Talent6()
     {
         RandomGold = Random.Range(2, 11);
         TowerMaker.instance.RandomPay = RandomGold;
@@ -148,6 +138,6 @@ public class Talent : MonoBehaviour
         randomButton.PrideChange(RandomGold);
         GameManager.instance.ShowMessage($"랜덤 타워의 골드가  {RandomGold}G로 변경되었습니다!");
         dbConnector.saveTalent($"'랜덤의 랜덤_랜덤' 타워의 가격이 {RandomGold}G로 변경되었습니다!");
-        OnPicked(7);
+        OnPicked(6);
     }
 }
