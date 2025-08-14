@@ -21,7 +21,6 @@ public class GameManager : MonoBehaviour
     public Transform UIPause;
     public Button PauseButton;
     public Button StartRoundButton;
-    public GameObject retryButton;
     public GameObject nameInput;
     public Text NoticeText;
 
@@ -103,9 +102,6 @@ public class GameManager : MonoBehaviour
 
     public void EndRound()
     {
-        isStart = false;
-        StartRoundButton.gameObject.SetActive(true); // ��ư Ȱ��ȭ
-        Gold += 50;
         if (Spawner.instance.level == 4)
         {
             Spawner.instance.anim.runtimeAnimatorController = Spawner.instance.animCon;
@@ -131,6 +127,14 @@ public class GameManager : MonoBehaviour
         dbConnector.saveValue(playerId, "time", (int)gameTime);
         dbConnector.saveValue(playerId, "stage", currentRound);
         Debug.Log("Time save!");
+
+        if (isLive)
+        {
+            isStart = false;
+            StartRoundButton.gameObject.SetActive(true); // ��ư Ȱ��ȭ
+            Gold += 50;
+            AudioManager.instance.PlaySFX("Win");
+        }
     }
 
     public void GameStart(int id)
@@ -145,6 +149,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        StartCoroutine(GameOverRoutine());
         dbConnector.Close();
     }
 
@@ -174,7 +179,7 @@ public class GameManager : MonoBehaviour
     IEnumerator GameWinRoutine()
     {
         isLive = false;
-        EnemyCleaner.SetActive(true);
+        //EnemyCleaner.SetActive(true);
 
         yield return new WaitForSeconds(0.5f);
 
@@ -203,9 +208,9 @@ public class GameManager : MonoBehaviour
     public void Stop()
     {
         isLive = false;
-        // �ð� �ӵ� (����)
         Time.timeScale = 0;
-        UIJoy.localScale = Vector3.zero;
+        //UIJoy.localScale = Vector3.zero;
+        StartRoundButton.gameObject.SetActive(false);
         PauseButton.gameObject.SetActive(false);
     }
 
@@ -266,10 +271,17 @@ public class GameManager : MonoBehaviour
     private IEnumerator ShowButtonAfterDelay(float delay,bool win)
     {
         yield return new WaitForSeconds(delay);
-        retryButton.SetActive(true);
         nameInput.SetActive(true);
-        if (win) AudioManager.instance.PlaySFX("Win");
-        else AudioManager.instance.PlaySFX("Fail");
+        if (win)
+        {
+            AudioManager.instance.PlaySFX("Victory");
+            GameWin();
+        }
+        else
+        {
+            AudioManager.instance.PlaySFX("Fail");
+            GameOver();
+        }
 
     }
 

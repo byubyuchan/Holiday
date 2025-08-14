@@ -79,12 +79,12 @@ public class AudioManager : MonoBehaviour
         BGMPlayer.clip = BGMClip;
         BGMEffet = Camera.main.GetComponent<AudioHighPassFilter>();
 
-        GameObject SFXObject = new GameObject("SFXPlayer");
-        // 자식 트랜스폼으로 지정
-        SFXObject.transform.parent = transform;
         SFXPlayers = new AudioSource[channels];
         for (int i = 0; i < channels; i++)
         {
+            GameObject SFXObject = new GameObject("SFXPlayer");
+            // 자식 트랜스폼으로 지정
+            SFXObject.transform.parent = transform;
             SFXPlayers[i] = SFXObject.AddComponent<AudioSource>();
             SFXPlayers[i].playOnAwake = false;
             SFXPlayers[i].volume = SFXVolume;

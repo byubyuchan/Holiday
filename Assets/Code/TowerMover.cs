@@ -9,6 +9,13 @@ public class TowerMover : MonoBehaviour
 
     public void StartMove()
     {
+        if (GameManager.instance.isStart)
+        {
+            GameManager.instance.ShowMessage("전투 중에는 이동이 불가합니다!");
+            AudioManager.instance.PlaySFX("Cant2");
+            CameraShakeComponent.instance.StartShake();
+            return;
+        }
         IsMoving = true;
     }
 
@@ -36,7 +43,14 @@ public class TowerMover : MonoBehaviour
 
     public void TowerSell()
     {
-        if (selectedTower != null)
+        if (GameManager.instance.isStart)
+        {
+            GameManager.instance.ShowMessage("전투 중에는 용사를 판매할 수 없습니다!");
+            AudioManager.instance.PlaySFX("Cant2");
+            CameraShakeComponent.instance.StartShake();
+            return;
+        }
+        if (selectedTower != null || GameManager.instance.isStart)
         {
             selectedTower.RemoveTower();
             GameManager.instance.Gold += selectedTower.price;
