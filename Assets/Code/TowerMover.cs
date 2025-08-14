@@ -7,6 +7,23 @@ public class TowerMover : MonoBehaviour
     public Tile tile;
     public bool IsMoving; // 이동 모드 여부
 
+    private void Update()
+    {
+        // 단축키 입력 체크
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            StartMove();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            TowerSell();
+        }
+
+        // 필요하면 다른 단축키도 추가 가능
+    }
+
+
     public void StartMove()
     {
         if (GameManager.instance.isStart)
@@ -16,6 +33,21 @@ public class TowerMover : MonoBehaviour
             CameraShakeComponent.instance.StartShake();
             return;
         }
+        // Hover된 타일에 타워가 있으면 selectedTower 갱신
+        if (towerSelector.selectedTile != null && towerSelector.selectedTile.GetComponent<Tile>().currentTower != null)
+        {
+            selectedTower = towerSelector.selectedTile.GetComponent<Tile>().currentTower;
+        }
+
+        if (selectedTower == null)
+        {
+            GameManager.instance.ShowMessage("이동할 타워를 먼저 선택하세요!");
+            AudioManager.instance.PlaySFX("Cant2");
+            return;
+        }
+
+        GameManager.instance.ShowMessage("이동할 위치를 선택하세요!");
+        AudioManager.instance.PlaySFX("Select");
         IsMoving = true;
     }
 
@@ -28,7 +60,7 @@ public class TowerMover : MonoBehaviour
         }
 
         GameManager.instance.ShowMessage("위치를 이동하였습니다!");
-
+        AudioManager.instance.PlaySFX("Select");
         if (tile.currentTower == null) // 빈 타일이면 이동
         {
             selectedTower.MoveToTile(tile, false);
@@ -56,8 +88,9 @@ public class TowerMover : MonoBehaviour
             GameManager.instance.Gold += selectedTower.price;
             selectedTower = null;
             TowerInfo.instance.HideUI();
-            towerSelector.ResetTile();
+            towerSelector.ResetTile(true);
             GameManager.instance.ShowMessage("용사를 판매했습니다!");
+            AudioManager.instance.PlaySFX("Sell");
         }
     }
 
