@@ -13,12 +13,25 @@ public class CameraController : MonoBehaviour
     public float leftLimit = -40f;  // 왼쪽 제한
     public float rightLimit = 100f; // 오른쪽 제한
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+        {
+            MoveCameraLeft();
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+        {
+            MoveCameraRight();
+        }
+    }
     public void MoveCameraLeft()
     {
         if (CutsceneManager.instance.cutsceneflag == 1) return;
         float currentX = cameraParent.position.x;
         float targetX = Mathf.Max(currentX - moveDistance, leftLimit);
         Vector3 targetPosition = new Vector3(targetX, cameraParent.position.y, cameraParent.position.z);
+        AudioManager.instance.PlaySFX("Page");
         StartCoroutine(MoveCameraToPosition(targetPosition));
     }
 
@@ -28,6 +41,7 @@ public class CameraController : MonoBehaviour
         float currentX = cameraParent.position.x;
         float targetX = Mathf.Min(currentX + moveDistance, rightLimit);
         Vector3 targetPosition = new Vector3(targetX, cameraParent.position.y, cameraParent.position.z);
+        AudioManager.instance.PlaySFX("Page");
         StartCoroutine(MoveCameraToPosition(targetPosition));
     }
 

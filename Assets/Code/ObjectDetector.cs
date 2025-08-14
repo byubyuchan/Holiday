@@ -10,23 +10,43 @@ public class ObjectDetector : MonoBehaviour
     {
         mainCamera = Camera.main;
     }
-
     private void Update()
     {
         if (CutsceneManager.instance.cutsceneflag == 1) return;
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (EventSystem.current.IsPointerOverGameObject())
-            {
-                return;
-            }
+        if (EventSystem.current.IsPointerOverGameObject()) return;
 
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+        {
+            tileSelector.HoverTile(hit.transform);
+
+            if (Input.GetMouseButtonDown(0))
             {
                 tileSelector.SelectTile(hit.transform);
             }
-            else tileSelector.ResetTile();
         }
+
+
+
+
     }
+
+    //private void Update()
+    //{
+    //    if (CutsceneManager.instance.cutsceneflag == 1) return;
+    //    if (Input.GetMouseButtonDown(0))
+    //    {
+    //        if (EventSystem.current.IsPointerOverGameObject())
+    //        {
+    //            return;
+    //        }
+
+    //        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+    //        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+    //        {
+    //            tileSelector.SelectTile(hit.transform);
+    //        }
+    //        else tileSelector.ResetTile();
+    //    }
+    //}
 }
