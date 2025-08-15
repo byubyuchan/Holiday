@@ -21,6 +21,8 @@ public class TowerManager : MonoBehaviour
             if (GameManager.instance.Gold < 3)
             {
                 GameManager.instance.ShowMessage("골드가 모자랍니다!");
+                AudioManager.instance.PlaySFX("Cant");
+                CameraShakeComponent.instance.StartShake();
                 return;
             }
             GameManager.instance.Gold -= 3;
@@ -33,6 +35,8 @@ public class TowerManager : MonoBehaviour
             if (GameManager.instance.Gold < 5)
             {
                 GameManager.instance.ShowMessage("골드가 모자랍니다!");
+                AudioManager.instance.PlaySFX("Cant");
+                CameraShakeComponent.instance.StartShake();
                 return;
             }
             GameManager.instance.Gold -= 5;

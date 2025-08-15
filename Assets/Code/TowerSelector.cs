@@ -12,7 +12,7 @@ public class TowerSelector : MonoBehaviour
     {
         if (!tileTransform.CompareTag("Tile"))
         {
-            towerInfoUI.UpdateTowerInfo(null);
+            towerInfoUI.HideUI();
             return;
         }
 
@@ -34,7 +34,7 @@ public class TowerSelector : MonoBehaviour
             }
             else
             {
-                towerInfoUI.UpdateTowerInfo(null);
+                towerInfoUI.HideUI();
             }
         }
         else
@@ -43,7 +43,7 @@ public class TowerSelector : MonoBehaviour
             if (tile.currentTower != null)
                 towerInfoUI.UpdateTowerInfo(tile.currentTower);
             else
-                towerInfoUI.UpdateTowerInfo(null);
+                towerInfoUI.HideUI();
         }
 
 

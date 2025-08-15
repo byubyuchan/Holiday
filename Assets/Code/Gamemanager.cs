@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour
     public Light2D globalLight;
     public SpriteRenderer Background;
 
-    private void Awake()
+    private void Start()
     {
         instance = this;
         AudioManager.instance.PlayBGM(true);

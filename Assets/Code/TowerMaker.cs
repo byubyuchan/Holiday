@@ -19,6 +19,29 @@ public class TowerMaker : MonoBehaviour
     private Tile loadtile;
     private bool isRandom;
 
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SelectMeleeTower();       
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SelectRangedTower();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            SelectTankTower();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            SelectRandomTower();
+        }
+    }
     private void Awake()
     {
         instance = this;
@@ -29,6 +52,7 @@ public class TowerMaker : MonoBehaviour
         if (CutsceneManager.instance.cutsceneflag == 1) return;
         selectedTowerPrefab = meleeTowerPrefab;
         GameManager.instance.ShowMessage("전사 영웅을 모집합니다!");
+        AudioManager.instance.PlaySFX("Select");
         Pay = MeleePay;
         isRandom = false;
     }
@@ -38,6 +62,7 @@ public class TowerMaker : MonoBehaviour
         if (CutsceneManager.instance.cutsceneflag == 1) return;
         selectedTowerPrefab = rangedTowerPrefab;
         GameManager.instance.ShowMessage("마법사 영웅을 모집합니다!");
+        AudioManager.instance.PlaySFX("Select");
         Pay = RangedPay;
         isRandom = false;
     }
@@ -47,6 +72,7 @@ public class TowerMaker : MonoBehaviour
         if (CutsceneManager.instance.cutsceneflag == 1) return;
         selectedTowerPrefab = tankTowerPrefab;
         GameManager.instance.ShowMessage("전위 영웅을 모집합니다!");
+        AudioManager.instance.PlaySFX("Select");
         Pay = TankPay;
         isRandom = false;
     }
@@ -58,6 +84,7 @@ public class TowerMaker : MonoBehaviour
         GameObject RandomPrefab = TowerArr[UnityEngine.Random.Range(0, TowerArr.Length)];
         selectedTowerPrefab = RandomPrefab;
         GameManager.instance.ShowMessage("무작위 영웅을 모집합니다!");
+        AudioManager.instance.PlaySFX("Select");
         Pay = RandomPay;
         isRandom = true;
     }
