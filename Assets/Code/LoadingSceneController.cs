@@ -97,9 +97,17 @@ public class LoadingSceneController : MonoBehaviour
 
         if (arg0.name == loadSceneName)
         {
-            StartCoroutine(Fade(false));
+            StartCoroutine(DelayedFadeOut());
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }
+    }
+    private IEnumerator DelayedFadeOut()
+    {
+        // 메인 씬 초기화 대기 (2프레임)
+        yield return null;
+        yield return null;
+
+        yield return StartCoroutine(Fade(false));
     }
 
     private IEnumerator Fade(bool isFadeIn)
@@ -114,6 +122,8 @@ public class LoadingSceneController : MonoBehaviour
 
         if (!isFadeIn)
         {
+            canvasGroup.blocksRaycasts = false;
+            canvasGroup.interactable = false;
             gameObject.SetActive(false);
         }
     }

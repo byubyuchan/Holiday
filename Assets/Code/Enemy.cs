@@ -186,6 +186,7 @@ public class Enemy : MonoBehaviour
 
     private void Attack()
     {
+        if (isDead) return;
         if (Time.time - lastAttackTime < attackCooldown) return;
 
         Collider2D[] towers = Physics2D.OverlapCircleAll(transform.position, range);

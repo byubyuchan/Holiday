@@ -28,6 +28,9 @@ public class TowerInfo : MonoBehaviour
             infoPanel.SetActive(false);
             return;
         }
+
+        if (infoTower) infoTower.HideRange();
+
         infoTower = tower;
 
         // 선택된 타워 정보 업데이트
@@ -38,6 +41,8 @@ public class TowerInfo : MonoBehaviour
         damageText.text = $"공격력 : {tower.damage}";
         rangeText.text = $"사거리 : {tower.range}";
         SellText.text = $"판매 : +{tower.price}G (Q)";
+
+        infoTower.ShowRange();
 
         // 아이콘 업데이트
         SpriteRenderer spriteRenderer = tower.GetComponent<SpriteRenderer>(); // 타워의 SpriteRenderer 가져오기
@@ -84,6 +89,7 @@ public class TowerInfo : MonoBehaviour
         if (infoPanel != null && infoPanel.activeSelf)
         {
             infoPanel.SetActive(false);
+            infoTower.HideRange(); // RangeCircle 비활성화
         }
     }
 }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.Analytics;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -9,16 +10,21 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
 
+    [Header("# Audio Mixer")]
+    public AudioMixer audioMixer; // Unity에서 만든 Mixer
+    public AudioMixerGroup bgmGroup;
+    public AudioMixerGroup sfxGroup;
+
     [Header("#BGM")]
     public AudioClip BGMClip;
     public float BGMVolume;
-    AudioSource BGMPlayer;
-    AudioHighPassFilter BGMEffet;
+    private AudioSource BGMPlayer;
+    private AudioHighPassFilter BGMEffet;
 
     [Header("#SFX")]
     public float SFXVolume;
     public int channels;
-    AudioSource[] SFXPlayers;
+    private AudioSource[] SFXPlayers;
     int channelIndex;
 
     [Header("# Volume UI")]
@@ -77,7 +83,10 @@ public class AudioManager : MonoBehaviour
         BGMPlayer.loop = true;
         BGMPlayer.volume = BGMVolume;
         BGMPlayer.clip = BGMClip;
-        BGMEffet = Camera.main.GetComponent<AudioHighPassFilter>();
+        //BGMEffet = Camera.main.GetComponent<AudioHighPassFilter>();
+        BGMEffet = BGMObject.AddComponent<AudioHighPassFilter>();
+        BGMEffet.enabled = false;
+        BGMPlayer.priority = 0;
 
         SFXPlayers = new AudioSource[channels];
         for (int i = 0; i < channels; i++)

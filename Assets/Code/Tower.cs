@@ -28,6 +28,8 @@ public class Tower : MonoBehaviour
     public int towerindex; // 김태현 maker로 이전
     public float[] probabilities = { 50f, 20f, 15f, 10f, 5f };
 
+    public LineRenderer rangeLine;
+
     private void Awake()
     {
         towerattack = GetComponent<TowerAttack>();
@@ -176,6 +178,16 @@ public class Tower : MonoBehaviour
     {
         towerindex++;
         Init(towerData[towerindex]);
+    }
+    public void ShowRange()
+    {
+        TowerRangeDisplay.Instance.UpdateRange();
+    }
+
+    public void HideRange()
+    {
+        if (rangeLine != null)
+            rangeLine.gameObject.SetActive(false);
     }
 }
 
