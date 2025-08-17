@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class TowerRangeDisplay : MonoBehaviour
 {
-    public static TowerRangeDisplay Instance;  
     public Tower tower;
     public LineRenderer lineRenderer;
 
@@ -13,7 +12,6 @@ public class TowerRangeDisplay : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
         // Tower와 LineRenderer 가져오기
         tower = GetComponent<Tower>();
         lineRenderer = GetComponent<LineRenderer>();
@@ -31,6 +29,7 @@ public class TowerRangeDisplay : MonoBehaviour
     public void UpdateRange()
     {
         if (tower == null) return;
+        lineRenderer.enabled = true;
         float range = tower.range;
         DrawCircle(range);
     }
@@ -53,5 +52,10 @@ public class TowerRangeDisplay : MonoBehaviour
 
             lineRenderer.SetPosition(i, new Vector3(x, y, 0));
         }
+    }
+
+    public void HideCircle()
+    {
+        lineRenderer.enabled = false;
     }
 }
