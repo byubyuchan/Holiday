@@ -66,9 +66,9 @@ public class HUD : MonoBehaviour
                     Enemy bossHP = GameManager.instance.bossEnemy;
                     float hp = Mathf.Max(0, bossHP.hp);
                     // 보스 HP 비율로 표시
-                    myText.text = string.Format("Boss HP {0:D0}%", Mathf.FloorToInt((hp / bossHP.maxHp) * 100));
+                    //myText.text = string.Format("Boss HP {0:D0}%", Mathf.FloorToInt((hp / bossHP.maxHp) * 100));
                     // 보스 HP 숫자로 표시
-                    // myText.text = string.Format("Boss HP {0:D0}/{1:D0}", Mathf.FloorToInt(hp), Mathf.FloorToInt(bossHP.maxHp));
+                    myText.text = string.Format("Boss HP {0:D0}/{1:D0}", Mathf.FloorToInt(hp), Mathf.FloorToInt(bossHP.maxHp));
                 }
                 break;
         }

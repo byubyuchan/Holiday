@@ -36,6 +36,7 @@ public class Talent : MonoBehaviour
         talents = new Transform[childCount];
         for (int i = 0; i < childCount; i++)
             talents[i] = talentGroup.GetChild(i);
+        Show();
     }
 
     public void Show()
@@ -102,42 +103,100 @@ public class Talent : MonoBehaviour
 
     public void Talent3()
     {
-        TowerMaker.instance.MeleePay = 6;
+        TowerMaker.instance.MeleePay = 5;
         TowerMaker.instance.selectedTowerPrefab = null;
-        meleeButton.PriceChange(6);
+        meleeButton.PriceChange(5);
         GameManager.instance.ShowMessage($"전사 타워의 골드가  {TowerMaker.instance.MeleePay}이 됩니다.");
-        dbConnector.saveTalent("전사의 가격이 6이됩니다.");
+        dbConnector.saveTalent("전사의 가격이 5이됩니다.");
         OnPicked(3);
     }
 
     public void Talent4()
     {
-        TowerMaker.instance.RangedPay = 6;
+        TowerMaker.instance.RangedPay = 5;
         TowerMaker.instance.selectedTowerPrefab = null;
-        rangeButton.PriceChange(6);
+        rangeButton.PriceChange(5);
         GameManager.instance.ShowMessage($"마법사 타워의 골드가  {TowerMaker.instance.RangedPay}이 됩니다.");
-        dbConnector.saveTalent("마법사의 가격이 6이됩니다.");
+        dbConnector.saveTalent("마법사의 가격이 5이됩니다.");
         OnPicked(4);
     }
 
     public void Talent5()
     {
-        TowerMaker.instance.TankPay = 6;
+        TowerMaker.instance.TankPay = 5;
         TowerMaker.instance.selectedTowerPrefab = null;
-        tankButton.PriceChange(6);
+        tankButton.PriceChange(5);
         GameManager.instance.ShowMessage($"전위 타워의 골드가  {TowerMaker.instance.TankPay}이 됩니다.");
-        dbConnector.saveTalent("전위 가격이 6이 됩니다.");
+        dbConnector.saveTalent("전위 가격이 5이 됩니다.");
         OnPicked(5);
     }
 
     public void Talent6()
     {
-        RandomGold = Random.Range(2, 11);
+        RandomGold = Random.Range(3, 9);
         TowerMaker.instance.RandomPay = RandomGold;
         TowerMaker.instance.selectedTowerPrefab = null;
         randomButton.PriceChange(RandomGold);
         GameManager.instance.ShowMessage($"랜덤 타워의 골드가  {RandomGold}G로 변경되었습니다!");
         dbConnector.saveTalent($"'랜덤의 랜덤_랜덤' 타워의 가격이 {RandomGold}G로 변경되었습니다!");
         OnPicked(6);
+    }
+
+    public void Talent7()
+    {
+
+        TowerMaker.instance.up_B = true;
+        TowerMaker.instance.selectedTowerPrefab = null;
+        GameManager.instance.ShowMessage($"B급 타워의 확률이 증가했습니다!");
+        dbConnector.saveTalent($"B급 타워의 확률이 증가했습니다!");
+        OnPicked(7);
+    }
+
+    public void Talent8()
+    {
+        TowerMaker.instance.up_A = true;
+        TowerMaker.instance.selectedTowerPrefab = null;
+        GameManager.instance.ShowMessage($"A급 타워의 확률이 증가했습니다!");
+        dbConnector.saveTalent($"A급 타워의 확률이 증가했습니다!");
+        OnPicked(8);
+    }
+
+    public void Talent9()
+    {
+        TowerMaker.instance.only_C = true;
+        TowerMaker.instance.selectedTowerPrefab = null;
+        GameManager.instance.Gold += 100;
+        GameManager.instance.ShowMessage($"더 이상 높은 등급의 용사가 등장하지 않습니다!");
+        dbConnector.saveTalent($"더 이상 높은 등급의 용사가 등장하지 않습니다!");
+        OnPicked(9);
+    }
+
+    public void Talent10()
+    {
+        TowerManager.instance.DestroyAllTower();
+        TowerMaker.instance.selectedTowerPrefab = null;
+        GameManager.instance.Gold += 100;
+        GameManager.instance.ShowMessage($"임무를 재시작합니다!");
+        dbConnector.saveTalent($"임무를 재시작합니다!");
+        OnPicked(10);
+    }
+
+    public void Talent11()
+    {
+        TowerManager.instance.UpgradeAllTower(0.1f);
+        TowerMaker.instance.Isupgrade = true;
+        TowerMaker.instance.selectedTowerPrefab = null;
+        GameManager.instance.ShowMessage($"모든 영웅의 능력치가 10% 향상됩니다!");
+        dbConnector.saveTalent($"모든 영웅의 능력치가 10% 향상됩니다!");
+        OnPicked(11);
+    }
+    public void Talent12()
+    {
+        TowerManager.instance.reverse = true;
+        TowerMaker.instance.selectedTowerPrefab = null;
+        healButton.PriceChange(TowerManager.instance.sale? 3:5);
+        GameManager.instance.ShowMessage($"회복 마법이 파괴 마법으로 변경됩니다!");
+        dbConnector.saveTalent($"회복 마법이 파괴 마법으로 변경됩니다!!");
+        OnPicked(12);
     }
 }

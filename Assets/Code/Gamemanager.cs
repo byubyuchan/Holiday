@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
         AudioManager.instance.PlayBGM(true);
         PauseButton.gameObject.SetActive(true);
         StartRoundButton.gameObject.SetActive(true);
-        Gold = 50;
+        Gold = 70;
         currentRound = 0;
         isLive = true;
         if (globalLight == null)
@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
         {
             isStart = false;
             StartRoundButton.gameObject.SetActive(true); // ��ư Ȱ��ȭ
-            Gold += 50;
+            Gold += 70;
             AudioManager.instance.PlaySFX("Win");
         }
     }
