@@ -14,24 +14,20 @@ public class ButtonText : MonoBehaviour
         switch (type)
         {
             case InfoType.Heal:
-                BText.text = $"회복({price}G)";
-                Debug.Log("가격변동");
+                if (TowerManager.instance.reverse) BText.text = $"파괴({price}G)";
+                else BText.text = $"회복({price}G)";
                 break;
             case InfoType.Melee:
                 BText.text = $"전사({price}G)";
-                Debug.Log("가격변동");
                 break;
             case InfoType.Range:
                 BText.text = $"마법사({price}G)";
-                Debug.Log("가격변동");
                 break;
             case InfoType.Tank:
                 BText.text = $"전위({price}G)";
-                Debug.Log("가격변동");
                 break;
             case InfoType.Random:
                 BText.text = $"랜덤({price}G)";
-                Debug.Log("가격변동");
                 break;
         }
     }

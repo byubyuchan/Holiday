@@ -8,7 +8,6 @@ public class TowerRangeDisplay : MonoBehaviour
     [Header("Line Settings")]
     public int segments = 100;           // 원을 부드럽게 만들 점 개수
     public float lineWidth = 0.05f;      // 선 두께
-    public Color lineColor = Color.green;
 
     private void Awake()
     {
@@ -22,8 +21,6 @@ public class TowerRangeDisplay : MonoBehaviour
         lineRenderer.startWidth = lineWidth;
         lineRenderer.endWidth = lineWidth;
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-        lineRenderer.startColor = lineColor;
-        lineRenderer.endColor = lineColor;
     }
 
     public void UpdateRange()

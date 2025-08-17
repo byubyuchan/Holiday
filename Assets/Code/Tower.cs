@@ -15,7 +15,7 @@ public class Tower : MonoBehaviour
     public float hp;            // 체력
     public float range;       // 사거리
     public float speed;
-    public int damage;        // 공격력
+    public float damage;        // 공격력
     public string cost;
     public int projectileIndex;
     public bool flipX;
@@ -26,7 +26,7 @@ public class Tower : MonoBehaviour
     public Animator anim;
 
     public int towerindex; // 김태현 maker로 이전
-    public float[] probabilities = { 50f, 20f, 15f, 10f, 5f };
+    public float[] probabilities = { 82.112f, 15f, 2f, 0.1f };
 
     public LineRenderer rangeLine;
 
@@ -51,12 +51,14 @@ public class Tower : MonoBehaviour
         {
             tile.IsBuildTower = false; // 설치된 타일의 상태를 초기화
         }
-
         Destroy(gameObject); // 타워 제거
     }
 
     public void Init(TowerData towerData)
     {
+        bool Isupgrade = TowerMaker.instance.Isupgrade;
+        float Val = TowerMaker.instance.upgradeVal;
+
         towerType = towerData.towerType;
         maxHp = towerData.HP;
         hp = towerData.HP;
@@ -67,6 +69,16 @@ public class Tower : MonoBehaviour
         cost = towerData.Cost;
         price = towerData.Star;
         projectileIndex = towerData.ProjectileIndex;
+
+        if (Isupgrade)
+        {
+            Debug.Log($"{Val}만큼 증가!");
+            maxHp = towerData.HP * (1f + Val);
+            hp = towerData.HP * (1f + Val);
+            range = towerData.Range * (1f + Val);
+            damage = towerData.Damage * (1f + Val);
+            speed = towerData.Speed * (1f - Val);
+        }
 
         spriteRenderer.flipX = flipX;
 
@@ -122,6 +134,26 @@ public class Tower : MonoBehaviour
     }
     private int GetRandomIndex()
     {
+        bool up_B = TowerMaker.instance.up_B;
+        bool up_A = TowerMaker.instance.up_A;
+        bool only_C = TowerMaker.instance.only_C;
+        if (up_B)
+        {
+            probabilities[0] -= 4f;
+            probabilities[2] -= 1f;
+            probabilities[1] += 5f;
+        }
+        if (up_A)
+        {
+            probabilities[1] -= 10f;
+            probabilities[0] += 7f;
+            probabilities[2] += 3f;
+        }
+        if (only_C)
+        {
+            probabilities[0] = 100f;
+        }
+
         float randomValue = Random.Range(0f, 100f); // 0~100 사이의 랜덤 값 생성
         float cumulativeProbability = 0f;
 
@@ -197,7 +229,7 @@ public class TowerData
     public float HP;            // 체력
     public float Speed;       // 공격 속도
     public float Range;       // 사거리
-    public int Damage;        // 공격력
+    public float Damage;        // 공격력
     public string Cost;          // 비용
     public int Star;          // 별 등급
     public int ProjectileIndex;

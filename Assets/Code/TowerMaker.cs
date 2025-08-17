@@ -4,10 +4,10 @@ using System;
 
 public class TowerMaker : MonoBehaviour
 {
-    [SerializeField] private GameObject meleeTowerPrefab;
-    [SerializeField] private GameObject rangedTowerPrefab;
-    [SerializeField] private GameObject tankTowerPrefab;
-    [SerializeField] private Transform towerParent;
+    [SerializeField] public GameObject meleeTowerPrefab;
+    [SerializeField] public GameObject rangedTowerPrefab;
+    [SerializeField] public GameObject tankTowerPrefab;
+    [SerializeField] public Transform towerParent;
 
     public GameObject selectedTowerPrefab;
     public static TowerMaker instance;
@@ -18,6 +18,12 @@ public class TowerMaker : MonoBehaviour
     public int RandomPay = 5;
     private Tile loadtile;
     private bool isRandom;
+
+    public bool up_B;
+    public bool up_A;
+    public bool only_C;
+    public bool Isupgrade;
+    public float upgradeVal = 0f;
 
 
     private void Update()
