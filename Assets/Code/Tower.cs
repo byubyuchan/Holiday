@@ -181,13 +181,12 @@ public class Tower : MonoBehaviour
     }
     public void ShowRange()
     {
-        TowerRangeDisplay.Instance.UpdateRange();
+        GetComponent<TowerRangeDisplay>().UpdateRange();
     }
 
     public void HideRange()
     {
-        if (rangeLine != null)
-            rangeLine.gameObject.SetActive(false);
+        GetComponent<TowerRangeDisplay>().HideCircle();
     }
 }
 
