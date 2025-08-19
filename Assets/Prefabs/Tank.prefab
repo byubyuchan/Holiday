@@ -336,6 +336,11 @@ MonoBehaviour:
   projectileIndex: 0
   flipX: 0
   price: 0
+  baseDamage: 0
+  baseHp: 0
+  baseMaxHp: 0
+  baseRange: 0
+  baseSpeed: 0
   towerattack: {fileID: 0}
   animCon:
   - {fileID: 22100000, guid: c791d90a568dfb24b917e2580797de42, type: 2}
@@ -345,13 +350,11 @@ MonoBehaviour:
   anim: {fileID: 0}
   towerindex: 0
   probabilities:
-  - 82.112
+  - 82.912
   - 15
   - 2
-  - 0.1
+  - 0.088
   - 0
-  up_B: 0
-  up_A: 0
   rangeLine: {fileID: 0}
 --- !u!114 &2238410380428710349
 MonoBehaviour:

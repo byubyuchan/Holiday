@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
@@ -33,6 +34,15 @@ public class TowerMover : MonoBehaviour
 
     public void StartMove()
     {
+
+        if (TowerMaker.instance.cantMove)
+        {
+            GameManager.instance.ShowMessage("저주로 인해 이동이 불가능합니다!");
+            AudioManager.instance.PlaySFX("Cant");
+            CameraShakeComponent.instance.StartShake();
+            return;
+        }
+
         if (GameManager.instance.isStart)
         {
             GameManager.instance.ShowMessage("전투 중에는 이동이 불가합니다!");
@@ -40,6 +50,8 @@ public class TowerMover : MonoBehaviour
             CameraShakeComponent.instance.StartShake();
             return;
         }
+
+
         // Hover된 타일에 타워가 있으면 selectedTower 갱신
         if (towerSelector.selectedTile != null && towerSelector.selectedTile.GetComponent<Tile>().currentTower != null)
         {
@@ -82,6 +94,14 @@ public class TowerMover : MonoBehaviour
 
     public void TowerSell()
     {
+        if (TowerManager.instance.cantSell)
+        {
+            GameManager.instance.ShowMessage("저주로 인해 판매할 수 없습니다!");
+            AudioManager.instance.PlaySFX("Cant");
+            CameraShakeComponent.instance.StartShake();
+            return;
+        }
+
         if (GameManager.instance.isStart)
         {
             GameManager.instance.ShowMessage("전투 중에는 용사를 판매할 수 없습니다!");
@@ -90,7 +110,7 @@ public class TowerMover : MonoBehaviour
             return;
         }
 
-        if (selectedTower != null || GameManager.instance.isStart)
+        if (selectedTower != null)
         {
             selectedTower.RemoveTower();
             GameManager.instance.Gold += selectedTower.price;
@@ -99,7 +119,13 @@ public class TowerMover : MonoBehaviour
             towerSelector.ResetTile(true);
             GameManager.instance.ShowMessage("용사를 판매했습니다!");
             AudioManager.instance.PlaySFX("Sell");
+            StartCoroutine(DelayUpgradeCheck());
         }
+    }
+    private IEnumerator DelayUpgradeCheck()
+    {
+        yield return null; // 한 프레임 대기
+        TowerManager.instance.UpgradeAllTower(TowerMaker.instance.upgradeVal);
     }
 
     public void EndMove()

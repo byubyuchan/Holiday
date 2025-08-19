@@ -35,7 +35,7 @@ public class TowerInfo : MonoBehaviour
         // 선택된 타워 정보 업데이트
         infoPanel.SetActive(true);
         towerTypeText.text = $"등급 : {tower.cost}";
-        hpText.text = $"체력 : {(int)tower.hp}/{tower.maxHp}";
+        hpText.text = $"체력 : {(int)tower.hp}/{(int)tower.maxHp}";
         speedText.text = $"공격속도 : {tower.speed:F2}";
         damageText.text = $"공격력 : {tower.damage:F2}";
         rangeText.text = $"사거리 : {tower.range:F2}";
@@ -57,7 +57,7 @@ public class TowerInfo : MonoBehaviour
         if (infoPanel.activeSelf)
         {
             towerTypeText.text = $"등급 : {infoTower.cost}";
-            hpText.text = $"체력 : {(int)infoTower.hp}/{infoTower.maxHp}";
+            hpText.text = $"체력 : {(int)infoTower.hp}/{(int)infoTower.maxHp}";
             speedText.text = $"공격속도 : {infoTower.speed:F2}";
             damageText.text = $"공격력 : {infoTower.damage:F2}";
             rangeText.text = $"사거리 : {infoTower.range:F2}";
@@ -85,10 +85,11 @@ public class TowerInfo : MonoBehaviour
 
     public void HideUI()
     {
-        if (infoPanel != null && infoPanel.activeSelf)
+        if (infoTower != null)
         {
-            infoPanel.SetActive(false);
             infoTower.HideRange(); // RangeCircle 비활성화
+            infoTower = null;
         }
+        infoPanel.SetActive(false);
     }
 }
