@@ -24,6 +24,7 @@ public class TowerMaker : MonoBehaviour
     public bool only_C;
     public bool Isupgrade;
     public float upgradeVal = 0f;
+    public bool cantMove;
 
 
     private void Update()
@@ -56,6 +57,11 @@ public class TowerMaker : MonoBehaviour
     public void SelectMeleeTower()
     {
         if (CutsceneManager.instance.cutsceneflag == 1) return;
+        if (TowerManager.instance.buttonRandom)
+        {
+            SelectRandomTower();
+            return;
+        }
         selectedTowerPrefab = meleeTowerPrefab;
         GameManager.instance.ShowMessage("전사 영웅을 모집합니다!");
         AudioManager.instance.PlaySFX("Select");
@@ -66,6 +72,11 @@ public class TowerMaker : MonoBehaviour
     public void SelectRangedTower()
     {
         if (CutsceneManager.instance.cutsceneflag == 1) return;
+        if (TowerManager.instance.buttonRandom)
+        {
+            SelectRandomTower();
+            return;
+        }
         selectedTowerPrefab = rangedTowerPrefab;
         GameManager.instance.ShowMessage("마법사 영웅을 모집합니다!");
         AudioManager.instance.PlaySFX("Select");
@@ -76,6 +87,11 @@ public class TowerMaker : MonoBehaviour
     public void SelectTankTower()
     {
         if (CutsceneManager.instance.cutsceneflag == 1) return;
+        if (TowerManager.instance.buttonRandom)
+        {
+            SelectRandomTower();
+            return;
+        }
         selectedTowerPrefab = tankTowerPrefab;
         GameManager.instance.ShowMessage("전위 영웅을 모집합니다!");
         AudioManager.instance.PlaySFX("Select");

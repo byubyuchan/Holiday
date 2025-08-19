@@ -26,6 +26,8 @@ public class Spawner : MonoBehaviour
     [Header("# Game Object")]
     public Talent RoundUp;
 
+    public bool bossHpUp = false;
+
     void Awake()
     {
         instance = this;

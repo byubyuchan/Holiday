@@ -134,6 +134,9 @@ public class GameManager : MonoBehaviour
             StartRoundButton.gameObject.SetActive(true); // ��ư Ȱ��ȭ
             Gold += 70;
             AudioManager.instance.PlaySFX("Win");
+            TowerManager.instance.TwicePrice();
+
+            if (TowerManager.instance.forcedSale) TowerManager.instance.TwiceSellAllTower();
         }
     }
 

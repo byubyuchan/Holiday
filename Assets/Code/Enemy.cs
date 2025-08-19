@@ -38,7 +38,6 @@ public class Enemy : MonoBehaviour
     private SpriteRenderer spriter;
     private bool isDead = false;
 
-
     void Start()
     {
         target = GameManager.instance.goal.transform; // 기본 목표 설정
@@ -60,6 +59,8 @@ public class Enemy : MonoBehaviour
 
     public void Init(SpawnData data)
     {
+        bool bossHpUp = Spawner.instance.bossHpUp;
+
         anim.runtimeAnimatorController = animCon[data.spriteType];
         speed = data.speed;
         maxHp = data.hp;
@@ -70,6 +71,12 @@ public class Enemy : MonoBehaviour
         attackCooldown = data.AttackSpeed;
         attackType = data.AttackType;
         projectileIndex = data.projectileIndex;
+
+        if (attackType == "Boss" && bossHpUp)
+        {
+            hp *= 1.5f;
+            maxHp *= 1.5f;
+        }
     }
 
     void Awake()

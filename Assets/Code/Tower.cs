@@ -21,6 +21,12 @@ public class Tower : MonoBehaviour
     public bool flipX;
     public int price;
 
+    public float baseDamage;
+    public float baseHp;
+    public float baseMaxHp;
+    public float baseRange;
+    public float baseSpeed;
+
     public TowerAttack towerattack;
     public RuntimeAnimatorController[] animCon;
     public Animator anim;
@@ -52,12 +58,16 @@ public class Tower : MonoBehaviour
             tile.IsBuildTower = false; // 설치된 타일의 상태를 초기화
         }
         Destroy(gameObject); // 타워 제거
+
     }
 
     public void Init(TowerData towerData)
     {
         bool Isupgrade = TowerMaker.instance.Isupgrade;
         float Val = TowerMaker.instance.upgradeVal;
+        bool IsAttackChange = TowerManager.instance.IsAttackChange;
+        bool IsBig = TowerManager.instance.bigProjectile;
+        bool IsSmall = TowerManager.instance.smallProjectile;
 
         towerType = towerData.towerType;
         maxHp = towerData.HP;
@@ -70,14 +80,35 @@ public class Tower : MonoBehaviour
         price = towerData.Star;
         projectileIndex = towerData.ProjectileIndex;
 
-        if (Isupgrade)
+        baseDamage = damage;
+        baseHp = hp;
+        baseMaxHp = maxHp;
+        baseRange = range;
+        baseSpeed = speed;
+
+        //if (Isupgrade)
+        //{
+        //    maxHp = towerData.HP * (1f + Val);
+        //    hp = towerData.HP * (1f + Val);
+        //    range = towerData.Range * (1f + Val);
+        //    damage = towerData.Damage * (1f + Val);
+        //    speed = towerData.Speed * (1f - Val);
+            
+        //    if (IsBig && towerType == "Range")
+        //    {
+        //        damage += towerData.Damage;
+        //        speed += towerData.Speed;
+        //    }
+        //    if (IsSmall && towerType == "Range")
+        //    {
+        //        damage -= towerData.Damage * 0.5f;
+        //        speed -= towerData.Speed * 0.5f;
+        //    }
+        //}
+
+        if (IsAttackChange && towerType == "Melee")
         {
-            Debug.Log($"{Val}만큼 증가!");
-            maxHp = towerData.HP * (1f + Val);
-            hp = towerData.HP * (1f + Val);
-            range = towerData.Range * (1f + Val);
-            damage = towerData.Damage * (1f + Val);
-            speed = towerData.Speed * (1f - Val);
+            towerType = "Round";
         }
 
         spriteRenderer.flipX = flipX;
@@ -108,6 +139,9 @@ public class Tower : MonoBehaviour
             CutsceneManager.instance.PlayTowerCutscene(transform, cost + "급 용사 소환!!", 0.3f, 4);
             AudioManager.instance.PlaySFX("Spawn_S");
         }
+
+        TowerManager.instance.UpgradeAllTower(Val);
+        hp = maxHp;
     }
 
     public void TakeDamage(float damage)
@@ -218,7 +252,23 @@ public class Tower : MonoBehaviour
 
     public void HideRange()
     {
-        GetComponent<TowerRangeDisplay>().HideCircle();
+        TowerRangeDisplay rangeDisplay = GetComponent<TowerRangeDisplay>();
+        if (rangeDisplay != null)
+        {
+            rangeDisplay.HideCircle();
+        }
+    }
+
+    public void ApplyHpScaling()
+    {
+        float hpPercent = Mathf.Clamp01(hp / maxHp);
+        float missingPercent = 1f - hpPercent; // HP가 줄어든 비율 (0 ~ 1)
+        float Val = TowerMaker.instance.upgradeVal;
+        // 버서커 모드 최대 공격력 증가 100
+        damage += 100f * missingPercent;
+
+        // 속도도 기본 속도에서 보정
+        speed = Mathf.Max(speed - (baseSpeed * 0.3f * missingPercent), 0.2f);
     }
 }
 

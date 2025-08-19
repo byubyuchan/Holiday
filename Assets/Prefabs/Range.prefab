@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 809171698193702746}
   - component: {fileID: 645679230056842298}
   - component: {fileID: 6887563088220899377}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Range
   m_TagString: Tower
   m_Icon: {fileID: 0}
@@ -336,6 +336,11 @@ MonoBehaviour:
   projectileIndex: 0
   flipX: 0
   price: 0
+  baseDamage: 0
+  baseHp: 0
+  baseMaxHp: 0
+  baseRange: 0
+  baseSpeed: 0
   towerattack: {fileID: 0}
   animCon:
   - {fileID: 22100000, guid: 496d3d1e1ce3f8e4690a459d6ecb044f, type: 2}
@@ -345,13 +350,11 @@ MonoBehaviour:
   anim: {fileID: 0}
   towerindex: 0
   probabilities:
-  - 82.112
+  - 82.912
   - 15
   - 2
-  - 0.1
+  - 0.088
   - 0
-  up_B: 0
-  up_A: 0
   rangeLine: {fileID: 0}
 --- !u!114 &3621588929993815978
 MonoBehaviour:

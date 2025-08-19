@@ -57,6 +57,12 @@ public class TowerSelector : MonoBehaviour
 
         if (towerMover.IsMoving) // 이동 모드인 경우
         {
+            if (GameManager.instance.isStart || TowerMaker.instance.cantMove)
+            {
+                towerMover.EndMove();
+                return;
+            }
+
             towerMover.MoveToTile(tile); // 이동 또는 교환 처리
             ResetTile(true);
             return;

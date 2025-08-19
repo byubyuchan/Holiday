@@ -16,12 +16,27 @@ public class Projectile : MonoBehaviour
     private float damage; // 데미지 값
     private bool isEnemyProjectile = false; // 적의 투사체인지 여부
 
+    bool isBig;
+    bool isSmall;
+
     // 초기화 메서드: 타워와 목표 설정
     public void Init(Tower _tower, GameObject _target)
     {
         tower = _tower;
         target = _target;
         isActive = true; // 활성화 상태로 설정
+
+        if (TowerManager.instance.bigProjectile && !isBig)
+        {
+            transform.localScale *= 2f;
+            isBig = true;
+        }
+
+        if (TowerManager.instance.smallProjectile && !isSmall)
+        {
+            transform.localScale /= 2f;
+            isSmall = true;
+        }
 
         if (tower.projectileIndex == 3 || tower.projectileIndex == 10) // 특수한 프로젝타일인 경우
         {
@@ -211,6 +226,6 @@ public class Projectile : MonoBehaviour
         StopAllCoroutines();
         isActive = false; // 활성 상태 변경
         gameObject.SetActive(false); // 투사체 비활성화
-    }
 
+    }
 }
