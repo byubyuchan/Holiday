@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 7260519717483783760}
   - component: {fileID: 6646561733695990079}
   m_Layer: 0
-  m_Name: Melee
+  m_Name: Special
   m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -175,7 +175,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: ae297123f091bbf4e8f1835eb98fb293, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fdb550509659347d4b4c37d05c566ad2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -316,14 +316,14 @@ MonoBehaviour:
     ProjectileIndex: 0
     FlipX: 1
     Desc: 
-  - towerType: Range
-    HP: 9999
-    Speed: 0.5
-    Range: 20
-    Damage: 999
-    Cost: S
-    Star: 100
-    ProjectileIndex: 10
+  - towerType: Round
+    HP: 1000
+    Speed: 0.75
+    Range: 8
+    Damage: 200
+    Cost: A
+    Star: 10
+    ProjectileIndex: 0
     FlipX: 1
     Desc: 
   towerType: 
@@ -334,7 +334,7 @@ MonoBehaviour:
   damage: 0
   cost: 
   projectileIndex: 0
-  flipX: 0
+  flipX: 1
   price: 0
   baseDamage: 0
   baseHp: 0
@@ -343,18 +343,17 @@ MonoBehaviour:
   baseSpeed: 0
   towerattack: {fileID: 0}
   animCon:
-  - {fileID: 9100000, guid: b95265f99b6d90e438df1308a89c8bab, type: 2}
-  - {fileID: 22100000, guid: b810f2280bb2a6b4cbf996716e6e3d55, type: 2}
-  - {fileID: 22100000, guid: 7ad1203c0a9aee94fb68d3e4a2bdd9f0, type: 2}
-  - {fileID: 9100000, guid: 3c2a5b7097b0fe44394328c0bdb9252e, type: 2}
+  - {fileID: 22100000, guid: d7146cf84899f724081298ae3439e024, type: 2}
   - {fileID: 22100000, guid: 74bc2d833471cd04fad4c526d1b843f1, type: 2}
+  - {fileID: 22100000, guid: 35b2a341a74b28049b6ee0b33d7063fc, type: 2}
+  - {fileID: 22100000, guid: 4653fe45a251d9145b6b1989aa719e4f, type: 2}
   anim: {fileID: 0}
   towerindex: 0
   probabilities:
-  - 82.912
-  - 15
-  - 2
-  - 0.088
+  - 0
+  - 0
+  - 0
+  - 0
   - 0
   rangeLine: {fileID: 0}
 --- !u!114 &2238410380428710349
@@ -436,8 +435,8 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0.6}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0}
-    oldSize: {x: 3.125, y: 1.71875}
+    pivot: {x: 0.5, y: -0.05}
+    oldSize: {x: 2.05, y: 1.5}
     newSize: {x: 0.33, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -544,15 +543,15 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0, g: 0.38754225, b: 1, a: 1}
-      key1: {r: 0, g: 1, b: 0.1714561, a: 1}
+      key0: {r: 1, g: 0, b: 0.89736366, a: 1}
+      key1: {r: 0, g: 0.38726044, b: 1, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
       key6: {r: 0, g: 0, b: 0, a: 0}
       key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 0
+      ctime0: 193
       ctime1: 65535
       ctime2: 0
       ctime3: 0
