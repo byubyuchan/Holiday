@@ -174,5 +174,6 @@ public class TowerMaker : MonoBehaviour
         int towerType = tower.towerindex;
         string tileName = loadtile.name;
         string areaName = loadtile.transform.parent.name;
+
     }
 }

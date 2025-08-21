@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
         AudioManager.instance.PlayBGM(true);
         PauseButton.gameObject.SetActive(true);
         StartRoundButton.gameObject.SetActive(true);
-        Gold = 70;
+        Gold = 5000;
         currentRound = 0;
         isLive = true;
         if (globalLight == null)

@@ -6,6 +6,8 @@ using UnityEngine;
 public class TowerMover : MonoBehaviour
 {
     [SerializeField] private TowerSelector towerSelector;
+    [SerializeField] private List<SpecialMixRecipe> specialMixRecipes;
+
     public Tower selectedTower; // 현재 선택된 타워
     public Tile tile;
     public bool IsMoving; // 이동 모드 여부
@@ -26,6 +28,11 @@ public class TowerMover : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
         {
             TowerLevelUp();
+        }
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            SpecialMix();
         }
 
         // 필요하면 다른 단축키도 추가 가능
@@ -186,5 +193,145 @@ public class TowerMover : MonoBehaviour
             AudioManager.instance.PlaySFX("Cant");
             CameraShakeComponent.instance.StartShake();
         }
+    }
+
+public void SpecialMix()
+{
+    // 1. 타워가 선택되었는지 먼저 확인합니다.
+    if (selectedTower == null)
+    {
+        GameManager.instance.ShowMessage("조합할 용사를 먼저 선택하세요!");
+        AudioManager.instance.PlaySFX("Cant2");
+        return;
+    }
+    
+    if (GameManager.instance.isStart)
+    {
+        GameManager.instance.ShowMessage("전투 중에는 조합이 불가능합니다!");
+        AudioManager.instance.PlaySFX("Cant2");
+        return;
+    }
+
+        // 2. 현재 맵에 있는 모든 타워 목록을 가져옵니다.
+        List<Tower> allTowersOnField = new List<Tower>(Object.FindObjectsByType<Tower>(FindObjectsSortMode.None));
+
+        // 3. 실행 가능한 레시피를 찾습니다.
+        SpecialMixRecipe foundRecipe = FindMatchingRecipe(allTowersOnField);
+
+    if (foundRecipe != null)
+    {
+        // 4. 레시피를 찾았다면, 조합을 실행합니다.
+        ConsumeAndCreate(foundRecipe, allTowersOnField);
+        GameManager.instance.ShowMessage(foundRecipe.recipeName + " 조합 성공!");
+        AudioManager.instance.PlaySFX("LevelUp"); // 조합 성공 효과음
+    }
+    else
+    {
+        // 5. 가능한 레시피가 없다면, 메시지를 표시합니다.
+        GameManager.instance.ShowMessage("특수조합에 필요한 영웅이 부족합니다!");
+        AudioManager.instance.PlaySFX("Cant");
+        CameraShakeComponent.instance.StartShake();
+    }
+}
+
+// selectedTower를 기준으로 조합 가능한 레시피를 찾는 함수
+private SpecialMixRecipe FindMatchingRecipe(List<Tower> allTowers)
+{
+    // 모든 레시피를 하나씩 확인
+    foreach (var recipe in specialMixRecipes)
+    {
+        // 현재 선택한 타워가 이 레시피의 재료 중 하나인지 확인
+        bool isIngredient = false;
+        foreach (var ingredient in recipe.ingredients)
+        {
+            if (ingredient.towerType == selectedTower.towerType && ingredient.cost == selectedTower.cost)
+            {
+                isIngredient = true;
+                break;
+            }
+        }
+
+        // 선택한 타워가 재료가 아니라면, 다음 레시피로 넘어감
+        if (!isIngredient) continue;
+
+        // 재료가 맞다면, 맵 전체에 모든 재료가 충분한지 확인
+        if (CheckAllIngredients(recipe, allTowers))
+        {
+            return recipe; // 모든 재료가 충분하면, 이 레시피를 반환
+        }
+    }
+
+    return null; // 가능한 레시피가 없으면 null 반환
+}
+
+
+// 레시피에 필요한 모든 재료가 맵에 있는지 확인하는 함수
+private bool CheckAllIngredients(SpecialMixRecipe recipe, List<Tower> allTowers)
+{
+    foreach (var ingredient in recipe.ingredients)
+    {
+        // 맵에 있는 타워들 중, 현재 재료와 일치하는 타워의 개수를 셉니다.
+        int count = allTowers.FindAll(tower => 
+            tower.towerType == ingredient.towerType && tower.cost == ingredient.cost
+        ).Count;
+
+        // 센 개수가 필요한 개수보다 적으면, 이 레시피는 불가능합니다.
+        if (count < ingredient.quantity)
+        {
+            return false;
+        }
+    }
+
+    // 모든 재료가 충분하면 true를 반환합니다.
+    return true;
+}
+
+
+// 재료를 소모하고 결과물을 생성하는 함수
+private void ConsumeAndCreate(SpecialMixRecipe recipe, List<Tower> allTowers)
+{
+    Tile originalTile = selectedTower.tile; // 새 타워가 생성될 위치 저장
+
+    // 1. 재료 소모
+    foreach (var ingredient in recipe.ingredients)
+    {
+        int consumedCount = 0;
+        // 복사된 리스트나 역방향으로 순회하며 제거해야 안전합니다.
+        List<Tower> towersToDestroy = allTowers.FindAll(tower => 
+            tower.towerType == ingredient.towerType && tower.cost == ingredient.cost
+        );
+
+        foreach(var tower in towersToDestroy)
+        {
+            if (consumedCount < ingredient.quantity)
+            {
+                tower.RemoveTower();
+                consumedCount++;
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
+        if (originalTile != null)
+        {
+            GameObject newTowerObj = Instantiate(recipe.resultTowerPrefab, originalTile.transform.position, Quaternion.identity);
+            newTowerObj.transform.SetParent(TowerMaker.instance.towerParent);
+            Tower newTower = newTowerObj.GetComponent<Tower>();
+            
+
+
+            newTower.InitAsSpecial(recipe.resultTowerIndex);
+
+            // 타일에 배치하는 건 똑같이!
+            newTower.MoveToTile(originalTile, false);
+        }
+
+    selectedTower = null;
+    TowerInfo.instance.HideUI();
+    towerSelector.ResetTile(true);
+    StartCoroutine(DelayUpgradeCheck());
     }
 }

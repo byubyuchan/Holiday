@@ -36,6 +36,8 @@ public class Tower : MonoBehaviour
 
     public LineRenderer rangeLine;
 
+    private bool isSpecialSpawn = false;
+
     private void Awake()
     {
         towerattack = GetComponent<TowerAttack>();
@@ -45,10 +47,22 @@ public class Tower : MonoBehaviour
 
     private void Start()
     {
+        if (isSpecialSpawn) return;
+
+        // 일반 영웅들만 원래대로 랜덤 소환
         towerindex = GetRandomIndex();
-        // 확률에 맞게 인덱스 번호 설정됨.
-        Init(towerData[towerindex]); // 소환 로직
+        Init(towerData[towerindex]);
         SortingOrder();
+    }
+
+    public void InitAsSpecial(int specialIndex)
+    {
+        isSpecialSpawn = true;
+
+        towerindex = specialIndex;
+
+        // 우리가 원래 쓰던 Init() 함수를 그대로 호출!
+        Init(towerData[towerindex]);
     }
 
     public void RemoveTower()
@@ -137,6 +151,11 @@ public class Tower : MonoBehaviour
         if (cost == "S")
         {
             CutsceneManager.instance.PlayTowerCutscene(transform, cost + "급 용사 소환!!", 0.3f, 4);
+            AudioManager.instance.PlaySFX("Spawn_S");
+        }
+        if (cost == "A+")
+        {
+            CutsceneManager.instance.PlayTowerCutscene(transform,"특급 용사 소환!!", 0.3f, 4);
             AudioManager.instance.PlaySFX("Spawn_S");
         }
 
