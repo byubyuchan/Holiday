@@ -51361,6 +51361,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerSelector: {fileID: 312433770}
+  specialMixRecipes:
+  - {fileID: 11400000, guid: bf96515decedeb04281ecccc60b19a35, type: 2}
   selectedTower: {fileID: 0}
   tile: {fileID: 0}
   IsMoving: 0

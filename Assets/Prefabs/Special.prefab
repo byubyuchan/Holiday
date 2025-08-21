@@ -291,7 +291,7 @@ MonoBehaviour:
     Speed: 0.75
     Range: 7
     Damage: 100
-    Cost: C
+    Cost: A+
     Star: 1
     ProjectileIndex: 0
     FlipX: 0
@@ -301,7 +301,7 @@ MonoBehaviour:
     Speed: 0.75
     Range: 7
     Damage: 150
-    Cost: B
+    Cost: A+
     Star: 2
     ProjectileIndex: 0
     FlipX: 0
@@ -311,7 +311,7 @@ MonoBehaviour:
     Speed: 0.75
     Range: 8
     Damage: 200
-    Cost: A
+    Cost: A+
     Star: 10
     ProjectileIndex: 0
     FlipX: 1
@@ -321,7 +321,7 @@ MonoBehaviour:
     Speed: 0.75
     Range: 8
     Damage: 200
-    Cost: A
+    Cost: A+
     Star: 10
     ProjectileIndex: 0
     FlipX: 1
