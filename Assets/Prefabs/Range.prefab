@@ -288,9 +288,9 @@ MonoBehaviour:
   towerData:
   - towerType: Range
     HP: 150
-    Speed: 2
+    Speed: 2.25
     Range: 8
-    Damage: 50
+    Damage: 60
     Cost: C
     Star: 1
     ProjectileIndex: 1
@@ -298,9 +298,9 @@ MonoBehaviour:
     Desc: 
   - towerType: Range
     HP: 400
-    Speed: 2
+    Speed: 2.25
     Range: 10
-    Damage: 100
+    Damage: 150
     Cost: B
     Star: 2
     ProjectileIndex: 2
@@ -310,7 +310,7 @@ MonoBehaviour:
     HP: 800
     Speed: 2
     Range: 15
-    Damage: 200
+    Damage: 250
     Cost: A
     Star: 10
     ProjectileIndex: 3
@@ -356,6 +356,7 @@ MonoBehaviour:
   - 0.088
   - 0
   rangeLine: {fileID: 0}
+  IsAttackChange: 0
 --- !u!114 &3621588929993815978
 MonoBehaviour:
   m_ObjectHideFlags: 0

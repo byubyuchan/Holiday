@@ -286,45 +286,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tile: {fileID: 0}
   towerData:
-  - towerType: Melee
-    HP: 200
+  - towerType: Round
+    HP: 1200
     Speed: 0.75
-    Range: 7
+    Range: 8
+    Damage: 200
+    Cost: A+
+    Star: 50
+    ProjectileIndex: 0
+    FlipX: 1
+    Desc: 
+  - towerType: Range
+    HP: 800
+    Speed: 1.5
+    Range: 10
     Damage: 100
     Cost: A+
-    Star: 1
-    ProjectileIndex: 0
-    FlipX: 0
+    Star: 50
+    ProjectileIndex: 10
+    FlipX: 1
     Desc: 
-  - towerType: Melee
-    HP: 500
-    Speed: 0.75
+  - towerType: Tank
+    HP: 4500
+    Speed: 3
     Range: 7
-    Damage: 150
+    Damage: 300
     Cost: A+
-    Star: 2
+    Star: 10
     ProjectileIndex: 0
+    FlipX: 1
+    Desc: 
+  - towerType: Range
+    HP: 800
+    Speed: 1.5
+    Range: 15
+    Damage: 300
+    Cost: A+
+    Star: 10
+    ProjectileIndex: 3
     FlipX: 0
-    Desc: 
-  - towerType: Round
-    HP: 1000
-    Speed: 0.75
-    Range: 8
-    Damage: 200
-    Cost: A+
-    Star: 10
-    ProjectileIndex: 0
-    FlipX: 1
-    Desc: 
-  - towerType: Round
-    HP: 1000
-    Speed: 0.75
-    Range: 8
-    Damage: 200
-    Cost: A+
-    Star: 10
-    ProjectileIndex: 0
-    FlipX: 1
     Desc: 
   towerType: 
   maxHp: 0
@@ -343,10 +343,10 @@ MonoBehaviour:
   baseSpeed: 0
   towerattack: {fileID: 0}
   animCon:
-  - {fileID: 22100000, guid: d7146cf84899f724081298ae3439e024, type: 2}
   - {fileID: 22100000, guid: 74bc2d833471cd04fad4c526d1b843f1, type: 2}
   - {fileID: 22100000, guid: 35b2a341a74b28049b6ee0b33d7063fc, type: 2}
   - {fileID: 22100000, guid: 4653fe45a251d9145b6b1989aa719e4f, type: 2}
+  - {fileID: 22100000, guid: d7146cf84899f724081298ae3439e024, type: 2}
   anim: {fileID: 0}
   towerindex: 0
   probabilities:
@@ -356,6 +356,7 @@ MonoBehaviour:
   - 0
   - 0
   rangeLine: {fileID: 0}
+  IsAttackChange: 0
 --- !u!114 &2238410380428710349
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -57,6 +57,9 @@ public class GameManager : MonoBehaviour
     public Light2D globalLight;
     public SpriteRenderer Background;
 
+    public bool isCutsceneActive = false;
+
+
     private void Start()
     {
         instance = this;
@@ -131,7 +134,7 @@ public class GameManager : MonoBehaviour
         if (isLive)
         {
             isStart = false;
-            StartRoundButton.gameObject.SetActive(true); // ��ư Ȱ��ȭ
+            StartRoundButton.gameObject.SetActive(true); // 이 부분 변경
             Gold += 70;
             AudioManager.instance.PlaySFX("Win");
             TowerManager.instance.TwicePrice();
@@ -293,6 +296,19 @@ public class GameManager : MonoBehaviour
         Destroy(instance.gameObject);
         SceneManager.LoadScene("IntroScene"); // 인트로 씬 이름
     }
+
+    public void StartCutsceneMode()
+    {
+        isCutsceneActive = true;
+        Time.timeScale = 0f; // 게임의 시간을 멈춥니다.
+    }
+
+    public void EndCutsceneMode()
+    {
+        isCutsceneActive = false;
+        Time.timeScale = gameSpeed[speedIndex]; // 게임 시간을 원래대로 되돌립니다.
+    }
+
 
     [Header("# DataBase")]
     public UnityEvent<int> OnGoldChanged;
