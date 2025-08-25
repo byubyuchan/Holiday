@@ -286,19 +286,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tile: {fileID: 0}
   towerData:
-  - towerType: Round
-    HP: 550
-    Speed: 3
+  - towerType: Tank
+    HP: 600
+    Speed: 5
     Range: 7
-    Damage: 10
+    Damage: 30
     Cost: C
     Star: 1
     ProjectileIndex: 0
     FlipX: 0
     Desc: 
-  - towerType: Round
-    HP: 1000
-    Speed: 3
+  - towerType: Tank
+    HP: 1500
+    Speed: 5
     Range: 7
     Damage: 50
     Cost: B
@@ -306,9 +306,9 @@ MonoBehaviour:
     ProjectileIndex: 0
     FlipX: 1
     Desc: 
-  - towerType: Round
-    HP: 2000
-    Speed: 3
+  - towerType: Tank
+    HP: 3000
+    Speed: 5
     Range: 7
     Damage: 100
     Cost: A
@@ -356,6 +356,7 @@ MonoBehaviour:
   - 0.088
   - 0
   rangeLine: {fileID: 0}
+  IsAttackChange: 0
 --- !u!114 &2238410380428710349
 MonoBehaviour:
   m_ObjectHideFlags: 0

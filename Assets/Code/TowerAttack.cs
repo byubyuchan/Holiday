@@ -1,4 +1,5 @@
 
+using System.Collections;
 using UnityEngine;
 
 public class TowerAttack : MonoBehaviour
@@ -14,12 +15,24 @@ public class TowerAttack : MonoBehaviour
     private bool isAttacking = false;
     public float attackCooldown; // 쿨타임 시간
 
+    public float skillCooldown = 20f;   // 전체 쿨타임
+    private float currentSkillCooldown; // 현재 남은 쿨타임
+
     private void Awake()
     {
         firePoint = this.transform;
         towerAnim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         tower = GetComponent<Tower>();
+    }
+
+    private void Start()
+    {
+        // A+ 등급 타워일 경우에만 쿨타임 초기화
+        if (tower.cost == "A+")
+        {
+            currentSkillCooldown = skillCooldown;
+        }
     }
 
     private void Update()
@@ -33,6 +46,52 @@ public class TowerAttack : MonoBehaviour
                 isAttacking = false; // 쿨타임 종료
             }
         }
+
+        if (tower.cost != "A+" || GameManager.instance.isCutsceneActive) return;
+
+        // 스킬이 준비되지 않았고, 전투 중일 때만 쿨타임 감소
+        if (currentSkillCooldown > 0 && GameManager.instance.isStart)
+        {
+            currentSkillCooldown -= Time.deltaTime;
+        }
+
+        // 쿨타임이 다 되면 스킬 발동
+        if (currentSkillCooldown <= 0)
+        {
+            ActivateSpecialSkill();
+        }
+    }
+
+    private void ActivateSpecialSkill()
+    {
+        // 쿨타임 초기화 (중복 실행 방지)
+        currentSkillCooldown = skillCooldown;
+
+        GameManager.instance.StartCutsceneMode();
+
+        if (towerAnim != null)
+        {
+            towerAnim.updateMode = AnimatorUpdateMode.UnscaledTime;
+        }
+
+        towerAnim.SetTrigger("Jump");
+        AudioManager.instance.PlaySFX("P_Heal");
+        CutsceneManager.instance.PlayTowerCutscene(transform, "스킬 발동!", 0.35f, 1, ApplySkillEffect);
+
+        
+    }
+
+    private void ApplySkillEffect()
+    {
+        
+        Debug.Log(gameObject.name + "의 스킬 효과가 발동됩니다!");
+
+        if (towerAnim != null)
+        {
+            towerAnim.updateMode = AnimatorUpdateMode.Normal;
+        }
+
+        GameManager.instance.EndCutsceneMode();
     }
 
     public void Attack(GameObject target)
@@ -52,7 +111,8 @@ public class TowerAttack : MonoBehaviour
         switch (tower.towerType)
         {
             case "Melee":
-                PerformMeleeAttack(target);
+                if (tower.IsAttackChange) PerformRoundAttack();
+                else PerformMeleeAttack(target);
                 break;
 
             case "Range":
@@ -60,6 +120,10 @@ public class TowerAttack : MonoBehaviour
                 break;
 
             case "Round":
+                PerformRoundAttack();
+                break;
+
+            case "Tank" :
                 PerformRoundAttack();
                 break;
 

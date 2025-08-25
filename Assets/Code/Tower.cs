@@ -36,6 +36,7 @@ public class Tower : MonoBehaviour
 
     public LineRenderer rangeLine;
 
+    public bool IsAttackChange = false;
     private bool isSpecialSpawn = false;
 
     private void Awake()
@@ -79,7 +80,7 @@ public class Tower : MonoBehaviour
     {
         bool Isupgrade = TowerMaker.instance.Isupgrade;
         float Val = TowerMaker.instance.upgradeVal;
-        bool IsAttackChange = TowerManager.instance.IsAttackChange;
+        IsAttackChange = TowerManager.instance.IsAttackChange;
         bool IsBig = TowerManager.instance.bigProjectile;
         bool IsSmall = TowerManager.instance.smallProjectile;
 
@@ -119,11 +120,6 @@ public class Tower : MonoBehaviour
         //        speed -= towerData.Speed * 0.5f;
         //    }
         //}
-
-        if (IsAttackChange && towerType == "Melee")
-        {
-            towerType = "Round";
-        }
 
         spriteRenderer.flipX = flipX;
 

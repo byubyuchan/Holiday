@@ -24,9 +24,9 @@ public class CutsceneManager : MonoBehaviour
         StartCoroutine(PlayBossCutsceneCoroutine(bossTransform, bossName, power));
     }
 
-    public void PlayTowerCutscene(Transform towerTransform, string towerName, float power, int time)
+    public void PlayTowerCutscene(Transform towerTransform, string towerName, float power, int time, Action onCutsceneEnd = null)
     {
-        StartCoroutine(PlayTowerCutsceneCoroutine(towerTransform, towerName, power, time));
+        StartCoroutine(PlayTowerCutsceneCoroutine(towerTransform, towerName, power, time, onCutsceneEnd));
     }
     public void PlayDeathCutscene(Transform bossTransform, string bossName, float power, Action onCutsceneEnd = null)
     {
@@ -65,7 +65,7 @@ public class CutsceneManager : MonoBehaviour
         mainCamera.orthographicSize = originalCamSize;
         cutsceneflag = 0;
     }
-    private IEnumerator PlayTowerCutsceneCoroutine(Transform towerTransform, string towerName, float power, int time)
+    private IEnumerator PlayTowerCutsceneCoroutine(Transform towerTransform, string towerName, float power, int time, Action onCutsceneEnd)
     {
         if (TowerInfo.instance != null)
         {
@@ -89,19 +89,21 @@ public class CutsceneManager : MonoBehaviour
             float t = 0f;
             while (t < interval) // 프레임마다 자연스러운 확대를 위한 while문
             {
-                t += Time.deltaTime;
+                t += Time.unscaledDeltaTime;
                 float progress = Mathf.Clamp01(t / interval); // 0 ~ 1 사이로 제한
                 mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, targetPos, progress); // Lerp = progress만큼 보간하며 확대
                 mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, targetCamSize, progress);
                 yield return null;
             }
             // 약간 텀 주기
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSecondsRealtime(0.1f);
         }
         // 원래 화면으로 완전히 되돌리기
         mainCamera.transform.position = originalCamPos;
         mainCamera.orthographicSize = originalCamSize;
         cutsceneflag = 0;
+
+        onCutsceneEnd?.Invoke();
     }
 
     private IEnumerator PlayDeathCutsceneCoroutine(Transform bossTransform, string bossName, float power, Action onCutsceneEnd)

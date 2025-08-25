@@ -185,7 +185,7 @@ public class TowerManager : MonoBehaviour
         {
             if (tower.towerType == "Melee")
             {
-                tower.towerType = "Round";
+                tower.IsAttackChange = true;
             }
         }
 
