@@ -15,11 +15,11 @@ public class DataBaseConnectingTest : MonoBehaviour
     {
         //databse 연결 문자열 설정
         connectionString = "Server=";
-        String sever = "175.197.161.15";
-        String port = "31242";
+        String sever = "127.0.0.1";
+        String port = "3306";
         String database = "holiday_db";
         String user = "root";
-        String password = "thth1234*";
+        String password = "0000";
         connectionString = string.Format("Server={0};Port={1};Database={2};Uid={3};Pwd={4};",
             sever, port, database, user, password);
         connection = new MySqlConnection(connectionString);
