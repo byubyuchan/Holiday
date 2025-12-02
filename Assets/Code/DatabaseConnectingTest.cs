@@ -19,7 +19,7 @@ public class DataBaseConnectingTest : MonoBehaviour
         String port = "3306";
         String database = "holiday_db";
         String user = "root";
-        String password = "000000";
+        String password = "*****";
         connectionString = string.Format("Server={0};Port={1};Database={2};Uid={3};Pwd={4};",
             sever, port, database, user, password);
         connection = new MySqlConnection(connectionString);
