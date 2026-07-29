@@ -38,6 +38,7 @@ public class Enemy : MonoBehaviour
     private SpriteRenderer spriter;
     private bool isDead = false;
 
+
     void Start()
     {
         target = GameManager.instance.goal.transform; // 기본 목표 설정
@@ -106,7 +107,7 @@ public class Enemy : MonoBehaviour
             lastUpdateTime = Time.time; // 시간 갱신
         }
 
-        Attack();
+        TryAttack();
 
         MoveTowardsTarget(); // 목표를 향해 이동
 
@@ -191,7 +192,7 @@ public class Enemy : MonoBehaviour
         gameObject.SetActive(false); // 비활성화하여 풀링 시스템으로 반환
     }
 
-    private void Attack()
+    private void TryAttack()
     {
         if (isDead) return;
         if (Time.time - lastAttackTime < attackCooldown) return;
@@ -204,24 +205,7 @@ public class Enemy : MonoBehaviour
                 tower = col.GetComponent<Tower>();
                 if (tower != null)
                 {
-                    if (attackType == "Melee")
-                    {
-                        // 근접 공격
-                        tower.TakeDamage(damage);
-                        GameObject effectInstance = GameManager.instance.pool.Get(12);
-                        effectInstance.transform.position = tower.transform.position;
-                        effectInstance.SetActive(true);
-
-                        string[] attackKeys = { "E_Attack1", "E_Attack2" };
-                        string randomKey = attackKeys[Random.Range(0, attackKeys.Length)];
-                        AudioManager.instance.PlaySFX(randomKey);
-                    }
-                    else if (attackType == "Range")
-                    {
-                        FireProjectile(tower.gameObject);
-                        AudioManager.instance.PlaySFX("P_Fire");
-                    }
-                    else if (attackType == "Boss")
+                    if (attackType == "Boss")
                     {
                         TryUseSkill();
                         lastAttackTime = Time.time;
@@ -229,8 +213,34 @@ public class Enemy : MonoBehaviour
                     }
                     anim.SetTrigger("Attack");
                     lastAttackTime = Time.time;
-                    break;
                 }
+                break;
+            }
+        }
+    }
+
+    private void Attack()
+    {
+        if (isDead) return;
+
+        if (tower != null)
+        {
+            if (attackType == "Melee")
+            {
+                // 근접 공격
+                tower.TakeDamage(damage);
+                GameObject effectInstance = GameManager.instance.pool.Get(12);
+                effectInstance.transform.position = tower.transform.position;
+                effectInstance.SetActive(true);
+
+                string[] attackKeys = { "E_Attack1", "E_Attack2" };
+                string randomKey = attackKeys[Random.Range(0, attackKeys.Length)];
+                AudioManager.instance.PlaySFX(randomKey);
+            }
+            else if (attackType == "Range")
+            {
+                FireProjectile(tower.gameObject);
+                AudioManager.instance.PlaySFX("P_Fire");
             }
         }
     }

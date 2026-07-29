@@ -25,10 +25,6 @@ public class ObjectDetector : MonoBehaviour
                 tileSelector.SelectTile(hit.transform);
             }
         }
-
-
-
-
     }
 
     //private void Update()

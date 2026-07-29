@@ -23,14 +23,14 @@ public class Talent : MonoBehaviour
 
     private int RandomGold;
     [SerializeField]
-    DataBaseConnectingTest dbConnector;
+    //DataBaseConnectingTest dbConnector;
 
     public int meleePrice = 7; // 가격 조정시 수정해야함.
     public int rangePrice = 7;
     public int tankPrice = 7;
     public int randomPrice = 6;
 
-    void Awake()
+    void Start()
     {
         rect = GetComponent<RectTransform>();
 
@@ -93,7 +93,7 @@ public class Talent : MonoBehaviour
         RandomGold = Random.Range(0, 151);
         GameManager.instance.Gold += RandomGold;
         GameManager.instance.ShowMessage($"{RandomGold}만큼 골드를 획득했습니다!");
-        dbConnector.saveTalent($"Talent1_{RandomGold}만큼 골드 획득");
+        //dbConnector.saveTalent($"Talent1_{RandomGold}만큼 골드 획득");
         OnPicked(1);
     }
 
@@ -102,7 +102,7 @@ public class Talent : MonoBehaviour
         TowerManager.instance.sale = true;
         healButton.PriceChange(3);
         GameManager.instance.ShowMessage("회복 골드가 3이 됩니다.");
-        dbConnector.saveTalent("회복 골드가 3골드가 됩니다.");
+        //dbConnector.saveTalent("회복 골드가 3골드가 됩니다.");
         OnPicked(2);
     }
 
@@ -113,7 +113,7 @@ public class Talent : MonoBehaviour
         TowerMaker.instance.selectedTowerPrefab = null;
         meleeButton.PriceChange(5);
         GameManager.instance.ShowMessage($"전사 타워의 골드가  {TowerMaker.instance.MeleePay}이 됩니다.");
-        dbConnector.saveTalent("전사의 가격이 5이됩니다.");
+        //dbConnector.saveTalent("전사의 가격이 5이됩니다.");
         OnPicked(3);
     }
 
@@ -124,7 +124,7 @@ public class Talent : MonoBehaviour
         TowerMaker.instance.selectedTowerPrefab = null;
         rangeButton.PriceChange(5);
         GameManager.instance.ShowMessage($"마법사 타워의 골드가  {TowerMaker.instance.RangedPay}이 됩니다.");
-        dbConnector.saveTalent("마법사의 가격이 5이됩니다.");
+        //dbConnector.saveTalent("마법사의 가격이 5이됩니다.");
         OnPicked(4);
     }
 
@@ -135,7 +135,7 @@ public class Talent : MonoBehaviour
         TowerMaker.instance.selectedTowerPrefab = null;
         tankButton.PriceChange(5);
         GameManager.instance.ShowMessage($"전위 타워의 골드가  {TowerMaker.instance.TankPay}이 됩니다.");
-        dbConnector.saveTalent("전위 가격이 5이 됩니다.");
+        //dbConnector.saveTalent("전위 가격이 5이 됩니다.");
         OnPicked(5);
     }
 
@@ -154,7 +154,7 @@ public class Talent : MonoBehaviour
             randomButton.PriceChange(randomPrice);
         }
         GameManager.instance.ShowMessage($"랜덤 타워의 골드가  {RandomGold}G로 변경되었습니다!");
-        dbConnector.saveTalent($"'랜덤의 랜덤_랜덤' 타워의 가격이 {RandomGold}G로 변경되었습니다!");
+        //dbConnector.saveTalent($"'랜덤의 랜덤_랜덤' 타워의 가격이 {RandomGold}G로 변경되었습니다!");
         OnPicked(6);
     }
 
@@ -164,7 +164,7 @@ public class Talent : MonoBehaviour
         TowerMaker.instance.up_B = true;
         TowerMaker.instance.selectedTowerPrefab = null;
         GameManager.instance.ShowMessage($"B급 타워의 확률이 증가했습니다!");
-        dbConnector.saveTalent($"B급 타워의 확률이 증가했습니다!");
+        //dbConnector.saveTalent($"B급 타워의 확률이 증가했습니다!");
         OnPicked(7);
     }
 
@@ -173,7 +173,7 @@ public class Talent : MonoBehaviour
         TowerMaker.instance.up_A = true;
         TowerMaker.instance.selectedTowerPrefab = null;
         GameManager.instance.ShowMessage($"A급 타워의 확률이 증가했습니다!");
-        dbConnector.saveTalent($"A급 타워의 확률이 증가했습니다!");
+        //dbConnector.saveTalent($"A급 타워의 확률이 증가했습니다!");
         OnPicked(8);
     }
 
@@ -183,7 +183,7 @@ public class Talent : MonoBehaviour
         TowerMaker.instance.selectedTowerPrefab = null;
         GameManager.instance.Gold += 100;
         GameManager.instance.ShowMessage($"더 이상 높은 등급의 용사가 등장하지 않습니다!");
-        dbConnector.saveTalent($"더 이상 높은 등급의 용사가 등장하지 않습니다!");
+        //dbConnector.saveTalent($"더 이상 높은 등급의 용사가 등장하지 않습니다!");
         OnPicked(9);
     }
 
@@ -193,7 +193,7 @@ public class Talent : MonoBehaviour
         TowerMaker.instance.selectedTowerPrefab = null;
         GameManager.instance.Gold += 100;
         GameManager.instance.ShowMessage($"임무를 재시작합니다!");
-        dbConnector.saveTalent($"임무를 재시작합니다!");
+        //dbConnector.saveTalent($"임무를 재시작합니다!");
         OnPicked(10);
     }
 
@@ -204,7 +204,7 @@ public class Talent : MonoBehaviour
         //TowerMaker.instance.Isupgrade = true;
         TowerMaker.instance.selectedTowerPrefab = null;
         GameManager.instance.ShowMessage($"모든 영웅의 능력치가 10% 향상됩니다!");
-        dbConnector.saveTalent($"모든 영웅의 능력치가 10% 향상됩니다!");
+        //dbConnector.saveTalent($"모든 영웅의 능력치가 10% 향상됩니다!");
         OnPicked(11);
     }
     public void Talent12()
@@ -213,7 +213,7 @@ public class Talent : MonoBehaviour
         TowerMaker.instance.selectedTowerPrefab = null;
         healButton.PriceChange(TowerManager.instance.sale? 3:5);
         GameManager.instance.ShowMessage($"회복 마법이 파괴 마법으로 변경됩니다!");
-        dbConnector.saveTalent($"회복 마법이 파괴 마법으로 변경됩니다!!");
+        //dbConnector.saveTalent($"회복 마법이 파괴 마법으로 변경됩니다!!");
         OnPicked(12);
     }
 
@@ -225,7 +225,7 @@ public class Talent : MonoBehaviour
         //TowerMaker.instance.Isupgrade = true;
         TowerMaker.instance.selectedTowerPrefab = null;
         GameManager.instance.ShowMessage($"능력치가 증가하고 보스몬스터의 체력이 증가합니다!");
-        dbConnector.saveTalent($"능력치가 증가하고 보스몬스터의 체력이 증가합니다!");
+        //dbConnector.saveTalent($"능력치가 증가하고 보스몬스터의 체력이 증가합니다!");
         OnPicked(13);
     }
 
@@ -234,7 +234,7 @@ public class Talent : MonoBehaviour
         TowerManager.instance.ChangeAttackFormToWarrior();
         TowerMaker.instance.selectedTowerPrefab = null;
         GameManager.instance.ShowMessage($"전사들의 공격이 광역으로 변경됩니다!");
-        dbConnector.saveTalent($"전사들의 공격이 광역으로 변경됩니다!");
+        //dbConnector.saveTalent($"전사들의 공격이 광역으로 변경됩니다!");
         OnPicked(14);
     }
 
@@ -245,7 +245,7 @@ public class Talent : MonoBehaviour
         TowerMaker.instance.cantMove = true;
         TowerMaker.instance.selectedTowerPrefab = null;
         GameManager.instance.ShowMessage($"능력치가 증가하고 더 이상 배치를 변경할 수 없습니다!");
-        dbConnector.saveTalent($"능력치가 증가하고 더 이상 배치를 변경할 수 없습니다!");
+        //dbConnector.saveTalent($"능력치가 증가하고 더 이상 배치를 변경할 수 없습니다!");
         OnPicked(15);
     }
 
@@ -254,7 +254,7 @@ public class Talent : MonoBehaviour
         TowerManager.instance.ActivateBurningTalent();
         TowerMaker.instance.selectedTowerPrefab = null;
         GameManager.instance.ShowMessage($"전투 중 광전사 모드가 발동됩니다!");
-        dbConnector.saveTalent($"전투 중 광전사 모드가 발동됩니다!");
+        //dbConnector.saveTalent($"전투 중 광전사 모드가 발동됩니다!");
         OnPicked(16);
     }
 
@@ -269,7 +269,7 @@ public class Talent : MonoBehaviour
         tankButton.PriceChange(randomPrice);
         randomButton.PriceChange(randomPrice);
         GameManager.instance.ShowMessage($"어떤 클래스를 선택하더라도 랜덤한 영웅이 소환됩니다! {RandomGold}만큼 골드를 획득했습니다!");
-        dbConnector.saveTalent($"어떤 클래스를 선택하더라도 랜덤한 영웅이 소환됩니다! {RandomGold}만큼 골드를 획득했습니다!");
+        //dbConnector.saveTalent($"어떤 클래스를 선택하더라도 랜덤한 영웅이 소환됩니다! {RandomGold}만큼 골드를 획득했습니다!");
         OnPicked(17);
     }
 
@@ -279,7 +279,7 @@ public class Talent : MonoBehaviour
         TowerManager.instance.ActivateHealingTalent();
         TowerMaker.instance.selectedTowerPrefab = null;
         GameManager.instance.ShowMessage($"더 이상 타워 판매가 불가능합니다! 5초에 1번씩 체력을 50씩 회복시킵니다.");
-        dbConnector.saveTalent($"더 이상 타워 판매가 불가능합니다! 5초에 1번씩 체력을 50씩 회복시킵니다.");
+        //dbConnector.saveTalent($"더 이상 타워 판매가 불가능합니다! 5초에 1번씩 체력을 50씩 회복시킵니다.");
         OnPicked(18);
     }
 
@@ -290,7 +290,7 @@ public class Talent : MonoBehaviour
         //TowerMaker.instance.Isupgrade = true;
         TowerMaker.instance.selectedTowerPrefab = null;
         GameManager.instance.ShowMessage($"투사체의 크기가 2배, 데미지가 2배 그리고 공격속도도 2배로 증가합니다.");
-        dbConnector.saveTalent($"투사체의 크기가 2배, 데미지가 2배 그리고 공격속도도 2배로 증가합니다.");
+        //dbConnector.saveTalent($"투사체의 크기가 2배, 데미지가 2배 그리고 공격속도도 2배로 증가합니다.");
         OnPicked(19);
     }
 
@@ -301,7 +301,7 @@ public class Talent : MonoBehaviour
         //TowerMaker.instance.Isupgrade = true;
         TowerMaker.instance.selectedTowerPrefab = null;
         GameManager.instance.ShowMessage($"투사체의 크기가 2배, 데미지가 2배 그리고 공격속도도 2배로 낮아집니다.");
-        dbConnector.saveTalent($"투사체의 크기가 2배, 데미지가 2배 그리고 공격속도도 2배로 낮아집니다.");
+       //dbConnector.saveTalent($"투사체의 크기가 2배, 데미지가 2배 그리고 공격속도도 2배로 낮아집니다.");
         OnPicked(20);
     }
 
@@ -312,7 +312,7 @@ public class Talent : MonoBehaviour
         //TowerMaker.instance.Isupgrade = true;
         TowerMaker.instance.selectedTowerPrefab = null;
         GameManager.instance.ShowMessage($"C급 영웅들만 있다면 능력치가 50% 상승합니다!");
-        dbConnector.saveTalent($"C급 영웅들만 있다면 능력치가 50% 상승합니다!");
+        //dbConnector.saveTalent($"C급 영웅들만 있다면 능력치가 50% 상승합니다!");
         OnPicked(21);
     }
 
@@ -321,17 +321,18 @@ public class Talent : MonoBehaviour
         TowerManager.instance.reSell = true;
         TowerMaker.instance.selectedTowerPrefab = null;
         GameManager.instance.ShowMessage($"현재 타워들의 판매 골드가 2배로 증가합니다. 살아남을 때마다 2배로 증가합니다!");
-        dbConnector.saveTalent($"현재 타워들의 판매 골드가 2배로 증가합니다. 살아남을 때마다 2배로 증가합니다!");
+        //dbConnector.saveTalent($"현재 타워들의 판매 골드가 2배로 증가합니다. 살아남을 때마다 2배로 증가합니다!");
         OnPicked(22);
     }
-    public void Talent23()
-    {
-        TowerManager.instance.forcedSale = true;
-        TowerMaker.instance.selectedTowerPrefab = null;
-        GameManager.instance.ShowMessage($"현재 타워들의 판매 골드가 2배로 증가합니다. 살아남을 때마다 2배로 증가합니다!");
-        dbConnector.saveTalent($"현재 타워들의 판매 골드가 2배로 증가합니다. 살아남을 때마다 2배로 증가합니다!");
-        OnPicked(23);
-    }
+
+    //public void Talent23()
+    //{
+    //    TowerManager.instance.forcedSale = true;
+    //    TowerMaker.instance.selectedTowerPrefab = null;
+    //    GameManager.instance.ShowMessage($"현재 타워들의 판매 골드가 2배로 증가합니다. 살아남을 때마다 2배로 증가합니다!");
+    //    //dbConnector.saveTalent($"현재 타워들의 판매 골드가 2배로 증가합니다. 살아남을 때마다 2배로 증가합니다!");
+    //    OnPicked(23);
+    //}
 
 
 

@@ -23,7 +23,7 @@ public class BossEnemy : Enemy
         // 스킬 초기 설정
         skills.Add(new BossSkill { skillName = "Normal Attack", cooldown = 2f, lastUseTime = -2f, weight = 20, useSkillAction = UseNormalAttack });
         skills.Add(new BossSkill { skillName = "Flying Attack", cooldown = 5f, lastUseTime = -5f, weight = 40, useSkillAction = UseFlyingAttack });
-        skills.Add(new BossSkill { skillName = "Thunder Attack", cooldown = 8f, lastUseTime = -8f, weight = 40, useSkillAction = UseThunderAttack });
+        skills.Add(new BossSkill { skillName = "Thunder Attack", cooldown = 15f, lastUseTime = -15f, weight = 100, useSkillAction = UseThunderAttack });
     }
 
     public override void TryUseSkill()
@@ -64,30 +64,40 @@ public class BossEnemy : Enemy
 
         return skills[0]; // fallback
     }
+
     void UseNormalAttack()
     {
         anim.SetTrigger("Attack");
+        AudioManager.instance.PlaySFX("B_Attack");
+    }
+
+    void NormalAttack()
+    {
         CameraShakeComponent.instance.StartShake(0.5f, 0.3f);
-        tower.TakeDamage(damage);
+        if (tower != null) tower.TakeDamage(damage);
         GameObject effectInstance = GameManager.instance.pool.Get(12);
         effectInstance.transform.position = tower.transform.position;
         effectInstance.SetActive(true);
-        AudioManager.instance.PlaySFX("B_Attack");
-
     }
+
+
     void UseFlyingAttack()
     {
         anim.SetTrigger("Hurt");
+        AudioManager.instance.PlaySFX("B_Attack2");
         CameraShakeComponent.instance.StartShake(0.5f, 0.5f);
+    }
+
+    void FlyingAttack()
+    {
         for (int i = 0; i < 10; i++)
         {
             CameraShakeComponent.instance.StartShake(0.5f, 0.4f);
-            tower.TakeDamage(damage/3);
+            if (tower != null) tower.TakeDamage(damage / 3);
             GameObject effectInstance = GameManager.instance.pool.Get(12);
             effectInstance.transform.position = tower.transform.position;
             effectInstance.SetActive(true);
         }
-        AudioManager.instance.PlaySFX("B_Attack2");
     }
 
     void UseThunderAttack()
@@ -98,7 +108,6 @@ public class BossEnemy : Enemy
             FireProjectile(tower.gameObject);
             AudioManager.instance.PlaySFX("B_Dark");
         }
-
     }
 
     public override void Dead()

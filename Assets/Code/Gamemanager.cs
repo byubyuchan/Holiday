@@ -29,18 +29,18 @@ public class GameManager : MonoBehaviour
     public bool isLive;
     public bool isStart;
     public int Life;
-    public int Gold
-    {
-        get => _gold;
-        set
-        {
-            if (_gold != value)
-            {
-                _gold = value;
-                OnGoldChanged?.Invoke(_gold);
-            }
-        }
-    }
+    public int Gold;
+    //{
+    //    get => _gold;
+    //    set
+    //    {
+    //        if (_gold != value)
+    //        {
+    //            _gold = value;
+    //            OnGoldChanged?.Invoke(_gold);
+    //        }
+    //    }
+    //}
     public int currentRound; // ���� ����
 
     int speedIndex = 0;
@@ -60,13 +60,13 @@ public class GameManager : MonoBehaviour
     public bool isCutsceneActive = false;
 
 
-    private void Start()
+    private void Awake()
     {
         instance = this;
         AudioManager.instance.PlayBGM(true);
         PauseButton.gameObject.SetActive(true);
         StartRoundButton.gameObject.SetActive(true);
-        Gold = 5000;
+        Gold = 50;
         currentRound = 0;
         isLive = true;
         if (globalLight == null)
@@ -74,8 +74,8 @@ public class GameManager : MonoBehaviour
             globalLight = GetComponent<Light2D>();
         }
         playerId = Random.Range(1,400000000);
-        dbConnector.defaultSetting(playerId);
-
+        Time.timeScale = 1f;
+        //dbConnector.defaultSetting(playerId);
     }
 
     void Update()
@@ -127,18 +127,17 @@ public class GameManager : MonoBehaviour
             Color targetBGColor = new Color(100f / 255f, 0f, 0f);
             Background.color = Color.Lerp(Background.color, targetBGColor, 0.33f);
         }
-        dbConnector.saveValue(playerId, "time", (int)gameTime);
-        dbConnector.saveValue(playerId, "stage", currentRound);
+        //dbConnector.saveValue(playerId, "time", (int)gameTime);
+        //dbConnector.saveValue(playerId, "stage", currentRound);
         Debug.Log("Time save!");
 
         if (isLive)
         {
             isStart = false;
             StartRoundButton.gameObject.SetActive(true); // 이 부분 변경
-            Gold += 70;
+            Gold += 50;
             AudioManager.instance.PlaySFX("Win");
-            TowerManager.instance.TwicePrice();
-
+            if(TowerManager.instance.reSell) TowerManager.instance.TwicePrice();
             if (TowerManager.instance.forcedSale) TowerManager.instance.TwiceSellAllTower();
         }
     }
@@ -156,7 +155,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         StartCoroutine(GameOverRoutine());
-        dbConnector.Close();
+        //dbConnector.Close();
     }
 
     IEnumerator GameOverRoutine()
@@ -179,7 +178,7 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(GameWinRoutine());
         //dbConnector.loadValue(playerId);//플레이어의 clear 순위를 가져옴(int로)
-        dbConnector.clearCnt();//플레이어의 클리어 순서를 저장하고, 전체 클리어 횟수를 하나 올림
+        //dbConnector.clearCnt();//플레이어의 클리어 순서를 저장하고, 전체 클리어 횟수를 하나 올림
     }
 
     IEnumerator GameWinRoutine()
@@ -310,9 +309,9 @@ public class GameManager : MonoBehaviour
     }
 
 
-    [Header("# DataBase")]
-    public UnityEvent<int> OnGoldChanged;
-    public DataBaseConnectingTest dbConnector;
+    //[Header("# DataBase")]
+    //public UnityEvent<int> OnGoldChanged;
+    //public DataBaseConnectingTest dbConnector;
 
-    private int _gold;
+    //private int _gold;
 }
