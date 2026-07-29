@@ -292,40 +292,40 @@ MonoBehaviour:
     Range: 8
     Damage: 200
     Cost: A+
-    Star: 50
+    Star: 15
     ProjectileIndex: 0
     FlipX: 1
-    Desc: 
+    Desc: "\uC5EC\uC804\uC0AC"
   - towerType: Range
     HP: 800
     Speed: 1.5
     Range: 10
     Damage: 100
     Cost: A+
-    Star: 50
-    ProjectileIndex: 10
+    Star: 15
+    ProjectileIndex: 16
     FlipX: 1
-    Desc: 
+    Desc: "\uC655"
   - towerType: Tank
-    HP: 4500
+    HP: 4000
     Speed: 3
     Range: 7
-    Damage: 300
+    Damage: 100
     Cost: A+
-    Star: 10
+    Star: 15
     ProjectileIndex: 0
     FlipX: 1
-    Desc: 
+    Desc: "\uC218\uB3C4\uC2B9"
   - towerType: Range
     HP: 800
     Speed: 1.5
     Range: 15
     Damage: 300
     Cost: A+
-    Star: 10
+    Star: 15
     ProjectileIndex: 3
     FlipX: 0
-    Desc: 
+    Desc: "\uBE0C\uB9C1\uC5B4"
   towerType: 
   maxHp: 0
   hp: 0
@@ -336,6 +336,7 @@ MonoBehaviour:
   projectileIndex: 0
   flipX: 1
   price: 0
+  desc: 
   baseDamage: 0
   baseHp: 0
   baseMaxHp: 0
@@ -385,6 +386,7 @@ MonoBehaviour:
   tower: {fileID: 0}
   meleeEffectIndex: 5
   attackCooldown: 0
+  skillCooldown: 10
 --- !u!114 &3518112344886342879
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -460,6 +462,7 @@ MonoBehaviour:
   originalColor: {r: 0, g: 0, b: 0, a: 0}
   flashColor: {r: 1, g: 0, b: 0, a: 1}
   flashDuration: 0.2
+  isSlowed: 0
 --- !u!114 &7260519717483783760
 MonoBehaviour:
   m_ObjectHideFlags: 0
