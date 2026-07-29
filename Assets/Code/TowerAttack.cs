@@ -18,6 +18,8 @@ public class TowerAttack : MonoBehaviour
     public float skillCooldown = 20f;   // 전체 쿨타임
     private float currentSkillCooldown; // 현재 남은 쿨타임
 
+    private GameObject targetEnemy;
+
     private void Awake()
     {
         firePoint = this.transform;
@@ -58,15 +60,19 @@ public class TowerAttack : MonoBehaviour
         // 쿨타임이 다 되면 스킬 발동
         if (currentSkillCooldown <= 0)
         {
-            ActivateSpecialSkill();
+            TryActivateSpecialSkill();
         }
     }
-
-    private void ActivateSpecialSkill()
+    
+    private void TryActivateSpecialSkill()
     {
         // 쿨타임 초기화 (중복 실행 방지)
         currentSkillCooldown = skillCooldown;
 
+        towerAnim.SetTrigger("Jump");
+    }
+    private void ActivateSpecialSkill()
+    {
         GameManager.instance.StartCutsceneMode();
 
         if (towerAnim != null)
@@ -74,17 +80,15 @@ public class TowerAttack : MonoBehaviour
             towerAnim.updateMode = AnimatorUpdateMode.UnscaledTime;
         }
 
-        towerAnim.SetTrigger("Jump");
         AudioManager.instance.PlaySFX("P_Heal");
         CutsceneManager.instance.PlayTowerCutscene(transform, "스킬 발동!", 0.35f, 1, ApplySkillEffect);
-
-        
     }
 
     private void ApplySkillEffect()
     {
         
         Debug.Log(gameObject.name + "의 스킬 효과가 발동됩니다!");
+        Attack();
 
         if (towerAnim != null)
         {
@@ -94,7 +98,8 @@ public class TowerAttack : MonoBehaviour
         GameManager.instance.EndCutsceneMode();
     }
 
-    public void Attack(GameObject target)
+
+    public void TryAttack(GameObject target)
     {
         if (target == null || isAttacking)
         {
@@ -107,16 +112,24 @@ public class TowerAttack : MonoBehaviour
         if (tower.flipX == false) spriteRenderer.flipX = direction.x > 0;
         else spriteRenderer.flipX = !(direction.x > 0);
 
+        targetEnemy = target;
 
+        isAttacking = true; // 공격 시작
+        attackCooldown = tower.speed; // 쿨타임 설정
+        towerAnim.SetTrigger("Attack"); // 애니메이션 실행
+    }
+
+    public void Attack()
+    {
         switch (tower.towerType)
         {
             case "Melee":
                 if (tower.IsAttackChange) PerformRoundAttack();
-                else PerformMeleeAttack(target);
+                else PerformMeleeAttack(targetEnemy);
                 break;
 
             case "Range":
-                PerformRangeAttack(target);
+                PerformRangeAttack(targetEnemy);
                 break;
 
             case "Round":
@@ -144,10 +157,6 @@ public class TowerAttack : MonoBehaviour
             enemy.TakeDamage(tower.damage);
         }
 
-        isAttacking = true; // 공격 시작
-        attackCooldown = tower.speed; // 쿨타임 설정
-        towerAnim.SetTrigger("Attack"); // 애니메이션 실행
-
         string[] attackKeys = { "P_Attack1", "P_Attack2", "P_Attack3" };
         string randomKey = attackKeys[Random.Range(0, attackKeys.Length)];
         AudioManager.instance.PlaySFX(randomKey);
@@ -166,9 +175,6 @@ public class TowerAttack : MonoBehaviour
         {
             projectile.Init(tower, target); // 초기화 및 목표 설정
         }
-        isAttacking = true; // 공격 시작
-        attackCooldown = tower.speed; // 쿨타임 설정
-        towerAnim.SetTrigger("Attack"); // 애니메이션 실행
 
         if (projectile.effectIndex == 5 || projectile.effectIndex == 9)
         {
@@ -199,10 +205,6 @@ public class TowerAttack : MonoBehaviour
         string[] attackKeys = { "P_Attack1", "P_Attack2", "P_Attack3" };
         string randomKey = attackKeys[Random.Range(0, attackKeys.Length)];
         AudioManager.instance.PlaySFX(randomKey);
-
-        isAttacking = true; // 공격 시작
-        attackCooldown = tower.speed; // 쿨타임 설정
-        towerAnim.SetTrigger("Attack"); // 애니메이션 실행
     }
 
     private void PerformHeal()
@@ -226,8 +228,5 @@ public class TowerAttack : MonoBehaviour
             }
         }
         AudioManager.instance.PlaySFX("P_Heal");
-        isAttacking = true; // 힐 시작
-        attackCooldown = tower.speed; // 쿨타임 설정
-        towerAnim.SetTrigger("Attack"); // 힐 애니메이션 실행
     }
 }
