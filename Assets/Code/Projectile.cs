@@ -155,9 +155,7 @@ public class Projectile : MonoBehaviour
                 if (tower != null)
                 {
                     tower.TakeDamage(damage);
-                    GameObject effectInstance = GameManager.instance.pool.Get(effectIndex);
-                    effectInstance.transform.position = transform.position;
-                    effectInstance.SetActive(true);
+                    GameManager.instance.PlayEffect(effectIndex, tower.transform.position);
                     if (Enemy.instance.projectileIndex == 14)
                     {
                         Invoke("DeactivateProjectile", 0.433f);
@@ -174,19 +172,7 @@ public class Projectile : MonoBehaviour
                 if (enemy != null)
                 {
                     enemy.TakeDamage(tower.damage); // 적에게 데미지 적용
-                }
-
-                if (tower.projectileIndex == 4 || tower.projectileIndex == 10) // S급 투사체
-                {
-                    GameObject effectInstance = GameManager.instance.pool.Get(effectIndex);
-                    effectInstance.transform.position = enemy.transform.position;
-                    effectInstance.SetActive(true);
-                }
-                else
-                {
-                    GameObject effectInstance = GameManager.instance.pool.Get(effectIndex);
-                    effectInstance.transform.position = transform.position;
-                    effectInstance.SetActive(true);
+                    GameManager.instance.PlayEffect(effectIndex, enemy);
                 }
             }
         }
@@ -202,6 +188,7 @@ public class Projectile : MonoBehaviour
             if (tower != null)
             {
                 tower.TakeDamage(tower.damage);
+                GameManager.instance.PlayEffect(effectIndex, tower.transform.position);
             }
         }
         else
@@ -210,14 +197,9 @@ public class Projectile : MonoBehaviour
             if (enemy != null)
             {
                 enemy.TakeDamage(this.damage); // 적에게 데미지 적용
+                GameManager.instance.PlayEffect(effectIndex, enemy);
             }
         }
-
-        // 충돌 이펙트 생성
-        GameObject effectInstance = GameManager.instance.pool.Get(effectIndex);
-        effectInstance.transform.position = transform.position;
-        effectInstance.SetActive(true);
-
         DeactivateProjectile(); // 투사체 비활성화
     }
 

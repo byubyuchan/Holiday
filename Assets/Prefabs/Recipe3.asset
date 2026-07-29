@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1454fd9bca579264f9607dffb1644db8, type: 3}
   m_Name: Recipe3
   m_EditorClassIdentifier: 
-  recipeName: "\uC655"
+  recipeName: "\uC218\uB3C4\uC2B9"
   ingredients:
   - towerType: Tank
     cost: C

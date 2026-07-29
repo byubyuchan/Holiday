@@ -101,26 +101,6 @@ public class Tower : MonoBehaviour
         baseRange = range;
         baseSpeed = speed;
 
-        //if (Isupgrade)
-        //{
-        //    maxHp = towerData.HP * (1f + Val);
-        //    hp = towerData.HP * (1f + Val);
-        //    range = towerData.Range * (1f + Val);
-        //    damage = towerData.Damage * (1f + Val);
-        //    speed = towerData.Speed * (1f - Val);
-            
-        //    if (IsBig && towerType == "Range")
-        //    {
-        //        damage += towerData.Damage;
-        //        speed += towerData.Speed;
-        //    }
-        //    if (IsSmall && towerType == "Range")
-        //    {
-        //        damage -= towerData.Damage * 0.5f;
-        //        speed -= towerData.Speed * 0.5f;
-        //    }
-        //}
-
         spriteRenderer.flipX = flipX;
 
         // 애니메이터 컨트롤러를 확률적으로 선택
