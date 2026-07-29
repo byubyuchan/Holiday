@@ -161,9 +161,7 @@ public class TowerAttack : MonoBehaviour
         string randomKey = attackKeys[Random.Range(0, attackKeys.Length)];
         AudioManager.instance.PlaySFX(randomKey);
 
-        GameObject effectInstance = GameManager.instance.pool.Get(meleeEffectIndex);
-        effectInstance.transform.position = target.transform.position;
-        effectInstance.SetActive(true); // 이펙트 활성화
+        GameManager.instance.PlayEffect(meleeEffectIndex, enemy);
     }
 
     public void PerformRangeAttack(GameObject target)
@@ -195,9 +193,7 @@ public class TowerAttack : MonoBehaviour
                 if (enemy != null || enemy.hp > 0)
                 {
                     enemy.TakeDamage(tower.damage); // 적에게 데미지 적용
-                    GameObject effectInstance = GameManager.instance.pool.Get(meleeEffectIndex);
-                    effectInstance.transform.position = enemy.transform.position;
-                    effectInstance.SetActive(true);
+                    GameManager.instance.PlayEffect(meleeEffectIndex, enemy);
                 }
             }
         }
@@ -221,9 +217,7 @@ public class TowerAttack : MonoBehaviour
                 {
                     nearTower.hp += tower.damage; // 타워 회복
                     if (nearTower.hp >= nearTower.maxHp) nearTower.hp = nearTower.maxHp;
-                    GameObject effectInstance = GameManager.instance.pool.Get(15);
-                    effectInstance.transform.position = nearTower.transform.position;
-                    effectInstance.SetActive(true);
+                    GameManager.instance.PlayEffect(15, nearTower.transform.position);
                 }
             }
         }

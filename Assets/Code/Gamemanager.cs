@@ -308,6 +308,45 @@ public class GameManager : MonoBehaviour
         Time.timeScale = gameSpeed[speedIndex]; // 게임 시간을 원래대로 되돌립니다.
     }
 
+    public GameObject PlayEffect(int effectIndex, Vector3 position)
+    {
+        if (pool == null)
+        {
+            Debug.LogError("GameManager의 PoolManager가 연결되지 않았습니다.");
+            return null;
+        }
+
+        GameObject effectInstance = pool.Get(effectIndex);
+
+        if (effectInstance == null)
+        {
+            Debug.LogError($"이펙트 풀을 가져오지 못했습니다. Index: {effectIndex}");
+            return null;
+        }
+
+        effectInstance.transform.position = position;
+        effectInstance.SetActive(true);
+
+        return effectInstance;
+    }
+
+    public GameObject PlayEffect(int effectIndex, Enemy enemy)
+    {
+        if (enemy == null) return null;
+
+        Vector3 effectPosition = enemy.transform.position;
+
+        if (enemy.GetComponent<BossEnemy>() != null)
+        {
+            effectPosition += new Vector3(
+                Random.Range(-5f, 5f),
+                Random.Range(-5f, 5f),
+                0f
+            );
+        }
+
+        return PlayEffect(effectIndex, effectPosition);
+    }
 
     //[Header("# DataBase")]
     //public UnityEvent<int> OnGoldChanged;
