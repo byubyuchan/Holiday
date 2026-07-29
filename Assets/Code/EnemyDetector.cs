@@ -22,7 +22,7 @@ public class EnemyDetector : MonoBehaviour
             // 현재 목표가 범위 내에 있는지 확인
             if (IsWithinRange(currentTarget))
             {
-                towerAttack.TryAttack(currentTarget); // 지속적으로 공격 수행
+                towerAttack.Attack(currentTarget); // 지속적으로 공격 수행
             }
             else
             {

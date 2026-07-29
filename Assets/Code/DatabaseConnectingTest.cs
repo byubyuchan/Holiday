@@ -1,241 +1,237 @@
-// using System;
-// using MySql.Data.MySqlClient;
-// using UnityEngine;
+//using System;
+//using MySql.Data.MySqlClient;
+//using UnityEngine;
 
-// public class DataBaseConnectingTest : MonoBehaviour
-// {
-//     //DB ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-//     private string connectionString;
-//     private MySqlConnection connection;
-//     private int playerId = 1; // ï¿½âº» ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ID
-//     private int num = 0; // talent ï¿½ï¿½ï¿½ï¿½
-//     public static DataBaseConnectingTest Instance;
+//public class DataBaseConnectingTest : MonoBehaviour
+//{
+//    //DB ¿¬°áÀ» À§ÇÑ »ý¼ºÀÚ
+//    private string connectionString;
+//    private MySqlConnection connection;
+//    private int playerId = 1; // ±âº» ÇÃ·¹ÀÌ¾î ID
+//    private int num = 0; // talent ¼ø¼­
+//    public static DataBaseConnectingTest Instance;
 
-//     private void Awake()
-//     {
-//         //databse ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½ ï¿½ï¿½ï¿½ï¿½
-//         connectionString = "Server=";
-//         String sever = "127.0.0.1";
-//         String port = "3306";
-//         String database = "holiday_db";
-//         String user = "root";
-// <<<<<<< HEAD
-//         String password = "0000";
-// =======
-//         String password = "******";
-// >>>>>>> 56873e3be39bc2280e210fc91b7862f42a8022fa
-//         connectionString = string.Format("Server={0};Port={1};Database={2};Uid={3};Pwd={4};",
-//             sever, port, database, user, password);
-//         connection = new MySqlConnection(connectionString);
-//         try
-//         {
-//             connection.Open();
-//             Debug.Log("first DB connecting Success!!!");
-//             if (Instance == null)
-//             {
-//                 Instance = this;
-//                 DontDestroyOnLoad(gameObject);
-//             }
-//             else
-//             {
-//                 Destroy(gameObject);
-//             }
-//             Close(); 
-//         }
-//         catch (Exception ex)
-//         {
-//             Debug.LogError("DB Connecting Fail ! : " + ex.Message);
-//             Debug.LogError("DB Connecting Fail ! : " + ex.Message);
-//             Debug.LogError("DB Connecting Fail ! : " + ex.Message);
-//             Debug.LogError("DB Connecting Fail ! : " + ex.Message);
-//             Debug.LogError("DB Connecting Fail ! : " + ex.Message);
-//             Debug.LogError("DB Connecting Fail ! : " + ex.Message);
-//             Debug.LogError("DB Connecting Fail ! : " + ex.Message);
-//         }
-//     }
-//     //ï¿½âº» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
+//    private void Awake()
+//    {
+//        //databse ¿¬°á ¹®ÀÚ¿­ ¼³Á¤
+//        connectionString = "Server=";
+//        String sever = "175.197.161.15";
+//        String port = "31242";
+//        String database = "holiday_db";
+//        String user = "root";
+//        String password = "thth1234*";
+//        connectionString = string.Format("Server={0};Port={1};Database={2};Uid={3};Pwd={4};",
+//            sever, port, database, user, password);
+//        connection = new MySqlConnection(connectionString);
+//        try
+//        {
+//            connection.Open();
+//            Debug.Log("first DB connecting Success!!!");
+//            if (Instance == null)
+//            {
+//                Instance = this;
+//                DontDestroyOnLoad(gameObject);
+//            }
+//            else
+//            {
+//                Destroy(gameObject);
+//            }
+//            Close(); 
+//        }
+//        catch (Exception ex)
+//        {
+//            Debug.LogError("DB Connecting Fail ! : " + ex.Message);
+//            Debug.LogError("DB Connecting Fail ! : " + ex.Message);
+//            Debug.LogError("DB Connecting Fail ! : " + ex.Message);
+//            Debug.LogError("DB Connecting Fail ! : " + ex.Message);
+//            Debug.LogError("DB Connecting Fail ! : " + ex.Message);
+//            Debug.LogError("DB Connecting Fail ! : " + ex.Message);
+//            Debug.LogError("DB Connecting Fail ! : " + ex.Message);
+//        }
+//    }
+//    //±âº» µ¥ÀÌÅÍ ÀúÀå ÇÔ¼ö
 
-//     public void defaultSetting(int playerID)
-//     {
-//         string query = @"
-//             INSERT INTO info (Player, name, gold, stage, clear, time)
-//             VALUES (@Player, @name, @gold, @stage, @clear, @time)
-//             ON DUPLICATE KEY UPDATE
-//                 name = VALUES(name),
-//                 gold = VALUES(gold),
-//                 stage = VALUES(stage),
-//                 clear = VALUES(clear),
-//                 time = VALUES(time);";
+//    public void defaultSetting(int playerID)
+//    {
+//        string query = @"
+//            INSERT INTO info (Player, name, gold, stage, clear, time)
+//            VALUES (@Player, @name, @gold, @stage, @clear, @time)
+//            ON DUPLICATE KEY UPDATE
+//                name = VALUES(name),
+//                gold = VALUES(gold),
+//                stage = VALUES(stage),
+//                clear = VALUES(clear),
+//                time = VALUES(time);";
 
-//         try
-//         {
-//             using (MySqlConnection connection = new MySqlConnection(connectionString))
-//             {
-//                 connection.Open();
+//        try
+//        {
+//            using (MySqlConnection connection = new MySqlConnection(connectionString))
+//            {
+//                connection.Open();
 
-//                 using (MySqlCommand command = new MySqlCommand(query, connection))
-//                 {
-//                     Debug.Log("DB Default Setting!");
-//                     // SQL Injection ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½
-//                     command.Parameters.AddWithValue("@Player", playerID);
-//                     command.Parameters.AddWithValue("@name", "none");
-//                     command.Parameters.AddWithValue("@gold", 50);
-//                     command.Parameters.AddWithValue("@stage", 0);
-//                     command.Parameters.AddWithValue("@clear", 0);
-//                     command.Parameters.AddWithValue("@time", 0);
-//                     playerId = playerID;
-//                     int rowsAffected = command.ExecuteNonQuery();
-//                     Debug.Log("DB Default Setting! succuesss!!!!");
-//                 }
-//             }
-//         }
+//                using (MySqlCommand command = new MySqlCommand(query, connection))
+//                {
+//                    Debug.Log("DB Default Setting!");
+//                    // SQL Injection ¹æÁö¸¦ À§ÇÑ ÆÄ¶ó¹ÌÅÍ ¹ÙÀÎµù
+//                    command.Parameters.AddWithValue("@Player", playerID);
+//                    command.Parameters.AddWithValue("@name", "none");
+//                    command.Parameters.AddWithValue("@gold", 50);
+//                    command.Parameters.AddWithValue("@stage", 0);
+//                    command.Parameters.AddWithValue("@clear", 0);
+//                    command.Parameters.AddWithValue("@time", 0);
+//                    playerId = playerID;
+//                    int rowsAffected = command.ExecuteNonQuery();
+//                    Debug.Log("DB Default Setting! succuesss!!!!");
+//                }
+//            }
+//        }
 
-//         catch (Exception ex)
-//         {
-//             Debug.LogError("Error to saving!!: " + ex.Message);
-//             Debug.LogError("Error to saving!!: " + ex.Message);
-//             Debug.LogError("Error to saving!!: " + ex.Message);
-//             Debug.LogError("Error to saving!!: " + ex.Message);
-//             Debug.LogError("Error to saving!!: " + ex.Message);
-//         }
-//     }
+//        catch (Exception ex)
+//        {
+//            Debug.LogError("Error to saving!!: " + ex.Message);
+//            Debug.LogError("Error to saving!!: " + ex.Message);
+//            Debug.LogError("Error to saving!!: " + ex.Message);
+//            Debug.LogError("Error to saving!!: " + ex.Message);
+//            Debug.LogError("Error to saving!!: " + ex.Message);
+//        }
+//    }
 
-//     //DB ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½1
-//     private void Execute(int playerId, string name, int value)
-//     {
-//         Debug.Log("excute ï¿½ï¿½ï¿½ï¿½");
-//         try
-//         {
-//             using (MySqlConnection conn = new MySqlConnection(connectionString))
-//             {
-//                 conn.Open();
-//                 //switch (fieldName.ToLower()) // ï¿½Ò¹ï¿½ï¿½Ú·ï¿½ ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½Ç¼ï¿½ ï¿½ï¿½ï¿½ï¿½
-//                 //{
-//                 //    case "gold":
-//                 //        query = "INSERT INTO info (Player, gold) VALUES (@playerID, @value) ON DUPLICATE KEY UPDATE gold = @value";
-//                 //        break;
-//                 //    case "stage":
-//                 //        query = "INSERT INTO info (Player, stage) VALUES (@playerID, @value) ON DUPLICATE KEY UPDATE stage = @value";
-//                 //        break;
-//                 //    // ï¿½ß¿ï¿½: 'name' ï¿½Ã·ï¿½ï¿½ï¿½ VARCHAR Å¸ï¿½ï¿½ï¿½Ì¹Ç·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼Òµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
-//                 //    // case "name":
-//                 //    //     ...
-//                 //    //     break;
-//                 //    default: 
-//                 //ï¿½ï¿½ï¿½ï¿½ ï¿½Ø¾ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½Óµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½È¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½.
+//    //DB Äû¸® ½ÇÇàÀ» À§ÇÑ ÇÔ¼ö1
+//    private void Execute(int playerId, string name, int value)
+//    {
+//        Debug.Log("excute ½ÃÀÛ");
+//        try
+//        {
+//            using (MySqlConnection conn = new MySqlConnection(connectionString))
+//            {
+//                conn.Open();
+//                //switch (fieldName.ToLower()) // ¼Ò¹®ÀÚ·Î ºñ±³ÇÏ¿© ½Ç¼ö ¹æÁö
+//                //{
+//                //    case "gold":
+//                //        query = "INSERT INTO info (Player, gold) VALUES (@playerID, @value) ON DUPLICATE KEY UPDATE gold = @value";
+//                //        break;
+//                //    case "stage":
+//                //        query = "INSERT INTO info (Player, stage) VALUES (@playerID, @value) ON DUPLICATE KEY UPDATE stage = @value";
+//                //        break;
+//                //    // Áß¿ä: 'name' ÄÃ·³Àº VARCHAR Å¸ÀÔÀÌ¹Ç·Î º°µµÀÇ ¸Þ¼Òµå·Î °ü¸®ÇÏ´Â °ÍÀÌ ÁÁÀ½.
+//                //    // case "name":
+//                //    //     ...
+//                //    //     break;
+//                //    default: 
+//                //¿ø·¡ ÇØ¾ßÇÏ´Â ¹æ½ÄÀÌÁö¸¸, ¼Óµµ¸¦ ³ôÀÌ±â À§ÇØ ¾Æ·¡ÀÇ º¸¾È¿¡ Ãë¾àÇÑ ¹æ½ÄÀ¸·Î »ç¿ëÇÔ.
 
-//                 string query = $"INSERT INTO info (Player, {name}) VALUES (@playerID, @value) ON DUPLICATE KEY UPDATE {name} = @value";
-//                 Debug.Log($"Saving to DB ï¿½ï¿½ {name} = {value}");
+//                string query = $"INSERT INTO info (Player, {name}) VALUES (@playerID, @value) ON DUPLICATE KEY UPDATE {name} = @value";
+//                Debug.Log($"Saving to DB ¡æ {name} = {value}");
 
-//                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
-//                 {
-//                     cmd.Parameters.AddWithValue("@value", value);
-//                     cmd.Parameters.AddWithValue("@playerID", playerId);
-//                     cmd.ExecuteNonQuery();
-//                 }
-//                 Debug.Log($"Saved {playerId}, '{name}' = {value} to DB");                
-//             }
-//         }
-//         catch (Exception ex)
-//         {
-//             Debug.LogError("Error to saving: " + ex.Message);
-//         }
-//     }
+//                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+//                {
+//                    cmd.Parameters.AddWithValue("@value", value);
+//                    cmd.Parameters.AddWithValue("@playerID", playerId);
+//                    cmd.ExecuteNonQuery();
+//                }
+//                Debug.Log($"Saved {playerId}, '{name}' = {value} to DB");                
+//            }
+//        }
+//        catch (Exception ex)
+//        {
+//            Debug.LogError("Error to saving: " + ex.Message);
+//        }
+//    }
 
-//     private void ExecuteTalent(int playerId, string name, string value)
-//     {
-//         Debug.Log("excute ï¿½ï¿½ï¿½ï¿½");
-//         try
-//         {
-//             using (MySqlConnection conn = new MySqlConnection(connectionString))
-//             {
-//                 conn.Open();
-//                 string query = $"INSERT INTO info (Player, {name}) VALUES (@playerID, @value) ON DUPLICATE KEY UPDATE {name} = @value";
-//                 Debug.Log($"Saving to DB ï¿½ï¿½ {name} = {value}");
+//    private void ExecuteTalent(int playerId, string name, string value)
+//    {
+//        Debug.Log("excute ½ÃÀÛ");
+//        try
+//        {
+//            using (MySqlConnection conn = new MySqlConnection(connectionString))
+//            {
+//                conn.Open();
+//                string query = $"INSERT INTO info (Player, {name}) VALUES (@playerID, @value) ON DUPLICATE KEY UPDATE {name} = @value";
+//                Debug.Log($"Saving to DB ¡æ {name} = {value}");
 
-//                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
-//                 {
-//                     cmd.Parameters.AddWithValue("@value", value);
-//                     cmd.Parameters.AddWithValue("@playerID", playerId);
-//                     cmd.ExecuteNonQuery();
-//                 }
-//                 Debug.Log($"Saved {playerId}, '{name}' = {value} to DB");
-//                 num++;
-//             }
-//         }
-//         catch (Exception ex)
-//         {
-//             Debug.LogError("Error to saving: " + ex.Message);
-//         }
-//     }
+//                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+//                {
+//                    cmd.Parameters.AddWithValue("@value", value);
+//                    cmd.Parameters.AddWithValue("@playerID", playerId);
+//                    cmd.ExecuteNonQuery();
+//                }
+//                Debug.Log($"Saved {playerId}, '{name}' = {value} to DB");
+//                num++;
+//            }
+//        }
+//        catch (Exception ex)
+//        {
+//            Debug.LogError("Error to saving: " + ex.Message);
+//        }
+//    }
 
-//     //DB ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½2
-//     public void saveValue(int playerId, string name, int value) => Execute(playerId, name, value);
+//    //DB Äû¸® ½ÇÇàÀ» À§ÇÑ ÇÔ¼ö2
+//    public void saveValue(int playerId, string name, int value) => Execute(playerId, name, value);
 
-//     public void saveTalent(string talent)
-//     {
-//         ExecuteTalent(playerId, "talent_"+num, talent);
-//     }
-//     //ï¿½Ý´ï¿½ ï¿½Ô¼ï¿½
-//     public void Close()
-//     {
-//         Debug.Log("ï¿½ï¿½ï¿½ï¿½");
-//         if (connection != null)
-//         {
-//             connection.Close();
-//             Debug.Log("DB connection end");
-//         }
-//     }
+//    public void saveTalent(string talent)
+//    {
+//        ExecuteTalent(playerId, "talent_"+num, talent);
+//    }
+//    //´Ý´Â ÇÔ¼ö
+//    public void Close()
+//    {
+//        Debug.Log("´ÝÀ½");
+//        if (connection != null)
+//        {
+//            connection.Close();
+//            Debug.Log("DB connection end");
+//        }
+//    }
 
-//     public void clearCnt()
-//     {
-//         Execute(playerId, "clear", LoadValue(0));
-//         Execute(0, "clear", LoadValue(0)+1);
-//     }
-//     public int LoadValue(int playerID)
-//     {
-//         int defalutValue = -1; // ï¿½âº»ï¿½ï¿½ (ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½)
-//         string query = $"SELECT clear FROM info WHERE Player = @playerID";
+//    public void clearCnt()
+//    {
+//        Execute(playerId, "clear", LoadValue(0));
+//        Execute(0, "clear", LoadValue(0)+1);
+//    }
+//    public int LoadValue(int playerID)
+//    {
+//        int defalutValue = -1; // ±âº»°ª (ºÒ·¯¿ÀÁö ¸øÇßÀ» °æ¿ì ´ëºñ)
+//        string query = $"SELECT clear FROM info WHERE Player = @playerID";
 
-//         try
-//         {
-//             using (MySqlConnection conn = new MySqlConnection(connectionString))
-//             { 
-//                 conn.Open();
-//                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
-//                 {
-//                     cmd.Parameters.AddWithValue("@playerID", playerID);
+//        try
+//        {
+//            using (MySqlConnection conn = new MySqlConnection(connectionString))
+//            { 
+//                conn.Open();
+//                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+//                {
+//                    cmd.Parameters.AddWithValue("@playerID", playerID);
 
-//                     // ExecuteScalar: ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½(Ã¹ ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ Ã¹ ï¿½ï¿½Â° ï¿½Ã·ï¿½)ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
-//                     object result = cmd.ExecuteScalar();
+//                    // ExecuteScalar: ´ÜÀÏ °ª(Ã¹ ¹øÂ° ÇàÀÇ Ã¹ ¹øÂ° ÄÃ·³)¸¸ °¡Á®¿Ã ¶§ Æí¸®ÇÕ´Ï´Ù.
+//                    object result = cmd.ExecuteScalar();
 
-//                     // ï¿½ï¿½ï¿½ï¿½ï¿½ nullï¿½ï¿½ ï¿½Æ´Ï°ï¿½ DBNullï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½
-//                     if (result != null && result != DBNull.Value)
-//                     {
-//                         defalutValue = Convert.ToInt32(result);
-//                         Debug.Log("[DB Success] clear ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½ï¿½:");
-//                     }
-//                     else
-//                     {
-//                         Debug.LogWarning($"[DB Info] Player {playerID}ï¿½ï¿½ clearï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê°Å³ï¿½ NULLï¿½Ô´Ï´ï¿½.");
-//                     }
-//                 }
-//             }
-//         }
-//         catch (Exception ex)
-//         {
-//             Debug.LogError("DB Error loading to clear" + ex.Message);
-//         }
-//         return defalutValue;
-//     }
+//                    // °á°ú°¡ nullÀÌ ¾Æ´Ï°í DBNullÀÌ ¾Æ´Ò °æ¿ì
+//                    if (result != null && result != DBNull.Value)
+//                    {
+//                        defalutValue = Convert.ToInt32(result);
+//                        Debug.Log("[DB Success] clear °ªÀ» ºÒ·¯¿È:");
+//                    }
+//                    else
+//                    {
+//                        Debug.LogWarning($"[DB Info] Player {playerID}ÀÇ clear°ªÀÌ Á¸ÀçÇÏÁö ¾Ê°Å³ª NULLÀÔ´Ï´Ù.");
+//                    }
+//                }
+//            }
+//        }
+//        catch (Exception ex)
+//        {
+//            Debug.LogError("DB Error loading to clear" + ex.Message);
+//        }
+//        return defalutValue;
+//    }
 
-//     public void saveGold(int gold)
-//     {
-//         Execute(playerId,"gold",gold);
+//    public void saveGold(int gold)
+//    {
+//        Execute(playerId,"gold",gold);
 
-//     }
-//     public void saveName(string name)
-//     {
-//         ExecuteTalent(playerId, "name", name);
-//     }
-// }
+//    }
+//    public void saveName(string name)
+//    {
+//        ExecuteTalent(playerId, "name", name);
+//    }
+//}

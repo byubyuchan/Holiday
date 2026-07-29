@@ -29,18 +29,18 @@ public class GameManager : MonoBehaviour
     public bool isLive;
     public bool isStart;
     public int Life;
-    public int Gold;
-    //{
-    //    get => _gold;
-    //    set
-    //    {
-    //        if (_gold != value)
-    //        {
-    //            _gold = value;
-    //            OnGoldChanged?.Invoke(_gold);
-    //        }
-    //    }
-    //}
+    public int Gold
+    {
+        get => _gold;
+        set
+        {
+            if (_gold != value)
+            {
+                _gold = value;
+                OnGoldChanged?.Invoke(_gold);
+            }
+        }
+    }
     public int currentRound; // ���� ����
 
     int speedIndex = 0;
@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
     public bool isCutsceneActive = false;
 
 
-    private void Awake()
+    private void Start()
     {
         instance = this;
         AudioManager.instance.PlayBGM(true);
@@ -74,8 +74,8 @@ public class GameManager : MonoBehaviour
             globalLight = GetComponent<Light2D>();
         }
         playerId = Random.Range(1,400000000);
-        Time.timeScale = 1f;
         //dbConnector.defaultSetting(playerId);
+
     }
 
     void Update()
@@ -135,9 +135,8 @@ public class GameManager : MonoBehaviour
         {
             isStart = false;
             StartRoundButton.gameObject.SetActive(true); // 이 부분 변경
-            Gold += 50;
+            Gold += 70;
             AudioManager.instance.PlaySFX("Win");
-            if(TowerManager.instance.reSell) TowerManager.instance.TwicePrice();
             if (TowerManager.instance.forcedSale) TowerManager.instance.TwiceSellAllTower();
         }
     }
@@ -177,7 +176,7 @@ public class GameManager : MonoBehaviour
     public void GameWin()
     {
         StartCoroutine(GameWinRoutine());
-        //dbConnector.loadValue(playerId);//플레이어의 clear 순위를 가져옴(int로)
+        ////dbConnector.loadValue(playerId);//플레이어의 clear 순위를 가져옴(int로)
         //dbConnector.clearCnt();//플레이어의 클리어 순서를 저장하고, 전체 클리어 횟수를 하나 올림
     }
 
@@ -199,10 +198,10 @@ public class GameManager : MonoBehaviour
     //public void GameRetry()
     //{
     //    SceneManager.LoadScene(0);
-    //    Gold = dbConnector.LoadValue("gold");
-    //    kill = dbConnector.LoadValue("kill");
-    //    currentRound = dbConnector.LoadValue("stage");
-    //    hp = dbConnector.LoadValue("hp");
+    //    Gold = //dbConnector.LoadValue("gold");
+    //    kill = //dbConnector.LoadValue("kill");
+    //    currentRound = //dbConnector.LoadValue("stage");
+    //    hp = //dbConnector.LoadValue("hp");
     //}
 
     public void GameQuit()
@@ -308,49 +307,10 @@ public class GameManager : MonoBehaviour
         Time.timeScale = gameSpeed[speedIndex]; // 게임 시간을 원래대로 되돌립니다.
     }
 
-    public GameObject PlayEffect(int effectIndex, Vector3 position)
-    {
-        if (pool == null)
-        {
-            Debug.LogError("GameManager의 PoolManager가 연결되지 않았습니다.");
-            return null;
-        }
 
-        GameObject effectInstance = pool.Get(effectIndex);
+    [Header("# DataBase")]
+    public UnityEvent<int> OnGoldChanged;
+    //public DataBaseConnectingTest //dbConnector;
 
-        if (effectInstance == null)
-        {
-            Debug.LogError($"이펙트 풀을 가져오지 못했습니다. Index: {effectIndex}");
-            return null;
-        }
-
-        effectInstance.transform.position = position;
-        effectInstance.SetActive(true);
-
-        return effectInstance;
-    }
-
-    public GameObject PlayEffect(int effectIndex, Enemy enemy)
-    {
-        if (enemy == null) return null;
-
-        Vector3 effectPosition = enemy.transform.position;
-
-        if (enemy.GetComponent<BossEnemy>() != null)
-        {
-            effectPosition += new Vector3(
-                Random.Range(-5f, 5f),
-                Random.Range(-5f, 5f),
-                0f
-            );
-        }
-
-        return PlayEffect(effectIndex, effectPosition);
-    }
-
-    //[Header("# DataBase")]
-    //public UnityEvent<int> OnGoldChanged;
-    //public DataBaseConnectingTest dbConnector;
-
-    //private int _gold;
+    private int _gold;
 }

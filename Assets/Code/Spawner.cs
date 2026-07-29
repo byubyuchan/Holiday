@@ -83,12 +83,6 @@ public class Spawner : MonoBehaviour
                 }
                 GameObject enemy = GameManager.instance.pool.Get(EnemyIndex); // 풀링될 프리팹 선택
 
-                    // 문제 되는 부분 !! //
-                //if (enemy == null || currentEnemyCount >= 150)
-                //{
-                //    break;
-                //}
-
                 Transform randomSpawnPoint = spawnPoint[Random.Range(1, spawnPoint.Length)];
                 enemy.transform.position = randomSpawnPoint.position;
                 enemy.GetComponent<Enemy>().Init(spawnData[i]);

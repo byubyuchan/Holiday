@@ -26,53 +26,81 @@ public class TowerManager : MonoBehaviour
 
     public void HealAllTowers()
     {
-        if (CutsceneManager.instance.cutsceneflag == 1)
-            return;
+        if (CutsceneManager.instance.cutsceneflag == 1) return;
+        Tower[] towers = towerParent.GetComponentsInChildren<Tower>();
+        Enemy[] enemys = enemyParent.GetComponentsInChildren<Enemy>();
 
-        int cost = sale ? 3 : 5;
-
-        if (GameManager.instance.Gold < cost)
+        if (sale)
         {
-            GameManager.instance.ShowMessage("골드가 모자랍니다!");
-            AudioManager.instance.PlaySFX("Cant");
-            CameraShakeComponent.instance.StartShake();
-            return;
-        }
-
-        GameManager.instance.Gold -= cost;
-
-        if (reverse)
-        {
-            Enemy[] enemies = enemyParent.GetComponentsInChildren<Enemy>();
-
-            foreach (Enemy enemy in enemies)
+            if (GameManager.instance.Gold < 3)
             {
-                if (enemy != null)
-                    enemy.TakeDamage(100f);
+                GameManager.instance.ShowMessage("골드가 모자랍니다!");
+                AudioManager.instance.PlaySFX("Cant");
+                CameraShakeComponent.instance.StartShake();
+                return;
             }
 
-            GameManager.instance.ShowMessage("파괴 마법을 걸었습니다!");
-            CameraShakeComponent.instance.StartShake();
-            return;
-        }
+            GameManager.instance.Gold -= 3;
+            if (reverse)
+            {
+                foreach (Enemy enemy in enemys)
+                {
+                    if (enemy != null)
+                    {
+                        enemy.TakeDamage(100f);
+                    }
+                }
+                GameManager.instance.ShowMessage("파괴 마법을 걸었습니다!");
+                CameraShakeComponent.instance.StartShake();
+            }
+            else
+            {
+                GameManager.instance.ShowMessage("회복 마법을 걸었습니다!");
+                CameraShakeComponent.instance.StartShake();
+                AudioManager.instance.PlaySFX("P_Heal");
+            }
 
-        Tower[] towers = towerParent.GetComponentsInChildren<Tower>();
+        }
+        else
+        {
+            if (GameManager.instance.Gold < 5)
+            {
+                GameManager.instance.ShowMessage("골드가 모자랍니다!");
+                AudioManager.instance.PlaySFX("Cant");
+                CameraShakeComponent.instance.StartShake();
+                return;
+            }
+            GameManager.instance.Gold -= 5;
+            if (reverse)
+            {
+                foreach (Enemy enemy in enemys)
+                {
+                    if (enemy != null)
+                    {
+                        enemy.TakeDamage(100f);
+                    }
+                }
+                GameManager.instance.ShowMessage("파괴 마법을 걸었습니다!");
+                CameraShakeComponent.instance.StartShake();
+            }
+            else
+            {
+                GameManager.instance.ShowMessage("회복 마법을 걸었습니다!");
+                CameraShakeComponent.instance.StartShake();
+                AudioManager.instance.PlaySFX("P_Heal");
+            }
+        }
 
         foreach (Tower tower in towers)
         {
-            if (tower == null)
-                continue;
-
-            tower.hp = tower.maxHp;
-
-            GameObject effectInstance = GameManager.instance.pool.Get(15);
-            effectInstance.transform.position = tower.transform.position;
-            effectInstance.SetActive(true);
+            if (tower != null)
+            {
+                tower.hp = tower.maxHp; // 체력 회복, 최대 체력 초과 방지
+                GameObject effectInstance = GameManager.instance.pool.Get(15);
+                effectInstance.transform.position = tower.transform.position;
+                effectInstance.SetActive(true);
+            }
         }
-
-        GameManager.instance.ShowMessage("회복 마법을 걸었습니다!");
-        CameraShakeComponent.instance.StartShake();
-        AudioManager.instance.PlaySFX("P_Heal");
     }
 
     public void DestroyAllTower()
@@ -104,17 +132,14 @@ public class TowerManager : MonoBehaviour
     public void UpgradeAllTower(float v)
     {
         Debug.Log("업그레이드 갱신!");
-
         Tower[] towers = towerParent.GetComponentsInChildren<Tower>();
 
         if (IsAllC)
         {
             AllC = true;
-
             foreach (Tower tower in towers)
             {
-                if (tower == null)
-                    continue;
+                if (tower == null) continue;
 
                 if (tower.cost != "C")
                 {
@@ -123,57 +148,32 @@ public class TowerManager : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            AllC = false;
-        }
 
-        float finalUpgradeValue = v;
-
-        if (AllC)
-        {
-            finalUpgradeValue += 0.5f;
-        }
+        if (AllC) v += 0.5f;
 
         foreach (Tower tower in towers)
         {
-            if (tower == null)
-                continue;
-
-            float damageBonus = finalUpgradeValue;
-            float hpBonus = finalUpgradeValue;
-            float rangeBonus = finalUpgradeValue;
-            float speedBonus = finalUpgradeValue;
-
-            if (tower.towerType == "Range")
+            tower.damage = tower.baseDamage * (1 + v);
+            tower.maxHp = tower.baseMaxHp * (1 + v);
+            // 체력 = max 체력을 하면 풀회복이 되고, 안하면 소환했을 때 maxhp를 받지 않고 basehp만 받게됨.
+            tower.range = tower.baseRange * (1 + v);
+            tower.speed = Mathf.Max(tower.baseSpeed * (1f - v),0.2f); // 최대 공속 0.2f
+            if (bigProjectile)
             {
-                if (bigProjectile)
+                if (tower.towerType == "Range")
                 {
-                    // 베이스 공격력의 100% 추가
-                    damageBonus += 1f;
-
-                    // 베이스 공격 간격의 100% 추가: 느려짐
-                    speedBonus -= 1f;
-                }
-
-                if (smallProjectile)
-                {
-                    // 베이스 공격력의 50% 감소
-                    damageBonus -= 0.5f;
-
-                    // 베이스 공격 간격의 50% 감소: 빨라짐
-                    speedBonus += 0.5f;
+                    tower.damage += tower.baseDamage;
+                    tower.speed += tower.baseSpeed;
                 }
             }
-
-            tower.damage = tower.baseDamage * (1f + damageBonus);
-            tower.maxHp = tower.baseMaxHp * (1f + hpBonus);
-            tower.range = tower.baseRange * (1f + rangeBonus);
-
-            tower.speed = Mathf.Max(
-                tower.baseSpeed * (1f - speedBonus),
-                0.2f
-            );
+            if (smallProjectile)
+            {
+                if (tower.towerType == "Range")
+                {
+                    tower.damage -= tower.baseDamage * 0.5f;
+                    tower.speed = Mathf.Max(tower.speed - (tower.baseSpeed * 0.5f),0.2f);
+                }
+            }
         }
     }
 
@@ -266,6 +266,43 @@ public class TowerManager : MonoBehaviour
         foreach (Tower tower in towers)
         {
             tower.price = Mathf.Min(tower.price * 2, 40);
+        }
+    }
+
+    public void HealSkill()
+    {
+        Tower[] towers = towerParent.GetComponentsInChildren<Tower>();
+
+        foreach (Tower tower in towers)
+        {
+            if (tower != null)
+            {
+                tower.hp = Mathf.Min(tower.hp + 200, tower.maxHp); // 체력 회복, 최대 체력 초과 방지
+                GameObject effectInstance = GameManager.instance.pool.Get(15);
+                effectInstance.transform.position = tower.transform.position;
+                effectInstance.SetActive(true);
+            }
+        }
+    }
+
+    public void SlowEnemy()
+    {
+        Enemy[] enemys = enemyParent.GetComponentsInChildren<Enemy>();
+        foreach (Enemy enemy in enemys)
+        {
+            if (enemy != null)
+            {
+                DamageFlashEffect flashEffect = enemy.GetComponent<DamageFlashEffect>();
+
+                if (flashEffect != null)
+                {
+                    flashEffect.SetSlowEffect(true);
+                }
+
+                enemy.speed *= 0.5f;
+                enemy.speed = Mathf.Min(enemy.speed, 3f);
+                enemy.TakeDamage(50f);
+            }
         }
     }
 }

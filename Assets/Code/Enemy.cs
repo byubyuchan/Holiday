@@ -38,6 +38,8 @@ public class Enemy : MonoBehaviour
     private SpriteRenderer spriter;
     private bool isDead = false;
 
+    public DamageFlashEffect flashEffect;
+
 
     void Start()
     {
@@ -73,6 +75,12 @@ public class Enemy : MonoBehaviour
         attackType = data.AttackType;
         projectileIndex = data.projectileIndex;
 
+        if (flashEffect != null)
+        {
+            flashEffect.isSlowed = false;
+            flashEffect.SetSlowEffect(false); // 시각적인 색상도 원래대로 복구
+        }
+
         if (attackType == "Boss" && bossHpUp)
         {
             hp *= 1.5f;
@@ -87,6 +95,7 @@ public class Enemy : MonoBehaviour
         col = GetComponent<Collider2D>();
         spriter = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        flashEffect = GetComponent<DamageFlashEffect>();
     }
 
     void LateUpdate()
@@ -107,7 +116,7 @@ public class Enemy : MonoBehaviour
             lastUpdateTime = Time.time; // 시간 갱신
         }
 
-        TryAttack();
+        Attack();
 
         MoveTowardsTarget(); // 목표를 향해 이동
 
@@ -163,8 +172,6 @@ public class Enemy : MonoBehaviour
         rigid.linearVelocity = Vector2.zero; // 이동 멈춤
         //col.enabled = false; // 충돌 비활성화
         rigid.simulated = false; // 물리 계산 비활성화
-        
-        DamageFlashEffect flashEffect = GetComponent<DamageFlashEffect>();
 
         if (flashEffect != null)
         {
@@ -192,7 +199,7 @@ public class Enemy : MonoBehaviour
         gameObject.SetActive(false); // 비활성화하여 풀링 시스템으로 반환
     }
 
-    private void TryAttack()
+    private void Attack()
     {
         if (isDead) return;
         if (Time.time - lastAttackTime < attackCooldown) return;
@@ -205,7 +212,24 @@ public class Enemy : MonoBehaviour
                 tower = col.GetComponent<Tower>();
                 if (tower != null)
                 {
-                    if (attackType == "Boss")
+                    if (attackType == "Melee")
+                    {
+                        // 근접 공격
+                        tower.TakeDamage(damage);
+                        GameObject effectInstance = GameManager.instance.pool.Get(12);
+                        effectInstance.transform.position = tower.transform.position;
+                        effectInstance.SetActive(true);
+
+                        string[] attackKeys = { "E_Attack1", "E_Attack2" };
+                        string randomKey = attackKeys[Random.Range(0, attackKeys.Length)];
+                        AudioManager.instance.PlaySFX(randomKey);
+                    }
+                    else if (attackType == "Range")
+                    {
+                        FireProjectile(tower.gameObject);
+                        AudioManager.instance.PlaySFX("P_Fire");
+                    }
+                    else if (attackType == "Boss")
                     {
                         TryUseSkill();
                         lastAttackTime = Time.time;
@@ -213,34 +237,8 @@ public class Enemy : MonoBehaviour
                     }
                     anim.SetTrigger("Attack");
                     lastAttackTime = Time.time;
+                    break;
                 }
-                break;
-            }
-        }
-    }
-
-    private void Attack()
-    {
-        if (isDead) return;
-
-        if (tower != null)
-        {
-            if (attackType == "Melee")
-            {
-                // 근접 공격
-                tower.TakeDamage(damage);
-                GameObject effectInstance = GameManager.instance.pool.Get(12);
-                effectInstance.transform.position = tower.transform.position;
-                effectInstance.SetActive(true);
-
-                string[] attackKeys = { "E_Attack1", "E_Attack2" };
-                string randomKey = attackKeys[Random.Range(0, attackKeys.Length)];
-                AudioManager.instance.PlaySFX(randomKey);
-            }
-            else if (attackType == "Range")
-            {
-                FireProjectile(tower.gameObject);
-                AudioManager.instance.PlaySFX("P_Fire");
             }
         }
     }
@@ -304,5 +302,17 @@ public class Enemy : MonoBehaviour
             proj.Init(damage, tower, 12); // 현재 하드코딩으로 지정됨.
         }
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        // 1. 공격 범위 (range) - 빨간색
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, range);
+
+        // 2. 타워 탐지 범위 (detectionRange) - 파란색
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
+    }
+
     public virtual void TryUseSkill() { }
 }

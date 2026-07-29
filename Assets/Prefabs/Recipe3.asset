@@ -12,17 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1454fd9bca579264f9607dffb1644db8, type: 3}
   m_Name: Recipe3
   m_EditorClassIdentifier: 
-  recipeName: "\uC218\uB3C4\uC2B9"
+  recipeName: "\uC218\uB3C4\uC2B9 \uCE74\uB77C\uC9D0"
   ingredients:
   - towerType: Tank
     cost: C
-    quantity: 5
-  - towerType: Range
-    cost: C
     quantity: 10
   - towerType: Tank
-    cost: B
-    quantity: 5
+    cost: A
+    quantity: 1
   ResultType: 2
   resultTowerPrefab: {fileID: 5415422783019143891, guid: 2c48eb89b8a4a4b43a9711e23df9e173, type: 3}
   resultTowerIndex: 2

@@ -12,14 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1454fd9bca579264f9607dffb1644db8, type: 3}
   m_Name: Recipe2
   m_EditorClassIdentifier: 
-  recipeName: "\uC655"
+  recipeName: "\uC655 \uC790\uB178\uBC14"
   ingredients:
   - towerType: Melee
-    cost: C
-    quantity: 1
-  - towerType: Melee
     cost: B
-    quantity: 0
+    quantity: 10
   ResultType: 1
   resultTowerPrefab: {fileID: 5415422783019143891, guid: 2c48eb89b8a4a4b43a9711e23df9e173, type: 3}
   resultTowerIndex: 1

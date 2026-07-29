@@ -38,7 +38,7 @@ public class Projectile : MonoBehaviour
             isSmall = true;
         }
 
-        if (tower.projectileIndex == 3 || tower.projectileIndex == 10) // 특수한 프로젝타일인 경우
+        if (tower.projectileIndex == 3 || tower.projectileIndex == 10 || tower.projectileIndex == 16) // 특수한 프로젝타일인 경우
         {
             if (tower.projectileIndex == 3)
             {
@@ -59,6 +59,10 @@ public class Projectile : MonoBehaviour
         {
             transform.position = target.transform.position;
             Invoke("DeactivateProjectile", 0.433f);
+        }
+        else if (tower.projectileIndex == 17)
+        {
+            StartCoroutine(BringerSkillProjectile());
         }
         else // 일반적인 프로젝타일
         {
@@ -81,6 +85,12 @@ public class Projectile : MonoBehaviour
                 break;
             case 10:
                 AudioManager.instance.PlaySFX("P_Slash");
+                break;
+            case 16:
+                AudioManager.instance.PlaySFX("P_Slash");
+                break;
+            case 17:
+                AudioManager.instance.PlaySFX("P_BringerSkill");
                 break;
         }
     }
@@ -155,7 +165,9 @@ public class Projectile : MonoBehaviour
                 if (tower != null)
                 {
                     tower.TakeDamage(damage);
-                    GameManager.instance.PlayEffect(effectIndex, tower.transform.position);
+                    GameObject effectInstance = GameManager.instance.pool.Get(effectIndex);
+                    effectInstance.transform.position = transform.position;
+                    effectInstance.SetActive(true);
                     if (Enemy.instance.projectileIndex == 14)
                     {
                         Invoke("DeactivateProjectile", 0.433f);
@@ -172,9 +184,22 @@ public class Projectile : MonoBehaviour
                 if (enemy != null)
                 {
                     enemy.TakeDamage(tower.damage); // 적에게 데미지 적용
-                    GameManager.instance.PlayEffect(effectIndex, enemy);
+                }
+
+                if (tower.projectileIndex == 4 || tower.projectileIndex == 10 || tower.projectileIndex == 16) // S급 투사체
+                {
+                    GameObject effectInstance = GameManager.instance.pool.Get(effectIndex);
+                    effectInstance.transform.position = enemy.transform.position;
+                    effectInstance.SetActive(true);
+                }
+                else
+                {
+                    GameObject effectInstance = GameManager.instance.pool.Get(effectIndex);
+                    effectInstance.transform.position = transform.position;
+                    effectInstance.SetActive(true);
                 }
             }
+
         }
 
     }
@@ -188,7 +213,6 @@ public class Projectile : MonoBehaviour
             if (tower != null)
             {
                 tower.TakeDamage(tower.damage);
-                GameManager.instance.PlayEffect(effectIndex, tower.transform.position);
             }
         }
         else
@@ -197,9 +221,14 @@ public class Projectile : MonoBehaviour
             if (enemy != null)
             {
                 enemy.TakeDamage(this.damage); // 적에게 데미지 적용
-                GameManager.instance.PlayEffect(effectIndex, enemy);
             }
         }
+
+        // 충돌 이펙트 생성
+        GameObject effectInstance = GameManager.instance.pool.Get(effectIndex);
+        effectInstance.transform.position = transform.position;
+        effectInstance.SetActive(true);
+
         DeactivateProjectile(); // 투사체 비활성화
     }
 
@@ -209,5 +238,36 @@ public class Projectile : MonoBehaviour
         isActive = false; // 활성 상태 변경
         gameObject.SetActive(false); // 투사체 비활성화
 
+    }
+
+    private IEnumerator BringerSkillProjectile()
+    {
+        // 1.0초 대기 (거대한 손이 떨어지는 시간)
+        yield return new WaitForSeconds(1f);
+
+        // 2. 주변 적 감지 및 데미지 적용
+        // 목표로 지정된 적의 위치를 중심으로 범위를 계산합니다.
+        if (target != null)
+        {
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(target.transform.position, tower.range);
+            foreach (Collider2D enemyCollider in hitEnemies)
+            {
+                if (enemyCollider.CompareTag("Enemy"))
+                {
+                    Enemy enemy = enemyCollider.GetComponent<Enemy>();
+                    if (enemy != null && enemy.hp > 0)
+                    {
+                        enemy.TakeDamage(tower.damage);
+
+                        GameObject damageEffect = GameManager.instance.pool.Get(effectIndex);
+                        damageEffect.transform.position = enemy.transform.position;
+                        damageEffect.SetActive(true);
+                    }
+                }
+            }
+        }
+
+        // 3. 모든 처리가 끝난 후 투사체 비활성화
+        DeactivateProjectile();
     }
 }

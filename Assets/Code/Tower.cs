@@ -20,6 +20,7 @@ public class Tower : MonoBehaviour
     public int projectileIndex;
     public bool flipX;
     public int price;
+    public string desc;
 
     public float baseDamage;
     public float baseHp;
@@ -94,12 +95,33 @@ public class Tower : MonoBehaviour
         cost = towerData.Cost;
         price = towerData.Star;
         projectileIndex = towerData.ProjectileIndex;
+        desc = towerData.Desc;
 
         baseDamage = damage;
         baseHp = hp;
         baseMaxHp = maxHp;
         baseRange = range;
         baseSpeed = speed;
+
+        //if (Isupgrade)
+        //{
+        //    maxHp = towerData.HP * (1f + Val);
+        //    hp = towerData.HP * (1f + Val);
+        //    range = towerData.Range * (1f + Val);
+        //    damage = towerData.Damage * (1f + Val);
+        //    speed = towerData.Speed * (1f - Val);
+            
+        //    if (IsBig && towerType == "Range")
+        //    {
+        //        damage += towerData.Damage;
+        //        speed += towerData.Speed;
+        //    }
+        //    if (IsSmall && towerType == "Range")
+        //    {
+        //        damage -= towerData.Damage * 0.5f;
+        //        speed -= towerData.Speed * 0.5f;
+        //    }
+        //}
 
         spriteRenderer.flipX = flipX;
 

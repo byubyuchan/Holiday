@@ -7278,7 +7278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNameInput: {fileID: 1747420209}
-  playerName: 
+  dbConnector: {fileID: 1123679828}
 --- !u!114 &233500098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10004,6 +10004,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: c40e6d6ef62f0af46a9b3e694b0cf1e3, type: 3}
   - key: Fail
     clip: {fileID: 8300000, guid: 656619e9b6bfb4b4cb376d87daef22fd, type: 3}
+  - key: P_KingSkill
+    clip: {fileID: 8300000, guid: 3807a319bc8565e44bd8f129c9e9648f, type: 3}
+  - key: P_MonkSkill
+    clip: {fileID: 8300000, guid: d452d892cf700c0459473e6079cf1c4d, type: 3}
 --- !u!4 &346984962
 Transform:
   m_ObjectHideFlags: 0
@@ -23398,6 +23402,7 @@ MonoBehaviour:
   randomButton: {fileID: 1823647889}
   talentGroup: {fileID: 1314911187}
   layoutRoot: {fileID: 1314911187}
+  dbConnector: {fileID: 1123679828}
   meleePrice: 7
   rangePrice: 7
   tankPrice: 7
@@ -32322,7 +32327,6 @@ MonoBehaviour:
   isLive: 0
   isStart: 0
   Life: 1
-  Gold: 0
   currentRound: 0
   gameSpeed:
   - 1
@@ -32340,6 +32344,10 @@ MonoBehaviour:
   globalLight: {fileID: 619394801}
   Background: {fileID: 1618730179}
   isCutsceneActive: 0
+  OnGoldChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  dbConnector: {fileID: 1123679828}
 --- !u!114 &1123679828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32347,7 +32355,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1123679824}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ed71f5ac3db8f7243a13a07a3230483f, type: 3}
   m_Name: 
@@ -32359,11 +32367,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1123679824}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b35474298e3e9e4c8ae387fd44e4652, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 1123679827}
+  dbConnectingT: {fileID: 0}
 --- !u!1 &1126913709
 GameObject:
   m_ObjectHideFlags: 0
@@ -41810,6 +41820,8 @@ MonoBehaviour:
   - {fileID: 8526039864412694808, guid: 1dd5f093587d7224fba1f977ce71ef30, type: 3}
   - {fileID: 8900365330149694422, guid: c5c8875955f628449966749dbe8f6f62, type: 3}
   - {fileID: 8900365330149694422, guid: 75984dc65f11c0043b093ce5ff8f9120, type: 3}
+  - {fileID: 8900365330149694422, guid: 179fd93495fb0ed469f2df59908dcab9, type: 3}
+  - {fileID: 8900365330149694422, guid: c34134dfad0c3e449b748519fbf196c3, type: 3}
 --- !u!4 &1327216126
 Transform:
   m_ObjectHideFlags: 0

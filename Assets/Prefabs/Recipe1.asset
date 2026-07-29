@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   recipeName: "\uC5EC\uC804\uC0AC \uC5D0\uB9AC\uC2A4"
   ingredients:
-  - towerType: Round
-    cost: A
-    quantity: 0
+  - towerType: Melee
+    cost: C
+    quantity: 10
   - towerType: Range
     cost: B
-    quantity: 0
+    quantity: 5
   ResultType: 0
   resultTowerPrefab: {fileID: 5415422783019143891, guid: 2c48eb89b8a4a4b43a9711e23df9e173, type: 3}
   resultTowerIndex: 0

@@ -30,7 +30,7 @@ public class Talent : MonoBehaviour
     public int tankPrice = 7;
     public int randomPrice = 6;
 
-    void Start()
+    void Awake()
     {
         rect = GetComponent<RectTransform>();
 
@@ -41,7 +41,6 @@ public class Talent : MonoBehaviour
         talents = new Transform[childCount];
         for (int i = 0; i < childCount; i++)
             talents[i] = talentGroup.GetChild(i);
-        Show();
     }
 
     public void Show()
@@ -93,7 +92,7 @@ public class Talent : MonoBehaviour
         RandomGold = Random.Range(0, 151);
         GameManager.instance.Gold += RandomGold;
         GameManager.instance.ShowMessage($"{RandomGold}만큼 골드를 획득했습니다!");
-        //dbConnector.saveTalent($"Talent1_{RandomGold}만큼 골드 획득");
+        ////dbConnector.saveTalent($"Talent1_{RandomGold}만큼 골드 획득");
         OnPicked(1);
     }
 
@@ -301,7 +300,7 @@ public class Talent : MonoBehaviour
         //TowerMaker.instance.Isupgrade = true;
         TowerMaker.instance.selectedTowerPrefab = null;
         GameManager.instance.ShowMessage($"투사체의 크기가 2배, 데미지가 2배 그리고 공격속도도 2배로 낮아집니다.");
-       //dbConnector.saveTalent($"투사체의 크기가 2배, 데미지가 2배 그리고 공격속도도 2배로 낮아집니다.");
+        //dbConnector.saveTalent($"투사체의 크기가 2배, 데미지가 2배 그리고 공격속도도 2배로 낮아집니다.");
         OnPicked(20);
     }
 
@@ -324,15 +323,14 @@ public class Talent : MonoBehaviour
         //dbConnector.saveTalent($"현재 타워들의 판매 골드가 2배로 증가합니다. 살아남을 때마다 2배로 증가합니다!");
         OnPicked(22);
     }
-
-    //public void Talent23()
-    //{
-    //    TowerManager.instance.forcedSale = true;
-    //    TowerMaker.instance.selectedTowerPrefab = null;
-    //    GameManager.instance.ShowMessage($"현재 타워들의 판매 골드가 2배로 증가합니다. 살아남을 때마다 2배로 증가합니다!");
-    //    //dbConnector.saveTalent($"현재 타워들의 판매 골드가 2배로 증가합니다. 살아남을 때마다 2배로 증가합니다!");
-    //    OnPicked(23);
-    //}
+    public void Talent23()
+    {
+        TowerManager.instance.forcedSale = true;
+        TowerMaker.instance.selectedTowerPrefab = null;
+        GameManager.instance.ShowMessage($"현재 타워들의 판매 골드가 살아남을 때마다 2배로 증가합니다!");
+        //dbConnector.saveTalent($"현재 타워들의 판매 골드가 살아남을 때마다 2배로 증가합니다!");
+        OnPicked(23);
+    }
 
 
 
@@ -373,7 +371,7 @@ public class Talent : MonoBehaviour
     //    }
 
     //    GameManager.instance.ShowMessage("랜덤한 특성 2개를 획득했습니다!");
-    //    dbConnector.saveTalent("Talent13: 랜덤 특성 2개 자동 지급");
+    //    //dbConnector.saveTalent("Talent13: 랜덤 특성 2개 자동 지급");
     //    OnPicked(13);
     //}
 }
