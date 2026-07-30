@@ -20,6 +20,7 @@ public class Tower : MonoBehaviour
     public int projectileIndex;
     public bool flipX;
     public int price;
+    public string desc;
 
     public float baseDamage;
     public float baseHp;
@@ -94,6 +95,7 @@ public class Tower : MonoBehaviour
         cost = towerData.Cost;
         price = towerData.Star;
         projectileIndex = towerData.ProjectileIndex;
+        desc = towerData.Desc;
 
         baseDamage = damage;
         baseHp = hp;

@@ -229,7 +229,6 @@ public class TowerMover : MonoBehaviour
             // 4. 레시피를 찾았다면, 조합을 실행합니다.
             ConsumeAndCreate(foundRecipe, allTowersOnField);
             GameManager.instance.ShowMessage(foundRecipe.recipeName + " 조합 성공!");
-            AudioManager.instance.PlaySFX("LevelUp"); // 조합 성공 효과음
         }
         else
         {

@@ -16,13 +16,13 @@ MonoBehaviour:
   ingredients:
   - towerType: Tank
     cost: C
-    quantity: 5
+    quantity: 1
   - towerType: Range
     cost: C
-    quantity: 10
+    quantity: 0
   - towerType: Tank
     cost: B
-    quantity: 5
+    quantity: 0
   ResultType: 2
   resultTowerPrefab: {fileID: 5415422783019143891, guid: 2c48eb89b8a4a4b43a9711e23df9e173, type: 3}
   resultTowerIndex: 2

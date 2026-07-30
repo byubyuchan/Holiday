@@ -19,7 +19,7 @@ MonoBehaviour:
     quantity: 0
   - towerType: Range
     cost: B
-    quantity: 0
+    quantity: 1
   ResultType: 0
   resultTowerPrefab: {fileID: 5415422783019143891, guid: 2c48eb89b8a4a4b43a9711e23df9e173, type: 3}
   resultTowerIndex: 0

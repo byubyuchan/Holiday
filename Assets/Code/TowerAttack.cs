@@ -86,9 +86,28 @@ public class TowerAttack : MonoBehaviour
 
     private void ApplySkillEffect()
     {
-        
-        Debug.Log(gameObject.name + "의 스킬 효과가 발동됩니다!");
-        Attack();
+
+        switch (tower.desc)
+        {
+            case "여전사 에리스":
+                AudioManager.instance.PlaySFX("P_Heal");
+                TowerManager.instance.HealSkill();
+                break;
+            case "왕 아담":
+                AudioManager.instance.PlaySFX("P_KingSkill");
+                tower.projectileIndex = 10;
+                break;
+            case "수도승 카라짐":
+                AudioManager.instance.PlaySFX("P_MonkSkill");
+                TowerManager.instance.SlowEnemy();
+                break;
+            case "죽음을 부르는 자":
+                AudioManager.instance.PlaySFX("P_MonkSkill");
+                tower.projectileIndex = 17;
+                break;
+            default:
+                break;
+        }
 
         if (towerAnim != null)
         {
@@ -130,6 +149,16 @@ public class TowerAttack : MonoBehaviour
 
             case "Range":
                 PerformRangeAttack(targetEnemy);
+
+                if (tower.desc == "왕 아담" && tower.projectileIndex == 10)
+                {
+                    tower.projectileIndex = 16;
+                }
+                if (tower.desc == "죽음을 부르는 자" && tower.projectileIndex == 17)
+                {
+                    tower.projectileIndex = 3;
+                }
+
                 break;
 
             case "Round":

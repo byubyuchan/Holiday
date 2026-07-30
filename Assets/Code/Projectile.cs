@@ -38,9 +38,9 @@ public class Projectile : MonoBehaviour
             isSmall = true;
         }
 
-        if (tower.projectileIndex == 3 || tower.projectileIndex == 10) // 특수한 프로젝타일인 경우
+        if (tower.projectileIndex == 3 || tower.projectileIndex == 10 || tower.projectileIndex == 16) // 특수한 프로젝타일인 경우
         {
-            if (tower.projectileIndex == 3)
+            if (tower.projectileIndex == 3 || tower.projectileIndex == 16)
             {
                 // 인덱스 3: 타겟을 향해 이동하며 회전
                 moveDirection = (target.transform.position - transform.position).normalized;
@@ -59,6 +59,11 @@ public class Projectile : MonoBehaviour
         {
             transform.position = target.transform.position;
             Invoke("DeactivateProjectile", 0.433f);
+        }
+        else if (tower.projectileIndex == 17)
+        {
+            transform.position = target.transform.position;
+            StartCoroutine(BringerSkillProjectile());
         }
         else // 일반적인 프로젝타일
         {
@@ -81,6 +86,12 @@ public class Projectile : MonoBehaviour
                 break;
             case 10:
                 AudioManager.instance.PlaySFX("P_Slash");
+                break;
+            case 16:
+                AudioManager.instance.PlaySFX("P_Slash");
+                break;
+            case 17:
+                AudioManager.instance.PlaySFX("P_BringerSkill");
                 break;
         }
     }
@@ -141,7 +152,7 @@ public class Projectile : MonoBehaviour
 
         if (collision.collider.CompareTag("Enemy"))
         {
-                HitTarget(collision.gameObject);
+            HitTarget(collision.gameObject);
         }
     }
 
@@ -176,7 +187,6 @@ public class Projectile : MonoBehaviour
                 }
             }
         }
-
     }
 
     // 목표에 도달했을 때 처리
@@ -208,6 +218,30 @@ public class Projectile : MonoBehaviour
         StopAllCoroutines();
         isActive = false; // 활성 상태 변경
         gameObject.SetActive(false); // 투사체 비활성화
+    }
 
+    private IEnumerator BringerSkillProjectile()
+    {
+
+        yield return new WaitForSeconds(0.8f);
+
+        if (target != null)
+        {
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(target.transform.position, tower.range);
+            foreach (Collider2D enemyCollider in hitEnemies)
+            {
+                if (enemyCollider.CompareTag("Enemy"))
+                {
+                    Enemy enemy = enemyCollider.GetComponent<Enemy>();
+                    if (enemy != null && enemy.hp > 0)
+                    {
+                        enemy.TakeDamage(tower.damage);
+
+                        GameManager.instance.PlayEffect(effectIndex, enemy);
+                    }
+                }
+            }
+        }
+        DeactivateProjectile();
     }
 }

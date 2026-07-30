@@ -268,4 +268,39 @@ public class TowerManager : MonoBehaviour
             tower.price = Mathf.Min(tower.price * 2, 40);
         }
     }
+
+    public void HealSkill()
+    {
+        Tower[] towers = towerParent.GetComponentsInChildren<Tower>();
+
+        foreach (Tower tower in towers)
+        {
+            if (tower != null)
+            {
+                tower.hp = Mathf.Min(tower.hp + 200, tower.maxHp);
+                GameManager.instance.PlayEffect(15, tower.transform.position);
+            }
+        }
+    }
+
+    public void SlowEnemy()
+    {
+        Enemy[] enemys = enemyParent.GetComponentsInChildren<Enemy>();
+        foreach (Enemy enemy in enemys)
+        {
+            if (enemy != null)
+            {
+                DamageFlashEffect flashEffect = enemy.GetComponent<DamageFlashEffect>();
+
+                if (flashEffect != null)
+                {
+                    flashEffect.SetSlowEffect(true);
+                }
+
+                enemy.speed *= 0.5f;
+                enemy.speed = Mathf.Min(enemy.speed, 3f);
+                enemy.TakeDamage(50f);
+            }
+        }
+    }
 }

@@ -295,7 +295,7 @@ MonoBehaviour:
     Star: 15
     ProjectileIndex: 0
     FlipX: 1
-    Desc: "\uC5EC\uC804\uC0AC"
+    Desc: "\uC5EC\uC804\uC0AC \uC5D0\uB9AC\uC2A4"
   - towerType: Range
     HP: 800
     Speed: 1.5
@@ -305,7 +305,7 @@ MonoBehaviour:
     Star: 15
     ProjectileIndex: 16
     FlipX: 1
-    Desc: "\uC655"
+    Desc: "\uC655 \uC544\uB2F4"
   - towerType: Tank
     HP: 4000
     Speed: 3
@@ -315,7 +315,7 @@ MonoBehaviour:
     Star: 15
     ProjectileIndex: 0
     FlipX: 1
-    Desc: "\uC218\uB3C4\uC2B9"
+    Desc: "\uC218\uB3C4\uC2B9 \uCE74\uB77C\uC9D0"
   - towerType: Range
     HP: 800
     Speed: 1.5
@@ -325,7 +325,7 @@ MonoBehaviour:
     Star: 15
     ProjectileIndex: 3
     FlipX: 0
-    Desc: "\uBE0C\uB9C1\uC5B4"
+    Desc: "\uC8FD\uC74C\uC744 \uBD80\uB974\uB294 \uC790"
   towerType: 
   maxHp: 0
   hp: 0
