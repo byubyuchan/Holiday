@@ -1,5 +1,6 @@
 
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TowerAttack : MonoBehaviour
@@ -43,10 +44,6 @@ public class TowerAttack : MonoBehaviour
         if (attackCooldown > 0)
         {
             attackCooldown -= Time.deltaTime;
-            if (attackCooldown <= 0)
-            {
-                isAttacking = false; // 쿨타임 종료
-            }
         }
 
         if (tower.cost != "A+" || GameManager.instance.isCutsceneActive) return;
@@ -69,7 +66,12 @@ public class TowerAttack : MonoBehaviour
         // 쿨타임 초기화 (중복 실행 방지)
         currentSkillCooldown = skillCooldown;
 
+        isAttacking = true;
+
+        ChangeAnimSpeed(1f);
+
         towerAnim.SetTrigger("Jump");
+        towerAnim.SetBool("IsSkill", true);
     }
     private void ActivateSpecialSkill()
     {
@@ -80,7 +82,7 @@ public class TowerAttack : MonoBehaviour
             towerAnim.updateMode = AnimatorUpdateMode.UnscaledTime;
         }
 
-        AudioManager.instance.PlaySFX("P_Heal");
+        //AudioManager.instance.PlaySFX("P_Heal");
         CutsceneManager.instance.PlayTowerCutscene(transform, "스킬 발동!", 0.35f, 1, ApplySkillEffect);
     }
 
@@ -115,15 +117,19 @@ public class TowerAttack : MonoBehaviour
         }
 
         GameManager.instance.EndCutsceneMode();
+        towerAnim.SetBool("IsSkill", false);
+        isAttacking = false;
     }
 
 
     public void TryAttack(GameObject target)
     {
-        if (target == null || isAttacking)
+        if (target == null || isAttacking || attackCooldown > 0)
         {
             return;
         }
+
+        ChangeAnimSpeed();
 
         Vector2 direction = (target.transform.position - transform.position).normalized;
 
@@ -134,7 +140,6 @@ public class TowerAttack : MonoBehaviour
         targetEnemy = target;
 
         isAttacking = true; // 공격 시작
-        attackCooldown = tower.speed; // 쿨타임 설정
         towerAnim.SetTrigger("Attack"); // 애니메이션 실행
     }
 
@@ -158,9 +163,7 @@ public class TowerAttack : MonoBehaviour
                 {
                     tower.projectileIndex = 3;
                 }
-
                 break;
-
             case "Round":
                 PerformRoundAttack();
                 break;
@@ -172,10 +175,11 @@ public class TowerAttack : MonoBehaviour
             case "Heal":
                 PerformHeal();
                 break;
-
             default:
                 break;
         }
+        isAttacking = false;
+        attackCooldown = tower.speed;
     }
 
     private void PerformMeleeAttack(GameObject target)
@@ -251,5 +255,18 @@ public class TowerAttack : MonoBehaviour
             }
         }
         AudioManager.instance.PlaySFX("P_Heal");
+    }
+
+    public void ChangeAnimSpeed(float speed = 0)
+    {
+        if (towerAnim != null)
+        {
+            if (speed != 0)
+            {
+                towerAnim.speed = speed;
+                return;
+            }
+            towerAnim.speed = tower.baseSpeed / tower.speed;
+        }
     }
 }

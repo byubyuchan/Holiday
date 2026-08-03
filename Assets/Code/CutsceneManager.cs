@@ -8,6 +8,7 @@ public class CutsceneManager : MonoBehaviour
     public static CutsceneManager instance;
     public Camera mainCamera;
     public float cutsceneDuration = 4f;
+    private Vector3 defaultCamPos;
     private Vector3 originalCamPos;
     private float originalCamSize;
     public int cutsceneflag;
@@ -16,7 +17,11 @@ public class CutsceneManager : MonoBehaviour
     {
         instance = this;
         if (mainCamera == null)
+        {
             mainCamera = Camera.main;
+        }
+        originalCamSize = mainCamera.orthographicSize;
+        defaultCamPos = mainCamera.transform.position;
     }
 
     public void PlayBossCutscene(Transform bossTransform, string bossName, float power)
@@ -33,6 +38,7 @@ public class CutsceneManager : MonoBehaviour
         StartCoroutine(PlayDeathCutsceneCoroutine(bossTransform, bossName, power, onCutsceneEnd));
     }
 
+    // !!
     private IEnumerator PlayBossCutsceneCoroutine(Transform bossTransform, string bossName, float power) // 파워는 확대량
     {
         if (TowerInfo.instance != null)
@@ -41,7 +47,6 @@ public class CutsceneManager : MonoBehaviour
         }
         cutsceneflag = 1;
         originalCamPos = mainCamera.transform.position;
-        originalCamSize = mainCamera.orthographicSize;
 
         GameManager.instance.ShowMessage(bossName, 4f);
 
@@ -61,7 +66,7 @@ public class CutsceneManager : MonoBehaviour
             yield return null;
         }
         // 원래 화면으로 되돌리기
-        mainCamera.transform.position = originalCamPos;
+        mainCamera.transform.position = new Vector3(originalCamPos.x, defaultCamPos.y, originalCamPos.z);
         mainCamera.orthographicSize = originalCamSize;
         cutsceneflag = 0;
     }
@@ -73,7 +78,6 @@ public class CutsceneManager : MonoBehaviour
         }
         cutsceneflag = 1; // 컷신이 이미 실행되었는지 확인하는 플래그
         originalCamPos = mainCamera.transform.position;
-        originalCamSize = mainCamera.orthographicSize;
 
         float interval = 0.44f;
         GameManager.instance.ShowMessage(towerName, time * 0.54f);
@@ -99,7 +103,7 @@ public class CutsceneManager : MonoBehaviour
             yield return new WaitForSecondsRealtime(0.1f);
         }
         // 원래 화면으로 완전히 되돌리기
-        mainCamera.transform.position = originalCamPos;
+        mainCamera.transform.position = new Vector3(originalCamPos.x, defaultCamPos.y, originalCamPos.z);
         mainCamera.orthographicSize = originalCamSize;
         cutsceneflag = 0;
 
@@ -116,7 +120,6 @@ public class CutsceneManager : MonoBehaviour
 
         cutsceneflag = 1;
         originalCamPos = mainCamera.transform.position;
-        originalCamSize = mainCamera.orthographicSize;
 
         GameManager.instance.ShowMessage(bossName, 4f);
 
@@ -161,7 +164,7 @@ public class CutsceneManager : MonoBehaviour
         }
 
         // 원래 화면 복귀
-        mainCamera.transform.position = originalCamPos;
+        mainCamera.transform.position = new Vector3(originalCamPos.x, defaultCamPos.y, originalCamPos.z);
         mainCamera.orthographicSize = originalCamSize;
         cutsceneflag = 0;
 

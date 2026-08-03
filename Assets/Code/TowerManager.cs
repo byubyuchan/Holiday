@@ -303,4 +303,21 @@ public class TowerManager : MonoBehaviour
             }
         }
     }
+
+    public void ResetAnimSpeed()
+    {
+        Tower[] towers = towerParent.GetComponentsInChildren<Tower>();
+
+        foreach (Tower tower in towers)
+        {
+            if (tower != null)
+            {
+                Animator anim = tower.GetComponent<Animator>();
+                if (anim != null)
+                {
+                    anim.speed = 1f;
+                }
+            }
+        }
+    }
 }

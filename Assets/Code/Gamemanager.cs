@@ -131,13 +131,27 @@ public class GameManager : MonoBehaviour
         //dbConnector.saveValue(playerId, "stage", currentRound);
         Debug.Log("Time save!");
 
+        Transform towerParent = GameObject.Find("TowerParent")?.transform;
+        if (towerParent != null)
+        {
+            Animator[] towerAnims = towerParent.GetComponentsInChildren<Animator>();
+            foreach (Animator anim in towerAnims)
+            {
+                if (anim != null)
+                {
+                    anim.speed = 1f;
+                }
+            }
+        }
+
         if (isLive)
         {
             isStart = false;
             StartRoundButton.gameObject.SetActive(true); // 이 부분 변경
             Gold += 50;
             AudioManager.instance.PlaySFX("Win");
-            if(TowerManager.instance.reSell) TowerManager.instance.TwicePrice();
+            TowerManager.instance.ResetAnimSpeed();
+            if (TowerManager.instance.reSell) TowerManager.instance.TwicePrice();
             if (TowerManager.instance.forcedSale) TowerManager.instance.TwiceSellAllTower();
         }
     }
@@ -238,7 +252,6 @@ public class GameManager : MonoBehaviour
     public void Pause_Resume()
     {
         isLive = true;
-        // �ð� �ӵ� (����)
         Time.timeScale = gameSpeed[speedIndex];
         UIPause.localScale = Vector3.zero;
     }
