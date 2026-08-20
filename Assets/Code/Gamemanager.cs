@@ -59,6 +59,8 @@ public class GameManager : MonoBehaviour
 
     public bool isCutsceneActive = false;
 
+    [SerializeField] private TowerMover towerMover;
+
 
     private void Awake()
     {
@@ -100,7 +102,7 @@ public class GameManager : MonoBehaviour
         Spawner.instance.isEnd = false;
         StartRoundButton.gameObject.SetActive(false); // ��ư ��Ȱ��ȭ
         isStart = true;
-
+        towerMover.SelectTower(false);
     }
 
     public void EndRound()

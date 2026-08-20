@@ -17,6 +17,7 @@ public class TowerMover : MonoBehaviour
         // 단축키 입력 체크
         if (Input.GetKeyDown(KeyCode.R))
         {
+            SelectTower(false);
             StartMove();
         }
 
@@ -75,6 +76,7 @@ public class TowerMover : MonoBehaviour
         GameManager.instance.ShowMessage("이동할 위치를 선택하세요!");
         AudioManager.instance.PlaySFX("Select");
         IsMoving = true;
+        SelectTower(true);
     }
 
     public void MoveToTile(Tile tile)
@@ -102,6 +104,14 @@ public class TowerMover : MonoBehaviour
     public void TowerSell()
     {
         if (CutsceneManager.instance.cutsceneflag == 1) return;
+
+        if (IsMoving)
+        {
+            GameManager.instance.ShowMessage("이동 중에는 판매할 수 없습니다!");
+            AudioManager.instance.PlaySFX("Cant");
+            CameraShakeComponent.instance.StartShake();
+            return;
+        }
 
         if (TowerManager.instance.cantSell)
         {
@@ -147,6 +157,14 @@ public class TowerMover : MonoBehaviour
     {
 
         if (CutsceneManager.instance.cutsceneflag == 1) return;
+
+        if (IsMoving)
+        {
+            GameManager.instance.ShowMessage("이동 중에는 강화할 수 없습니다!");
+            AudioManager.instance.PlaySFX("Cant");
+            CameraShakeComponent.instance.StartShake();
+            return;
+        }
 
         if (GameManager.instance.isStart)
         {
@@ -201,6 +219,14 @@ public class TowerMover : MonoBehaviour
     public void SpecialMix()
     {
         if (CutsceneManager.instance.cutsceneflag == 1) return;
+
+        if (IsMoving)
+        {
+            GameManager.instance.ShowMessage("이동 중에는 강화할 수 없습니다!");
+            AudioManager.instance.PlaySFX("Cant");
+            CameraShakeComponent.instance.StartShake();
+            return;
+        }
 
         if (selectedTower == null)
         {
@@ -354,4 +380,12 @@ public class TowerMover : MonoBehaviour
         towerSelector.ResetTile(true);
         StartCoroutine(DelayUpgradeCheck());
         }
+
+    public void SelectTower(bool isSelected)
+    {
+        if (selectedTower != null)
+        {
+            selectedTower.GetComponent<SpriteRenderer>().color = isSelected ? new Color(1f, 1f, 1f, 0.3f) : new Color(1f, 1f, 1f, 1f);
+        }
+    }
 }

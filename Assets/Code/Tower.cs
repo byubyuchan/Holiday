@@ -161,6 +161,7 @@ public class Tower : MonoBehaviour
             AudioManager.instance.PlaySFX(randomKey);
             CameraShakeComponent.instance.StartShake(0.1f, 1f);
             RemoveTower();
+            TowerManager.instance.UpgradeAllTower(TowerMaker.instance.upgradeVal);
         }
     }
     private int GetRandomIndex()

@@ -63,6 +63,7 @@ public class TowerSelector : MonoBehaviour
                 return;
             }
 
+            towerMover.SelectTower(false);
             towerMover.MoveToTile(tile); // 이동 또는 교환 처리
             ResetTile(true);
             return;
@@ -72,6 +73,7 @@ public class TowerSelector : MonoBehaviour
 
         if (selectedTile == tileTransform) // 같은 타일 클릭 시 타워 설치
         {
+            towerMover.SelectTower(false);
             towerMaker.SpawnTower(tile);
             ResetTile(true);
         }

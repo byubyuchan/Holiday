@@ -113,7 +113,7 @@ public class TowerManager : MonoBehaviour
 
             foreach (Tower tower in towers)
             {
-                if (tower == null)
+                if (tower == null || tower.hp <= 0)
                     continue;
 
                 if (tower.cost != "C")

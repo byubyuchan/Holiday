@@ -54,6 +54,12 @@ public class TowerInfo : MonoBehaviour
 
     public void Update()
     {
+        if (infoTower == null)
+        {
+            HideUI();
+            return;
+        }
+
         if (infoPanel.activeSelf)
         {
             towerTypeText.text = $"µî±Þ : {infoTower.cost}";
