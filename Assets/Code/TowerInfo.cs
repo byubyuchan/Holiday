@@ -39,7 +39,7 @@ public class TowerInfo : MonoBehaviour
         speedText.text = $"공격속도 : {tower.speed:F2}";
         damageText.text = $"공격력 : {tower.damage:F2}";
         rangeText.text = $"사거리 : {tower.range:F2}";
-        SellText.text = $"판매 : +{tower.price}G (Q)";
+        SellText.text = $"판매 : +{tower.price}G (Z)";
 
         infoTower.ShowRange();
 
@@ -67,7 +67,7 @@ public class TowerInfo : MonoBehaviour
             speedText.text = $"공격속도 : {infoTower.speed:F2}";
             damageText.text = $"공격력 : {infoTower.damage:F2}";
             rangeText.text = $"사거리 : {infoTower.range:F2}";
-            SellText.text = $"판매 : +{infoTower.price}G (Q)";
+            SellText.text = $"판매 : +{infoTower.price}G (Z)";
 
             // 실시간으로 아이콘 업데이트 (필요 시)
             SpriteRenderer spriteRenderer = infoTower.GetComponent<SpriteRenderer>();

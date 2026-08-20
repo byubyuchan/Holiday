@@ -9,6 +9,12 @@ public class TowerMaker : MonoBehaviour
     [SerializeField] public GameObject tankTowerPrefab;
     [SerializeField] public Transform towerParent;
 
+    [Header("UI Button Managers (어두워지는 효과용)")]
+    [SerializeField] public ButtonManager btnMelee;
+    [SerializeField] public ButtonManager btnRanged;
+    [SerializeField] public ButtonManager btnTank;
+    [SerializeField] public ButtonManager btnRandom;
+
     public GameObject selectedTowerPrefab;
     public static TowerMaker instance;
     private int Pay;
@@ -54,6 +60,17 @@ public class TowerMaker : MonoBehaviour
         instance = this;
     }
 
+    private void SyncButtonVisuals(ButtonManager activeBtn)
+    {
+        if (btnMelee != null) btnMelee.ReturnButton();
+        if (btnRanged != null) btnRanged.ReturnButton();
+        if (btnTank != null) btnTank.ReturnButton();
+        if (btnRandom != null) btnRandom.ReturnButton();
+
+        // 2. 현재 선택된 버튼만 어둡게 만듭니다.
+        if (activeBtn != null) activeBtn.ClickButton();
+    }
+
     public void SelectMeleeTower()
     {
         if (CutsceneManager.instance.cutsceneflag == 1) return;
@@ -67,6 +84,8 @@ public class TowerMaker : MonoBehaviour
         AudioManager.instance.PlaySFX("Select");
         Pay = MeleePay;
         isRandom = false;
+
+        SyncButtonVisuals(btnMelee);
     }
 
     public void SelectRangedTower()
@@ -82,6 +101,8 @@ public class TowerMaker : MonoBehaviour
         AudioManager.instance.PlaySFX("Select");
         Pay = RangedPay;
         isRandom = false;
+
+        SyncButtonVisuals(btnRanged);
     }
 
     public void SelectTankTower()
@@ -97,6 +118,8 @@ public class TowerMaker : MonoBehaviour
         AudioManager.instance.PlaySFX("Select");
         Pay = TankPay;
         isRandom = false;
+
+        SyncButtonVisuals(btnTank);
     }
 
     public void SelectRandomTower()
@@ -109,6 +132,8 @@ public class TowerMaker : MonoBehaviour
         AudioManager.instance.PlaySFX("Select");
         Pay = RandomPay;
         isRandom = true;
+
+        SyncButtonVisuals(btnRandom);
     }
 
     public void SpawnTower(Tile tile)

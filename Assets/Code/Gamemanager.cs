@@ -149,7 +149,8 @@ public class GameManager : MonoBehaviour
         if (isLive)
         {
             isStart = false;
-            StartRoundButton.gameObject.SetActive(true); // 이 부분 변경
+            StartRoundButton.gameObject.SetActive(true);
+            StartRoundButton.GetComponent<ButtonManager>().ReturnButton();
             Gold += 50;
             AudioManager.instance.PlaySFX("Win");
             TowerManager.instance.ResetAnimSpeed();

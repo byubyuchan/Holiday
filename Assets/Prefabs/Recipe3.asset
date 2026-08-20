@@ -15,14 +15,14 @@ MonoBehaviour:
   recipeName: "\uC218\uB3C4\uC2B9"
   ingredients:
   - towerType: Tank
-    cost: C
+    cost: A
     quantity: 1
-  - towerType: Range
-    cost: C
-    quantity: 0
   - towerType: Tank
     cost: B
-    quantity: 0
+    quantity: 2
+  - towerType: Tank
+    cost: C
+    quantity: 5
   ResultType: 2
   resultTowerPrefab: {fileID: 5415422783019143891, guid: 2c48eb89b8a4a4b43a9711e23df9e173, type: 3}
   resultTowerIndex: 2

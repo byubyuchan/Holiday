@@ -9,6 +9,7 @@ public class Talent : MonoBehaviour
     [SerializeField] ButtonText rangeButton;
     [SerializeField] ButtonText tankButton;
     [SerializeField] ButtonText randomButton;
+    [SerializeField] TowerButtonGroup buttonGroup;
 
     RectTransform rect;
     Transform[] talents;
@@ -52,6 +53,7 @@ public class Talent : MonoBehaviour
 
     public void Hide()
     {
+        buttonGroup.ResetButtons();
         rect.localScale = Vector3.zero;
     }
 

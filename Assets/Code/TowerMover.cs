@@ -15,25 +15,26 @@ public class TowerMover : MonoBehaviour
     private void Update()
     {
         // 단축키 입력 체크
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             SelectTower(false);
             StartMove();
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            TowerSell();
-        }
-
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             TowerLevelUp();
         }
 
-        if (Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             SpecialMix();
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            TowerSell();
         }
 
         // 필요하면 다른 단축키도 추가 가능
